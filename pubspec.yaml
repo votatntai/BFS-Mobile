@@ -11,12 +11,17 @@ dependencies:
     sdk: flutter
 
   nb_utils: ^6.1.2
+  flutter_svg: ^2.0.9
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
-
+  build_runner: ^2.3.3
+  
 flutter:
   uses-material-design: true
   
+  assets:
+    - assets/icons/
+    - assets/images/

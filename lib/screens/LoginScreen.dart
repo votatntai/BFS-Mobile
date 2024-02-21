@@ -100,7 +100,7 @@ class LoginScreen extends StatelessWidget {
                     ],
                   )),
                 ).onTap((){ 
-                  Navigator.pushNamed(context, DashboardScreen.routeName);
+                  Navigator.pushReplacementNamed(context, DashboardScreen.routeName);
                 }),
               ],
             ).paddingSymmetric(horizontal: 32),

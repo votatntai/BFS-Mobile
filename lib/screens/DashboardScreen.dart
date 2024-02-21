@@ -1,9 +1,12 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/utils/app_assets.dart';
 import 'package:flutter_application_1/utils/colors.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+import '../fragments/BirdFragment.dart';
 import '../fragments/HomeFragment.dart';
 import '../widgets/Background.dart';
 
@@ -35,6 +38,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
   List<Widget> widgetOption = <Widget>[
     HomeFragment(),
     HomeFragment(),
+    BirdFragment(),
+    HomeFragment(),
     HomeFragment(),
   ];
 
@@ -59,11 +64,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
         widgetOption.elementAt(selectedItem)
       ]),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.home),
+        child: SvgPicture.asset(AppAssets.dove_svg,
+            color: whiteColor, width: 24, height: 24),
         backgroundColor: primaryColor,
         elevation: 15.0,
         onPressed: () {
-          // Hành động khi nút được nhấn
+          onTapSelection(2);
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation
@@ -72,7 +78,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
         borderRadius: BorderRadius.only(
             topLeft: Radius.circular(24), topRight: Radius.circular(24)),
         child: BottomAppBar(
-          shape: CircularNotchedRectangle(), // Định hình cho notch xung quanh FAB
+          shape:
+              CircularNotchedRectangle(), // Định hình cho notch xung quanh FAB
           notchMargin: 6.0, // Khoảng cách giữa notch và FAB
           clipBehavior: Clip.antiAlias,
           child: BackdropFilter(
@@ -90,18 +97,22 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   IconButton(
-                      icon: Icon(Icons.home, color: primaryColor),
-                      onPressed: () {}),
+                      icon: SvgPicture.asset(AppAssets.list_check_svg,
+                          color: primaryColor, width: 24, height: 24),
+                      onPressed: () {onTapSelection(0);}),
                   IconButton(
-                      icon: Icon(Icons.calendar_today, color: primaryColor),
-                      onPressed: () {}),
+                      icon: SvgPicture.asset(AppAssets.cage_svg,
+                          color: primaryColor, width: 24, height: 24),
+                      onPressed: () {onTapSelection(1);}),
                   SizedBox(width: 48), // Tạo khoảng trống cho FAB
                   IconButton(
-                      icon: Icon(Icons.file_copy, color: primaryColor),
-                      onPressed: () {}),
+                      icon: SvgPicture.asset(AppAssets.food_svg,
+                          color: primaryColor, width: 24, height: 24),
+                      onPressed: () {onTapSelection(3);}),
                   IconButton(
-                      icon: Icon(Icons.people, color: primaryColor),
-                      onPressed: () {}),
+                      icon: SvgPicture.asset(AppAssets.user_svg,
+                          color: primaryColor, width: 24, height: 24),
+                      onPressed: () {onTapSelection(4);}),
                 ],
               ),
             ),
