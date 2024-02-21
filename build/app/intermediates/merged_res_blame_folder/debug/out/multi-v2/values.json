@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.flutter_application_1.app-mergeDebugResources-9:/values/values.xml",
+            "outputFile": "com.example.bfs_mobile.app-mergeDebugResources-9:/values/values.xml",
             "map": [
                 {
                     "source": "/Users/maichinh/Documents/Outsource/BFS-Mobile/android/app/src/main/res/values/styles.xml",

@@ -12,6 +12,9 @@ dependencies:
 
   nb_utils: ^6.1.2
   flutter_svg: ^2.0.9
+  dio: ^5.4.1
+  flutter_bloc: ^8.1.4
+  get_it: ^7.6.7
 
 dev_dependencies:
   flutter_test:

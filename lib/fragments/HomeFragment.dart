@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/utils/gap.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:nb_utils/nb_utils.dart';
+
+import '../components/TaskComponent.dart';
+import '../utils/app_assets.dart';
+import '../utils/colors.dart';
 
 class HomeFragment extends StatefulWidget {
   @override
@@ -17,9 +23,6 @@ class _HomeFragmentState extends State<HomeFragment> {
   }
 
   void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
     _pageController.animateToPage(index,
         duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
   }
@@ -29,9 +32,9 @@ class _HomeFragmentState extends State<HomeFragment> {
     return SafeArea(
       child: Column(
         children: [
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.6,
+          Expanded(
             child: Material(
+              color: transparentColor,
               child: Column(
                 children: <Widget>[
                   // Custom TabBar
@@ -39,21 +42,54 @@ class _HomeFragmentState extends State<HomeFragment> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
                       // Custom tab buttons
-                      IconButton(
-                        icon: Icon(Icons.home),
-                        onPressed: () => _onItemTapped(0),
-                        color: _selectedIndex == 0 ? Colors.blue : Colors.grey,
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.search),
-                        onPressed: () => _onItemTapped(1),
-                        color: _selectedIndex == 1 ? Colors.blue : Colors.grey,
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.notifications),
-                        onPressed: () => _onItemTapped(2),
-                        color: _selectedIndex == 2 ? Colors.blue : Colors.grey,
-                      ),
+                      Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: _selectedIndex == 0
+                                ? primaryColor
+                                : primaryColor.withOpacity(0.1)),
+                        child: Text(
+                          'To do',
+                          style: TextStyle(
+                              color: _selectedIndex == 0 ? white : primaryColor,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ).onTap(() => _onItemTapped(0)),
+                      Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: _selectedIndex == 1
+                                ? primaryColor
+                                : primaryColor.withOpacity(0.1)),
+                        child: Text(
+                          'In progress',
+                          style: TextStyle(
+                              color: _selectedIndex == 1 ? white : primaryColor,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ).onTap(() => _onItemTapped(1)),
+                      Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: _selectedIndex == 2
+                                ? primaryColor
+                                : primaryColor.withOpacity(0.1)),
+                        child: Text(
+                          'Done',
+                          style: TextStyle(
+                              color: _selectedIndex == 2 ? white : primaryColor,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ).onTap(() => _onItemTapped(2)),
                     ],
                   ),
                   Expanded(
@@ -66,7 +102,20 @@ class _HomeFragmentState extends State<HomeFragment> {
                       },
                       children: <Widget>[
                         // Nội dung của mỗi "tab"
-                        Center(child: Text('Home Tab Content')),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              child: ListView.separated(
+                                  itemBuilder: (context, index) =>
+                                      TaskComponent(),
+                                  separatorBuilder: (context, indext) =>
+                                      Gap.k16.height,
+                                  itemCount: 3),
+                            )
+                          ],
+                        ).paddingTop(32),
                         Center(child: Text('Search Tab Content')),
                         Center(child: Text('Notifications Tab Content')),
                       ],
@@ -77,7 +126,7 @@ class _HomeFragmentState extends State<HomeFragment> {
             ),
           ),
         ],
-      ).paddingSymmetric(horizontal: 32),
+      ).paddingSymmetric(horizontal: 16, vertical: 32),
     );
   }
 }

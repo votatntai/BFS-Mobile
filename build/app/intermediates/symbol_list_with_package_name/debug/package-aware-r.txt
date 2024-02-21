@@ -1,4 +1,4 @@
-com.example.flutter_application_1
+com.example.bfs_mobile
 attr activityAction
 attr activityName
 attr alpha

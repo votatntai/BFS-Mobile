@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.flutter_application_1"
+    package="com.example.bfs_mobile"
     android:versionCode="1"
     android:versionName="0.1.0" >
 
@@ -22,7 +22,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="BFS" >
         <activity
-            android:name="com.example.flutter_application_1.MainActivity"
+            android:name="com.example.bfs_mobile.MainActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:exported="true"
             android:hardwareAccelerated="true"

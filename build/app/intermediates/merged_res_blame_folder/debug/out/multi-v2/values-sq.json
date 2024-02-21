@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.flutter_application_1.app-mergeDebugResources-9:/values-sq/values-sq.xml",
+            "outputFile": "com.example.bfs_mobile.app-mergeDebugResources-9:/values-sq/values-sq.xml",
             "map": [
                 {
                     "source": "/Users/maichinh/.gradle/caches/transforms-3/7e9df2ac2213a6bd3cef0f2f27870d79/transformed/core-1.6.0/res/values-sq/values-sq.xml",

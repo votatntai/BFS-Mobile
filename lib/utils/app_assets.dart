@@ -6,4 +6,5 @@ class AppAssets {
   static const String food_svg = 'assets/icons/food.svg';
   static const String cage_svg = 'assets/icons/cage.svg';
   static const String list_check_svg = 'assets/icons/list-check.svg';
+  static const String clock_svg = 'assets/icons/clock.svg';
 }
