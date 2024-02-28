@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/screens/LoginScreen.dart';
 
 import '../screens/DashboardScreen.dart';
 import '../screens/NotFoundScreen.dart';
-import '../screens/ProfileScreen.dart';
+import '../fragments/ProfileFragment.dart';
 import '../screens/SettingScreen.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
-    // Add your route cases here
+    case LoginScreen.routeName:
+      return MaterialPageRoute(builder: (_) => LoginScreen());
     case DashboardScreen.routeName:
       return MaterialPageRoute(builder: (_) => DashboardScreen());
-    case '/profile':
-      return MaterialPageRoute(builder: (_) => ProfileScreen());
     case '/settings':
       return MaterialPageRoute(builder: (_) => SettingsScreen());
     default:

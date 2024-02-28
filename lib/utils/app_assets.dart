@@ -7,4 +7,7 @@ class AppAssets {
   static const String cage_svg = 'assets/icons/cage.svg';
   static const String list_check_svg = 'assets/icons/list-check.svg';
   static const String clock_svg = 'assets/icons/clock.svg';
+  static const String magnifying_glass_svg = 'assets/icons/magnifying-glass.svg';
+  static const String list_svg = 'assets/icons/list.svg';
+  static const String gird_vertical_svg = 'assets/icons/grid-vertical.svg';
 }

@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/fragments/ProfileFragment.dart';
 import 'package:flutter_application_1/utils/app_assets.dart';
 import 'package:flutter_application_1/utils/colors.dart';
 import 'package:flutter_svg/svg.dart';
@@ -40,7 +41,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     HomeFragment(),
     BirdFragment(),
     HomeFragment(),
-    HomeFragment(),
+    ProfileFragment(),
   ];
 
   @override

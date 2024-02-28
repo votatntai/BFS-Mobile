@@ -15,6 +15,7 @@ import '../widgets/Background.dart';
 import 'DashboardScreen.dart';
 
 class LoginScreen extends StatefulWidget {
+  static const String routeName = '/login';
   const LoginScreen({Key? key});
 
   @override
@@ -24,21 +25,26 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  bool loading = false;
   @override
   Widget build(BuildContext context) {
     return BlocProvider<LoginCubit>(
       create: (context) => LoginCubit(),
       child: BlocConsumer<LoginCubit, LoginState>(
         listener: (context, state) {
+          if (state is LoginLoadingState) {
+            showDialog(context: context, builder: (context) => const Center(child: CircularProgressIndicator()));
+          }
           if (state is LoginSuccessState) {
             Navigator.pushReplacementNamed(context, DashboardScreen.routeName);
           } else if (state is LoginFailedState) {
             showModalBottomSheet(context: context, builder: (context) => AlertDialog(
               title: const Text(msg_login_failed_title),
-                content: Text(msg_login_failed_content + '\n' + state.error.toString().replaceFirst('Exception: ', '')),
+                content: Text('$msg_login_failed_content\n${state.error.toString().replaceFirst('Exception: ', '')}'),
               actions: [
                 TextButton(
                   onPressed: () {
+                    Navigator.pop(context);
                     Navigator.pop(context);
                   },
                   child: const Text('OK'),

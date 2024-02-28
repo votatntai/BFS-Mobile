@@ -6,6 +6,7 @@ import 'package:nb_utils/nb_utils.dart';
 import '../components/TaskComponent.dart';
 import '../utils/app_assets.dart';
 import '../utils/colors.dart';
+import '../widgets/Tab.dart';
 
 class HomeFragment extends StatefulWidget {
   @override
@@ -39,57 +40,14 @@ class _HomeFragmentState extends State<HomeFragment> {
                 children: <Widget>[
                   // Custom TabBar
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       // Custom tab buttons
-                      Container(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: _selectedIndex == 0
-                                ? primaryColor
-                                : primaryColor.withOpacity(0.1)),
-                        child: Text(
-                          'To do',
-                          style: TextStyle(
-                              color: _selectedIndex == 0 ? white : primaryColor,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ).onTap(() => _onItemTapped(0)),
-                      Container(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: _selectedIndex == 1
-                                ? primaryColor
-                                : primaryColor.withOpacity(0.1)),
-                        child: Text(
-                          'In progress',
-                          style: TextStyle(
-                              color: _selectedIndex == 1 ? white : primaryColor,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ).onTap(() => _onItemTapped(1)),
-                      Container(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: _selectedIndex == 2
-                                ? primaryColor
-                                : primaryColor.withOpacity(0.1)),
-                        child: Text(
-                          'Done',
-                          style: TextStyle(
-                              color: _selectedIndex == 2 ? white : primaryColor,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ).onTap(() => _onItemTapped(2)),
+                      Expanded(child: CustomTab(title: 'To Do', index: 0, selectedIndex: _selectedIndex).onTap(() => _onItemTapped(0))),
+                      Gap.k16.width,
+                      Expanded(child: CustomTab(title: 'In progress', index: 1, selectedIndex: _selectedIndex).onTap(() => _onItemTapped(1))),
+                      Gap.k16.width,
+                      Expanded(child: CustomTab(title: 'Done', index: 2, selectedIndex: _selectedIndex).onTap(() => _onItemTapped(2))),
                     ],
                   ),
                   Expanded(
@@ -108,11 +66,12 @@ class _HomeFragmentState extends State<HomeFragment> {
                           children: [
                             Expanded(
                               child: ListView.separated(
+                                  physics: const BouncingScrollPhysics(),
                                   itemBuilder: (context, index) =>
-                                      TaskComponent(),
+                                      const TaskComponent(),
                                   separatorBuilder: (context, indext) =>
                                       Gap.k16.height,
-                                  itemCount: 3),
+                                  itemCount: 10),
                             )
                           ],
                         ).paddingTop(32),
@@ -126,7 +85,7 @@ class _HomeFragmentState extends State<HomeFragment> {
             ),
           ),
         ],
-      ).paddingSymmetric(horizontal: 16, vertical: 32),
+      ).paddingOnly(left: 16, right: 16, top: 32),
     );
   }
 }
