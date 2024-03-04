@@ -10,4 +10,6 @@ class AppAssets {
   static const String magnifying_glass_svg = 'assets/icons/magnifying-glass.svg';
   static const String list_svg = 'assets/icons/list.svg';
   static const String gird_vertical_svg = 'assets/icons/grid-vertical.svg';
+  static const String xmark_svg = 'assets/icons/xmark.svg';
+  static const String angle_down_svg = 'assets/icons/angle-down.svg';
 }

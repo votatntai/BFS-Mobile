@@ -1,9 +1,11 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/cubit/bird/bird_cubit.dart';
 import 'package:flutter_application_1/fragments/ProfileFragment.dart';
 import 'package:flutter_application_1/utils/app_assets.dart';
 import 'package:flutter_application_1/utils/colors.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -39,7 +41,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   List<Widget> widgetOption = <Widget>[
     HomeFragment(),
     HomeFragment(),
-    BirdFragment(),
+    BlocProvider<BirdCubit>(create: (context) => BirdCubit(), child: BirdFragment()),
     HomeFragment(),
     ProfileFragment(),
   ];

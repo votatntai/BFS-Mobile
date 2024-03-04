@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_application_1/domain/repositories/bird_repo.dart';
 import 'package:flutter_application_1/domain/repositories/user_repo.dart';
 import 'package:flutter_application_1/utils/dio.dart';
 import 'package:get_it/get_it.dart';
@@ -9,4 +10,5 @@ Future<void> initialGetIt() async {
   getIt.registerLazySingleton<Dio>(() => apiClient);
 
   getIt.registerLazySingleton(() => UserRepo());
+  getIt.registerLazySingleton(() => BirdRepo());
 }
