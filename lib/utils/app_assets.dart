@@ -1,5 +1,4 @@
 class AppAssets {
-  static const String package = 'flutter_application_1';
 
   static const String dove_svg = 'assets/icons/dove.svg';
   static const String user_svg = 'assets/icons/user.svg';
@@ -12,4 +11,7 @@ class AppAssets {
   static const String gird_vertical_svg = 'assets/icons/grid-vertical.svg';
   static const String xmark_svg = 'assets/icons/xmark.svg';
   static const String angle_down_svg = 'assets/icons/angle-down.svg';
+  static const String angle_left_svg = 'assets/icons/angle-left.svg';
+  static const String gender_svg = 'assets/icons/gender.svg';
+  static const String cake_candles_svg = 'assets/icons/cake-candles.svg';
 }

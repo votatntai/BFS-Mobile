@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -29,4 +31,34 @@ class DotPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(CustomPainter oldDelegate) => false;
+}
+
+class Background extends StatelessWidget {
+  const Background({
+    super.key,
+    required this.widget,
+  });
+
+  final Widget widget;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(children: [
+      CustomPaint(
+        painter: DotPainter(),
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          decoration: BoxDecoration(),
+        ),
+      ),
+      BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 70, sigmaY: 70),
+        child: Container(
+          color: Colors.black.withOpacity(
+              0), // Container phải có màu nhưng có thể trong suốt
+        ),
+      ),
+      widget
+    ]);
+  }
 }

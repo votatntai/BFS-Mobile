@@ -1,21 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/LoginScreen.dart';
 
+import '../screens/BirdDetailScreen.dart';
 import '../screens/DashboardScreen.dart';
 import '../screens/NotFoundScreen.dart';
-import '../fragments/ProfileFragment.dart';
 import '../screens/SettingScreen.dart';
+import '../screens/TaskDetailScreen.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
     case LoginScreen.routeName:
-      return MaterialPageRoute(builder: (_) => LoginScreen());
+      return MaterialPageRoute(builder: (_) => const LoginScreen());
     case DashboardScreen.routeName:
       return MaterialPageRoute(builder: (_) => DashboardScreen());
     case '/settings':
-      return MaterialPageRoute(builder: (_) => SettingsScreen());
+      return MaterialPageRoute(builder: (_) => const SettingsScreen());
+    case '/bird-detail':
+      return MaterialPageRoute(builder: (_) => const BirdDetailScreen());
+    case '/task-detail':
+      return MaterialPageRoute(builder: (_) => const TaskDetailScreen());
     default:
-      return MaterialPageRoute(builder: (_) => NotFoundScreen());
+      return MaterialPageRoute(builder: (_) => const NotFoundScreen());
   }
 }
 

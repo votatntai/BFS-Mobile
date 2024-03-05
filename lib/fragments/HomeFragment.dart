@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/utils/gap.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../components/TaskComponent.dart';
-import '../utils/app_assets.dart';
-import '../utils/colors.dart';
+import '../utils/gap.dart';
 import '../widgets/Tab.dart';
 
 class HomeFragment extends StatefulWidget {

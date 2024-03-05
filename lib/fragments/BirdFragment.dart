@@ -6,11 +6,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../components/BirdComponent.dart';
-import '../components/TaskComponent.dart';
 import '../utils/app_assets.dart';
 import '../utils/colors.dart';
 import '../utils/gap.dart';
-import '../widgets/Tab.dart';
 
 class BirdFragment extends StatefulWidget {
   @override
@@ -305,7 +303,9 @@ class _BirdFragmentState extends State<BirdFragment> {
                       var birds = state.birds;
                       if (birds.birds!.isEmpty) {
                         // return const Center(child: Text('No bird data available'),);
-                        return TextButton(onPressed: (){}, child: Text('Bird detail'));
+                        return TextButton(onPressed: (){
+                          Navigator.pushNamed(context, '/bird-detail');
+                        }, child: Text('Bird detail'));
                       }
                     return Expanded(
                       child: Column(

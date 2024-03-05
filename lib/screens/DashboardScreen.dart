@@ -105,8 +105,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       onPressed: () {onTapSelection(0);}),
                   IconButton(
                       icon: SvgPicture.asset(AppAssets.cage_svg,
-                          color: primaryColor, width: 24, height: 24),
-                      onPressed: () {onTapSelection(1);}),
+                          color: primaryColor, width: 32, height: 32),
+                      onPressed: () {onTapSelection(1);}).paddingTop(4),
                   SizedBox(width: 48), // Tạo khoảng trống cho FAB
                   IconButton(
                       icon: SvgPicture.asset(AppAssets.food_svg,
