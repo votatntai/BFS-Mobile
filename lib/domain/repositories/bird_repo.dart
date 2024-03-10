@@ -6,10 +6,11 @@ import '../models/birds.dart';
 final Dio _apiClient = getIt.get<Dio>();
 
 class BirdRepo {
-  Future<Birds> getBirds({String? name, int? pageNumber, int? pageSize}) async {
+  Future<Birds> getBirds({String? name, String? categoryId, int? pageNumber, int? pageSize}) async {
     try {
       Map<String, dynamic> queryParameters = {};
       if (name != null) queryParameters['name'] = name;
+      if (categoryId != null) queryParameters['categoryId'] = categoryId;
       if (pageNumber != null) queryParameters['pageNumber'] = pageNumber;
       if (pageSize != null) queryParameters['pageSize'] = pageSize;
 

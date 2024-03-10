@@ -17,7 +17,7 @@ class BirdDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: MyAppBar(
+        appBar: const MyAppBar(
             title: 'Bird Detail', leadingIcon: AppAssets.angle_left_svg),
         body: Background(
           widget: Column(
@@ -31,7 +31,7 @@ class BirdDetailScreen extends StatelessWidget {
                           color: Colors.grey.withOpacity(0.5),
                           spreadRadius: 2,
                           blurRadius: 3,
-                          offset: Offset(0, 1), // changes position of shadow
+                          offset: const Offset(0, 1), // changes position of shadow
                         ),
                       ]),
                   child: ClipRRect(

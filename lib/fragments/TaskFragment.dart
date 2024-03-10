@@ -5,12 +5,12 @@ import '../components/TaskComponent.dart';
 import '../utils/gap.dart';
 import '../widgets/Tab.dart';
 
-class HomeFragment extends StatefulWidget {
+class TaskFragment extends StatefulWidget {
   @override
-  _HomeFragmentState createState() => _HomeFragmentState();
+  _TaskFragmentState createState() => _TaskFragmentState();
 }
 
-class _HomeFragmentState extends State<HomeFragment> {
+class _TaskFragmentState extends State<TaskFragment> {
   PageController _pageController = PageController();
   int _selectedIndex = 0;
 

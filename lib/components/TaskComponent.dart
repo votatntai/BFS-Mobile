@@ -84,6 +84,8 @@ class TaskComponent extends StatelessWidget {
         ),
         
       ]),
-    );
+    ).onTap((){
+      Navigator.pushNamed(context, '/task-detail');
+    });
   }
 }

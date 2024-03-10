@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/cubit/bird/bird_cubit.dart';
+import 'package:flutter_application_1/fragments/CageFragment.dart';
 import 'package:flutter_application_1/fragments/ProfileFragment.dart';
 import 'package:flutter_application_1/utils/app_assets.dart';
 import 'package:flutter_application_1/utils/colors.dart';
@@ -10,7 +11,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../fragments/BirdFragment.dart';
-import '../fragments/HomeFragment.dart';
+import '../fragments/TaskFragment.dart';
 import '../widgets/Background.dart';
 
 // ignore: must_be_immutable
@@ -39,11 +40,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   List<Widget> widgetOption = <Widget>[
-    HomeFragment(),
-    HomeFragment(),
+    TaskFragment(),
+    CageFragment(),
     BlocProvider<BirdCubit>(create: (context) => BirdCubit(), child: BirdFragment()),
-    HomeFragment(),
-    ProfileFragment(),
+    TaskFragment(),
+    const ProfileFragment(),
   ];
 
   @override
@@ -54,7 +55,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           painter: DotPainter(),
           child: Container(
             height: MediaQuery.of(context).size.height,
-            decoration: BoxDecoration(),
+            decoration: const BoxDecoration(),
           ),
         ),
         BackdropFilter(
@@ -78,21 +79,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
       floatingActionButtonLocation: FloatingActionButtonLocation
           .centerDocked, // Đặt FAB ở giữa và neo vào BottomAppBar
       bottomNavigationBar: ClipRRect(
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(24), topRight: Radius.circular(24)),
         child: BottomAppBar(
           shape:
-              CircularNotchedRectangle(), // Định hình cho notch xung quanh FAB
+              const CircularNotchedRectangle(), // Định hình cho notch xung quanh FAB
           notchMargin: 6.0, // Khoảng cách giữa notch và FAB
           clipBehavior: Clip.antiAlias,
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 100.0, sigmaY: 100.0),
             child: Container(
               height: 60,
-              padding: EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               decoration: BoxDecoration(
                   color: blueViolet.withOpacity(0.1),
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(24),
                       topRight: Radius.circular(24))),
               child: Row(
@@ -101,20 +102,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 children: <Widget>[
                   IconButton(
                       icon: SvgPicture.asset(AppAssets.list_check_svg,
-                          color: primaryColor, width: 24, height: 24),
+                          color: primaryColor, height: 20),
                       onPressed: () {onTapSelection(0);}),
                   IconButton(
                       icon: SvgPicture.asset(AppAssets.cage_svg,
-                          color: primaryColor, width: 32, height: 32),
+                          color: primaryColor, height: 28),
                       onPressed: () {onTapSelection(1);}).paddingTop(4),
-                  SizedBox(width: 48), // Tạo khoảng trống cho FAB
+                  const SizedBox(width: 48), // Tạo khoảng trống cho FAB
                   IconButton(
                       icon: SvgPicture.asset(AppAssets.food_svg,
-                          color: primaryColor, width: 24, height: 24),
+                          color: primaryColor, height: 20),
                       onPressed: () {onTapSelection(3);}),
                   IconButton(
                       icon: SvgPicture.asset(AppAssets.user_svg,
-                          color: primaryColor, width: 24, height: 24),
+                          color: primaryColor, height: 20),
                       onPressed: () {onTapSelection(4);}),
                 ],
               ),

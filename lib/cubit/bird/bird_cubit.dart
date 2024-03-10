@@ -9,10 +9,10 @@ class BirdCubit extends Cubit<BirdState>{
 
   BirdCubit() : super(BirdState());
 
-  Future<void> getBirds({String? name, int? pageNumber, int? pageSize}) async {
+  Future<void> getBirds({String? name, String? categoryId, int? pageNumber, int? pageSize}) async {
     emit(BirdLoadingState());
     try {
-      var birds = await _birdRepo.getBirds(name: name, pageNumber: pageNumber, pageSize: pageSize);
+      var birds = await _birdRepo.getBirds(name: name, categoryId: categoryId, pageNumber: pageNumber, pageSize: pageSize);
       emit(BirdSuccessState(birds: birds));
     } catch (e) {
       emit(BirdFailedState(e.toString()));

@@ -2,6 +2,7 @@ class AppAssets {
 
   static const String dove_svg = 'assets/icons/dove.svg';
   static const String user_svg = 'assets/icons/user.svg';
+  static const String users_svg = 'assets/icons/users.svg';
   static const String food_svg = 'assets/icons/food.svg';
   static const String cage_svg = 'assets/icons/cage.svg';
   static const String list_check_svg = 'assets/icons/list-check.svg';
@@ -14,4 +15,10 @@ class AppAssets {
   static const String angle_left_svg = 'assets/icons/angle-left.svg';
   static const String gender_svg = 'assets/icons/gender.svg';
   static const String cake_candles_svg = 'assets/icons/cake-candles.svg';
+  static const String circle_half_stroke_svg = 'assets/icons/circle-half-stroke.svg';
+  static const String hand_holding_medical_svg = 'assets/icons/hand-holding-medical.svg';
+  static const String circle_svg = 'assets/icons/circle.svg';
+  static const String circle_check_svg = 'assets/icons/circle-check.svg';
+  static const String pen_to_square_svg = 'assets/icons/pen-to-square.svg';
+  
 }
