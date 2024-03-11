@@ -1,6 +1,6 @@
-import 'package:flutter_application_1/domain/repositories/user_repo.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../domain/repositories/user_repo.dart';
 import '../../utils/get_it.dart';
 import 'login_state.dart';
 

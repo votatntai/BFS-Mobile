@@ -4,6 +4,7 @@ import 'package:nb_utils/nb_utils.dart';
 import '../../utils/Constants.dart';
 import '../../utils/get_it.dart';
 import '../../utils/messages.dart';
+import '../models/staff.dart';
 
 class UserRepo {
   final Dio apiClient = getIt.get<Dio>();
@@ -20,6 +21,20 @@ class UserRepo {
         throw Exception(e.response!.data);
       }
       throw Exception(msg_server_error);
+    }
+  }
+
+  Future<void> logout() async {
+    await setValue(AppConstant.TOKEN_KEY, '');
+  }
+
+  Future<Staff> getStaffInformation() async {
+    try {
+      var res = await apiClient.get('/api/staffs/informations');
+      return Staff.fromJson(res.data);
+    } on DioException {
+      throw Exception(msg_server_error);
+      
     }
   }
 }

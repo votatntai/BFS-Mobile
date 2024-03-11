@@ -1,4 +1,5 @@
 class AppAssets {
+  static const String placeholder = 'assets/images/placeholder.jpg';
 
   static const String dove_svg = 'assets/icons/dove.svg';
   static const String user_svg = 'assets/icons/user.svg';
@@ -20,5 +21,6 @@ class AppAssets {
   static const String circle_svg = 'assets/icons/circle.svg';
   static const String circle_check_svg = 'assets/icons/circle-check.svg';
   static const String pen_to_square_svg = 'assets/icons/pen-to-square.svg';
-  
+  static const String phone = 'assets/icons/phone.svg';
+  static const String envelope = 'assets/icons/envelope.svg';
 }
