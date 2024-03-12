@@ -4,12 +4,12 @@
 4
 5    <uses-sdk
 6        android:minSdkVersion="19"
-6-->/Users/maichinh/.pub-cache/hosted/pub.dev/connectivity_plus-5.0.2/android/src/main/AndroidManifest.xml
+6-->C:\Users\yenng\AppData\Local\Pub\Cache\hosted\pub.dev\connectivity_plus-5.0.2\android\src\main\AndroidManifest.xml
 7        android:targetSdkVersion="19" />
-7-->/Users/maichinh/.pub-cache/hosted/pub.dev/connectivity_plus-5.0.2/android/src/main/AndroidManifest.xml
+7-->C:\Users\yenng\AppData\Local\Pub\Cache\hosted\pub.dev\connectivity_plus-5.0.2\android\src\main\AndroidManifest.xml
 8
 9    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-9-->/Users/maichinh/.pub-cache/hosted/pub.dev/connectivity_plus-5.0.2/android/src/main/AndroidManifest.xml:3:3-76
-9-->/Users/maichinh/.pub-cache/hosted/pub.dev/connectivity_plus-5.0.2/android/src/main/AndroidManifest.xml:3:20-74
+9-->C:\Users\yenng\AppData\Local\Pub\Cache\hosted\pub.dev\connectivity_plus-5.0.2\android\src\main\AndroidManifest.xml:3:3-76
+9-->C:\Users\yenng\AppData\Local\Pub\Cache\hosted\pub.dev\connectivity_plus-5.0.2\android\src\main\AndroidManifest.xml:3:20-74
 10
 11</manifest>

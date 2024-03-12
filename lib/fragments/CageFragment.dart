@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/cubit/bird/bird_cubit.dart';
 import 'package:flutter_application_1/cubit/bird/bird_state.dart';
+import 'package:flutter_application_1/cubit/cage/cage_cubit.dart';
+import 'package:flutter_application_1/cubit/cage/cage_state.dart';
+import 'package:flutter_application_1/domain/models/cages.dart';
+import 'package:flutter_application_1/domain/repositories/cage_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../components/BirdComponent.dart';
+import '../components/CageComponent.dart';
 import '../utils/app_assets.dart';
 import '../utils/colors.dart';
 import '../utils/gap.dart';
@@ -38,8 +43,7 @@ class _CageFragmentState extends State<CageFragment> {
   }
 
   void _onItemTapped(int index) {
-    _pageController.animateToPage(index,
-        duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+    _pageController.animateToPage(index, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
   }
 
   @override
@@ -77,9 +81,7 @@ class _CageFragmentState extends State<CageFragment> {
                   Expanded(
                       child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        color: primaryColor.withOpacity(0.1)),
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(12), color: primaryColor.withOpacity(0.1)),
                     child: Row(
                       children: [
                         selectedSpeies != null
@@ -106,12 +108,10 @@ class _CageFragmentState extends State<CageFragment> {
                               color: primaryColor,
                               width: 14,
                             ),
-                            items: species
-                                .map<DropdownMenuItem<String>>((String value) {
+                            items: species.map<DropdownMenuItem<String>>((String value) {
                               return DropdownMenuItem<String>(
                                 value: value,
-                                child: Text(value,
-                                    style: const TextStyle(color: primaryColor)),
+                                child: Text(value, style: const TextStyle(color: primaryColor)),
                               );
                             }).toList(),
                             onChanged: (newValue) {
@@ -133,9 +133,7 @@ class _CageFragmentState extends State<CageFragment> {
                   Expanded(
                       child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        color: selectedSpeies != null ? primaryColor.withOpacity(0.1) : gray.withOpacity(0.1)),
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(12), color: selectedSpeies != null ? primaryColor.withOpacity(0.1) : gray.withOpacity(0.1)),
                     child: Row(
                       children: [
                         selectedCareMode != null
@@ -161,19 +159,19 @@ class _CageFragmentState extends State<CageFragment> {
                               color: selectedSpeies != null ? primaryColor : gray,
                               width: 14,
                             ),
-                            items: careMode
-                                .map<DropdownMenuItem<String>>((String value) {
+                            items: careMode.map<DropdownMenuItem<String>>((String value) {
                               return DropdownMenuItem<String>(
                                 value: value,
-                                child: Text(value,
-                                    style: const TextStyle(color: primaryColor)),
+                                child: Text(value, style: const TextStyle(color: primaryColor)),
                               );
                             }).toList(),
-                            onChanged: selectedSpeies == null ? null : (newValue) {
-                              setState(() {
-                                selectedCareMode = newValue;
-                              });
-                            },
+                            onChanged: selectedSpeies == null
+                                ? null
+                                : (newValue) {
+                                    setState(() {
+                                      selectedCareMode = newValue;
+                                    });
+                                  },
                             value: selectedCareMode,
                             hint: const Text(
                               'Care Mode',
@@ -196,13 +194,10 @@ class _CageFragmentState extends State<CageFragment> {
                         ? [
                             Positioned(
                               child: Container(
-                                padding: const EdgeInsets.only(
-                                    left: 0, right: 8, top: 8, bottom: 8),
+                                padding: const EdgeInsets.only(left: 0, right: 8, top: 8, bottom: 8),
                                 width: 50,
                                 decoration: BoxDecoration(
-                                  color: isGrid
-                                      ? primaryColor.withOpacity(0.1)
-                                      : primaryColor,
+                                  color: isGrid ? primaryColor.withOpacity(0.1) : primaryColor,
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                                 child: SvgPicture.asset(
@@ -244,13 +239,10 @@ class _CageFragmentState extends State<CageFragment> {
                             Positioned(
                                 left: 30,
                                 child: Container(
-                                  padding: const EdgeInsets.only(
-                                      left: 8, right: 0, top: 8, bottom: 8),
+                                  padding: const EdgeInsets.only(left: 8, right: 0, top: 8, bottom: 8),
                                   width: 50,
                                   decoration: BoxDecoration(
-                                    color: isGrid
-                                        ? primaryColor
-                                        : primaryColor.withOpacity(0.1),
+                                    color: isGrid ? primaryColor : primaryColor.withOpacity(0.1),
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                   child: SvgPicture.asset(
@@ -291,22 +283,18 @@ class _CageFragmentState extends State<CageFragment> {
                 ),
               ),
               Gap.k16.height,
-              BlocProvider<BirdCubit>(
-                create: (context) => BirdCubit()..getBirds(),
-                child: BlocBuilder<BirdCubit, BirdState>(
-                  builder: (context, state) {
-                    if (state is BirdLoadingState) {
-                      return const Center(child: CircularProgressIndicator());
-                      
+              BlocProvider<CageCubit>(
+                create: (context) => CageCubit()..getCages(),
+                child: BlocBuilder<CageCubit, CageState>(builder: (context, state) {
+                  if (state is CagesLoadingState) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  if (state is CagesSuccessState) {
+                    var cages = state.cages;
+                    if (cages.cages!.isEmpty) {
+                      // return const Center(child: Text('No bird data available'),);
+                      return const Center(child: Text('No cage'));
                     }
-                    if (state is BirdSuccessState) {
-                      var birds = state.birds;
-                      if (birds.birds!.isEmpty) {
-                        // return const Center(child: Text('No bird data available'),);
-                        return TextButton(onPressed: (){
-                          Navigator.pushNamed(context, '/cage-detail');
-                        }, child: Text('Cage detail'));
-                      }
                     return Expanded(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -315,33 +303,29 @@ class _CageFragmentState extends State<CageFragment> {
                           Expanded(
                             child: isGrid
                                 ? GridView.builder(
-                                    gridDelegate:
-                                        const SliverGridDelegateWithFixedCrossAxisCount(
-                                            crossAxisCount: 2,
-                                            mainAxisSpacing: 16,
-                                            crossAxisSpacing: 16,
-                                            childAspectRatio: 0.72),
+                                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, mainAxisSpacing: 16, crossAxisSpacing: 16, childAspectRatio: 0.72),
                                     itemBuilder: (context, index) {
-                                      return BirdComponent(isGrid: isGrid, bird: birds.birds![index],);
+                                      return CageComponent(
+                                        isGrid: isGrid,
+                                        cage: cages.cages![index],
+                                      );
                                     })
                                 : ListView.separated(
                                     physics: const BouncingScrollPhysics(),
-                                    itemBuilder: (context, index) =>
-                                        BirdComponent(
-                                          isGrid: isGrid,
-                                          bird: birds.birds![index],
-                                        ),
-                                    separatorBuilder: (context, indext) =>
-                                        Gap.k16.height,
-                                    itemCount: birds.birds!.length,),
+                                    itemBuilder: (context, index) => CageComponent(
+                                      isGrid: isGrid,
+                                      cage: cages.cages![index],
+                                    ),
+                                    separatorBuilder: (context, indext) => Gap.k16.height,
+                                    itemCount: cages.cages!.length,
+                                  ),
                           ),
                         ],
                       ),
                     );
-                    }
-                    return const SizedBox.shrink();
                   }
-                ),
+                  return const SizedBox.shrink();
+                }),
               )
             ],
           ))

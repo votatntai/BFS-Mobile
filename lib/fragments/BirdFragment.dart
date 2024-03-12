@@ -303,9 +303,7 @@ class _BirdFragmentState extends State<BirdFragment> {
                       var birds = state.birds;
                       if (birds.birds!.isEmpty) {
                         // return const Center(child: Text('No bird data available'),);
-                        return TextButton(onPressed: (){
-                          Navigator.pushNamed(context, '/bird-detail');
-                        }, child: Text('Bird detail'));
+                        return const Center(child: Text('No bird'));
                       }
                     return Expanded(
                       child: Column(
@@ -321,6 +319,7 @@ class _BirdFragmentState extends State<BirdFragment> {
                                             mainAxisSpacing: 16,
                                             crossAxisSpacing: 16,
                                             childAspectRatio: 0.72),
+                                            itemCount: birds.birds!.length,
                                     itemBuilder: (context, index) {
                                       return BirdComponent(isGrid: isGrid, bird: birds.birds![index],);
                                     })

@@ -4,15 +4,15 @@
 4
 5    <uses-sdk
 6        android:minSdkVersion="21"
-6-->/Users/maichinh/.pub-cache/hosted/pub.dev/nb_utils-6.1.2/android/src/main/AndroidManifest.xml
+6-->C:\Users\yenng\AppData\Local\Pub\Cache\hosted\pub.dev\nb_utils-6.1.2\android\src\main\AndroidManifest.xml
 7        android:targetSdkVersion="21" />
-7-->/Users/maichinh/.pub-cache/hosted/pub.dev/nb_utils-6.1.2/android/src/main/AndroidManifest.xml
+7-->C:\Users\yenng\AppData\Local\Pub\Cache\hosted\pub.dev\nb_utils-6.1.2\android\src\main\AndroidManifest.xml
 8
 9    <uses-permission android:name="android.permission.INTERNET" />
-9-->/Users/maichinh/.pub-cache/hosted/pub.dev/nb_utils-6.1.2/android/src/main/AndroidManifest.xml:4:5-67
-9-->/Users/maichinh/.pub-cache/hosted/pub.dev/nb_utils-6.1.2/android/src/main/AndroidManifest.xml:4:22-64
+9-->C:\Users\yenng\AppData\Local\Pub\Cache\hosted\pub.dev\nb_utils-6.1.2\android\src\main\AndroidManifest.xml:4:5-67
+9-->C:\Users\yenng\AppData\Local\Pub\Cache\hosted\pub.dev\nb_utils-6.1.2\android\src\main\AndroidManifest.xml:4:22-64
 10    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-10-->/Users/maichinh/.pub-cache/hosted/pub.dev/nb_utils-6.1.2/android/src/main/AndroidManifest.xml:5:5-79
-10-->/Users/maichinh/.pub-cache/hosted/pub.dev/nb_utils-6.1.2/android/src/main/AndroidManifest.xml:5:22-76
+10-->C:\Users\yenng\AppData\Local\Pub\Cache\hosted\pub.dev\nb_utils-6.1.2\android\src\main\AndroidManifest.xml:5:5-79
+10-->C:\Users\yenng\AppData\Local\Pub\Cache\hosted\pub.dev\nb_utils-6.1.2\android\src\main\AndroidManifest.xml:5:22-76
 11
 12</manifest>

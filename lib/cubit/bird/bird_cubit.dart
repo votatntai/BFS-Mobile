@@ -18,4 +18,14 @@ class BirdCubit extends Cubit<BirdState>{
       emit(BirdFailedState(e.toString()));
     }
   }
+
+  Future<void> getBirdDetail(String id) async {
+    emit(BirdDetailLoadingState());
+    try {
+      var bird = await _birdRepo.getBirdDetail(id);
+      emit(BirdDetailSuccessState(bird: bird));
+    } catch (e) {
+      emit(BirdDetailFailedState(e.toString()));
+    }
+  }
 }

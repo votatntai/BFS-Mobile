@@ -5,9 +5,7 @@ class Birds {
   Birds({this.pagination, this.birds});
 
   Birds.fromJson(Map<String, dynamic> json) {
-    pagination = json['pagination'] != null
-        ? Pagination.fromJson(json['pagination'])
-        : null;
+    pagination = json['pagination'] != null ? Pagination.fromJson(json['pagination']) : null;
     if (json['data'] != null) {
       birds = <Bird>[];
       json['data'].forEach((v) {
@@ -60,19 +58,10 @@ class Bird {
   String? code;
   Species? species;
   CareMode? careMode;
+  Category? category;
   String? createAt;
 
-  Bird(
-      {this.id,
-      this.thumbnailUrl,
-      this.characteristic,
-      this.name,
-      this.gender,
-      this.dayOfBirth,
-      this.code,
-      this.species,
-      this.careMode,
-      this.createAt});
+  Bird({this.id, this.thumbnailUrl, this.characteristic, this.name, this.gender, this.dayOfBirth, this.code, this.species, this.careMode, this.createAt});
 
   Bird.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -82,11 +71,9 @@ class Bird {
     gender = json['gender'];
     dayOfBirth = json['dayOfBirth'];
     code = json['code'];
-    species =
-        json['species'] != null ? Species.fromJson(json['species']) : null;
-    careMode = json['careMode'] != null
-        ? CareMode.fromJson(json['careMode'])
-        : null;
+    species = json['species'] != null ? Species.fromJson(json['species']) : null;
+    careMode = json['careMode'] != null ? CareMode.fromJson(json['careMode']) : null;
+    category = json['category'] != null ? new Category.fromJson(json['category']) : null;
     createAt = json['createAt'];
   }
 
@@ -104,6 +91,9 @@ class Bird {
     }
     if (careMode != null) {
       data['careMode'] = careMode!.toJson();
+    }
+    if (this.category != null) {
+      data['category'] = this.category!.toJson();
     }
     data['createAt'] = createAt;
     return data;
@@ -156,6 +146,25 @@ class CareMode {
     data['priority'] = priority;
     data['name'] = name;
     data['createAt'] = createAt;
+    return data;
+  }
+}
+
+class Category {
+  String? thumbnailUrl;
+  String? name;
+
+  Category({this.thumbnailUrl, this.name});
+
+  Category.fromJson(Map<String, dynamic> json) {
+    thumbnailUrl = json['thumbnailUrl'];
+    name = json['name'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['thumbnailUrl'] = this.thumbnailUrl;
+    data['name'] = this.name;
     return data;
   }
 }

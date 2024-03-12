@@ -17,11 +17,11 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case '/settings':
       return MaterialPageRoute(builder: (_) => const SettingsScreen());
     case '/bird-detail':
-      return MaterialPageRoute(builder: (_) => const BirdDetailScreen());
+      return MaterialPageRoute(builder: (_) => BirdDetailScreen(birdId: settings.arguments.toString(),));
     case '/task-detail':
       return MaterialPageRoute(builder: (_) => const TaskDetailScreen());
     case '/cage-detail':
-      return MaterialPageRoute(builder: (_) => const CageDetailScreen());
+      return MaterialPageRoute(builder: (_) => CageDetailScreen(cageId: settings.arguments.toString(),));
     default:
       return MaterialPageRoute(builder: (_) => const NotFoundScreen());
   }

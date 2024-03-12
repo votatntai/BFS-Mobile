@@ -1,33 +1,33 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /Users/maichinh/.pub-cache/hosted/pub.dev/nb_utils-6.1.2/android/src/main/AndroidManifest.xml:1:1-6:12
-INJECTED from /Users/maichinh/.pub-cache/hosted/pub.dev/nb_utils-6.1.2/android/src/main/AndroidManifest.xml:1:1-6:12
-INJECTED from /Users/maichinh/.pub-cache/hosted/pub.dev/nb_utils-6.1.2/android/src/main/AndroidManifest.xml:1:1-6:12
+ADDED from C:\Users\yenng\AppData\Local\Pub\Cache\hosted\pub.dev\nb_utils-6.1.2\android\src\main\AndroidManifest.xml:1:1-6:12
+INJECTED from C:\Users\yenng\AppData\Local\Pub\Cache\hosted\pub.dev\nb_utils-6.1.2\android\src\main\AndroidManifest.xml:1:1-6:12
+INJECTED from C:\Users\yenng\AppData\Local\Pub\Cache\hosted\pub.dev\nb_utils-6.1.2\android\src\main\AndroidManifest.xml:1:1-6:12
 	package
-		ADDED from /Users/maichinh/.pub-cache/hosted/pub.dev/nb_utils-6.1.2/android/src/main/AndroidManifest.xml:2:3-28
-		INJECTED from /Users/maichinh/.pub-cache/hosted/pub.dev/nb_utils-6.1.2/android/src/main/AndroidManifest.xml
-		INJECTED from /Users/maichinh/.pub-cache/hosted/pub.dev/nb_utils-6.1.2/android/src/main/AndroidManifest.xml
+		ADDED from C:\Users\yenng\AppData\Local\Pub\Cache\hosted\pub.dev\nb_utils-6.1.2\android\src\main\AndroidManifest.xml:2:3-28
+		INJECTED from C:\Users\yenng\AppData\Local\Pub\Cache\hosted\pub.dev\nb_utils-6.1.2\android\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\yenng\AppData\Local\Pub\Cache\hosted\pub.dev\nb_utils-6.1.2\android\src\main\AndroidManifest.xml
 	xmlns:android
-		ADDED from /Users/maichinh/.pub-cache/hosted/pub.dev/nb_utils-6.1.2/android/src/main/AndroidManifest.xml:1:11-69
+		ADDED from C:\Users\yenng\AppData\Local\Pub\Cache\hosted\pub.dev\nb_utils-6.1.2\android\src\main\AndroidManifest.xml:1:11-69
 uses-permission#android.permission.INTERNET
-ADDED from /Users/maichinh/.pub-cache/hosted/pub.dev/nb_utils-6.1.2/android/src/main/AndroidManifest.xml:4:5-67
+ADDED from C:\Users\yenng\AppData\Local\Pub\Cache\hosted\pub.dev\nb_utils-6.1.2\android\src\main\AndroidManifest.xml:4:5-67
 	android:name
-		ADDED from /Users/maichinh/.pub-cache/hosted/pub.dev/nb_utils-6.1.2/android/src/main/AndroidManifest.xml:4:22-64
+		ADDED from C:\Users\yenng\AppData\Local\Pub\Cache\hosted\pub.dev\nb_utils-6.1.2\android\src\main\AndroidManifest.xml:4:22-64
 uses-permission#android.permission.ACCESS_NETWORK_STATE
-ADDED from /Users/maichinh/.pub-cache/hosted/pub.dev/nb_utils-6.1.2/android/src/main/AndroidManifest.xml:5:5-79
+ADDED from C:\Users\yenng\AppData\Local\Pub\Cache\hosted\pub.dev\nb_utils-6.1.2\android\src\main\AndroidManifest.xml:5:5-79
 	android:name
-		ADDED from /Users/maichinh/.pub-cache/hosted/pub.dev/nb_utils-6.1.2/android/src/main/AndroidManifest.xml:5:22-76
+		ADDED from C:\Users\yenng\AppData\Local\Pub\Cache\hosted\pub.dev\nb_utils-6.1.2\android\src\main\AndroidManifest.xml:5:22-76
 uses-sdk
-INJECTED from /Users/maichinh/.pub-cache/hosted/pub.dev/nb_utils-6.1.2/android/src/main/AndroidManifest.xml reason: use-sdk injection requested
-INJECTED from /Users/maichinh/.pub-cache/hosted/pub.dev/nb_utils-6.1.2/android/src/main/AndroidManifest.xml
-INJECTED from /Users/maichinh/.pub-cache/hosted/pub.dev/nb_utils-6.1.2/android/src/main/AndroidManifest.xml
-INJECTED from /Users/maichinh/.pub-cache/hosted/pub.dev/nb_utils-6.1.2/android/src/main/AndroidManifest.xml
-INJECTED from /Users/maichinh/.pub-cache/hosted/pub.dev/nb_utils-6.1.2/android/src/main/AndroidManifest.xml
+INJECTED from C:\Users\yenng\AppData\Local\Pub\Cache\hosted\pub.dev\nb_utils-6.1.2\android\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from C:\Users\yenng\AppData\Local\Pub\Cache\hosted\pub.dev\nb_utils-6.1.2\android\src\main\AndroidManifest.xml
+INJECTED from C:\Users\yenng\AppData\Local\Pub\Cache\hosted\pub.dev\nb_utils-6.1.2\android\src\main\AndroidManifest.xml
+INJECTED from C:\Users\yenng\AppData\Local\Pub\Cache\hosted\pub.dev\nb_utils-6.1.2\android\src\main\AndroidManifest.xml
+INJECTED from C:\Users\yenng\AppData\Local\Pub\Cache\hosted\pub.dev\nb_utils-6.1.2\android\src\main\AndroidManifest.xml
 	android:targetSdkVersion
-		INJECTED from /Users/maichinh/.pub-cache/hosted/pub.dev/nb_utils-6.1.2/android/src/main/AndroidManifest.xml
-		ADDED from /Users/maichinh/.pub-cache/hosted/pub.dev/nb_utils-6.1.2/android/src/main/AndroidManifest.xml
-		INJECTED from /Users/maichinh/.pub-cache/hosted/pub.dev/nb_utils-6.1.2/android/src/main/AndroidManifest.xml
+		INJECTED from C:\Users\yenng\AppData\Local\Pub\Cache\hosted\pub.dev\nb_utils-6.1.2\android\src\main\AndroidManifest.xml
+		ADDED from C:\Users\yenng\AppData\Local\Pub\Cache\hosted\pub.dev\nb_utils-6.1.2\android\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\yenng\AppData\Local\Pub\Cache\hosted\pub.dev\nb_utils-6.1.2\android\src\main\AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from /Users/maichinh/.pub-cache/hosted/pub.dev/nb_utils-6.1.2/android/src/main/AndroidManifest.xml
-		ADDED from /Users/maichinh/.pub-cache/hosted/pub.dev/nb_utils-6.1.2/android/src/main/AndroidManifest.xml
-		INJECTED from /Users/maichinh/.pub-cache/hosted/pub.dev/nb_utils-6.1.2/android/src/main/AndroidManifest.xml
+		INJECTED from C:\Users\yenng\AppData\Local\Pub\Cache\hosted\pub.dev\nb_utils-6.1.2\android\src\main\AndroidManifest.xml
+		ADDED from C:\Users\yenng\AppData\Local\Pub\Cache\hosted\pub.dev\nb_utils-6.1.2\android\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\yenng\AppData\Local\Pub\Cache\hosted\pub.dev\nb_utils-6.1.2\android\src\main\AndroidManifest.xml

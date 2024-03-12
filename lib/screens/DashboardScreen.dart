@@ -42,7 +42,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   List<Widget> widgetOption = <Widget>[
     TaskFragment(),
     CageFragment(),
-    BlocProvider<BirdCubit>(create: (context) => BirdCubit(), child: BirdFragment()),
+    BirdFragment(),
     TaskFragment(),
     const ProfileFragment(),
   ];

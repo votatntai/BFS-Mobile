@@ -1,14 +1,14 @@
-#Fri Mar 08 20:48:58 ICT 2024
-base.0=/Users/maichinh/Documents/Outsource/BFS-Mobile/build/app/intermediates/dex/debug/mergeExtDexDebug/classes.dex
-base.1=/Users/maichinh/Documents/Outsource/BFS-Mobile/build/app/intermediates/dex/debug/mergeLibDexDebug/0/classes.dex
-base.2=/Users/maichinh/Documents/Outsource/BFS-Mobile/build/app/intermediates/dex/debug/mergeProjectDexDebug/0/classes.dex
-base.3=/Users/maichinh/Documents/Outsource/BFS-Mobile/build/app/intermediates/dex/debug/mergeProjectDexDebug/1/classes.dex
-base.4=/Users/maichinh/Documents/Outsource/BFS-Mobile/build/app/intermediates/dex/debug/mergeProjectDexDebug/14/classes.dex
+#Tue Mar 12 15:41:00 ICT 2024
+base.0=D\:\\CHINH\\Outsource\\BFS-Mobile\\build\\app\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
+base.1=D\:\\CHINH\\Outsource\\BFS-Mobile\\build\\app\\intermediates\\dex\\debug\\mergeLibDexDebug\\0\\classes.dex
+base.2=D\:\\CHINH\\Outsource\\BFS-Mobile\\build\\app\\intermediates\\dex\\debug\\mergeProjectDexDebug\\0\\classes.dex
+base.3=D\:\\CHINH\\Outsource\\BFS-Mobile\\build\\app\\intermediates\\dex\\debug\\mergeProjectDexDebug\\14\\classes.dex
+base.4=D\:\\CHINH\\Outsource\\BFS-Mobile\\build\\app\\intermediates\\dex\\debug\\mergeProjectDexDebug\\1\\classes.dex
 path.0=classes.dex
 path.1=0/classes.dex
 path.2=0/classes.dex
-path.3=1/classes.dex
-path.4=14/classes.dex
+path.3=14/classes.dex
+path.4=1/classes.dex
 renamed.0=classes.dex
 renamed.1=classes2.dex
 renamed.2=classes3.dex

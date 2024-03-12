@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_application_1/cubit/staff/staff_cubit.dart';
 import 'package:flutter_application_1/domain/repositories/bird_repo.dart';
+import 'package:flutter_application_1/domain/repositories/cage_repo.dart';
 import 'package:flutter_application_1/domain/repositories/user_repo.dart';
 import 'package:flutter_application_1/utils/dio.dart';
 import 'package:get_it/get_it.dart';
@@ -12,6 +13,7 @@ Future<void> initialGetIt() async {
 
   getIt.registerLazySingleton(() => UserRepo());
   getIt.registerLazySingleton(() => BirdRepo());
+  getIt.registerLazySingleton(() => CageRepo());
 
   getIt.registerLazySingleton(() => StaffCubit());
 }

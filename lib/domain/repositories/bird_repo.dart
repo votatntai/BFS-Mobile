@@ -20,4 +20,13 @@ class BirdRepo {
       throw Exception(e.response!.data);
     }
   }
+
+  Future<Bird> getBirdDetail(String id) async {
+    try {
+      var res = await _apiClient.get('/api/birds/$id');
+      return Bird.fromJson(res.data);
+    } on DioException catch (e) {
+      throw Exception(e.response!.data);
+    }
+  }
 }
