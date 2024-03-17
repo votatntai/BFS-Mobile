@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+import '../domain/models/tasks.dart';
 import '../utils/app_assets.dart';
 import '../utils/colors.dart';
 import '../utils/gap.dart';
 
 class TaskComponent extends StatelessWidget {
+  final Task task;
   const TaskComponent({
-    super.key,
+    super.key, required this.task,
   });
 
   @override
@@ -42,12 +45,12 @@ class TaskComponent extends StatelessWidget {
           ],
         ),
         Gap.k4.height,
-        const Row(
+        Row(
           mainAxisAlignment:
               MainAxisAlignment.spaceBetween,
           children: [
-            Text('Fill food and water',
-                style: TextStyle(
+            Text(task.title!,
+                style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500)),
           ],
@@ -62,7 +65,7 @@ class TaskComponent extends StatelessWidget {
                 SvgPicture.asset(AppAssets.clock_svg,
                     width: 16, height: 16, color: primaryColor.withOpacity(0.5)),
                     Gap.k8.width,
-                Text('10:00 AM',
+                Text(DateFormat('HH:mm dd-MM-yyyy').format(DateTime.parse(task.deadLine!)),
                     style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,

@@ -6,6 +6,8 @@ import 'package:flutter_application_1/domain/repositories/user_repo.dart';
 import 'package:flutter_application_1/utils/dio.dart';
 import 'package:get_it/get_it.dart';
 
+import '../domain/repositories/task_repo.dart';
+
 final getIt = GetIt.instance;
 
 Future<void> initialGetIt() async {
@@ -14,6 +16,7 @@ Future<void> initialGetIt() async {
   getIt.registerLazySingleton(() => UserRepo());
   getIt.registerLazySingleton(() => BirdRepo());
   getIt.registerLazySingleton(() => CageRepo());
+  getIt.registerLazySingleton(() => TaskRepo());
 
   getIt.registerLazySingleton(() => StaffCubit());
 }
