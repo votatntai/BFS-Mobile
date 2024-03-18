@@ -19,7 +19,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case '/bird-detail':
       return MaterialPageRoute(builder: (_) => BirdDetailScreen(birdId: settings.arguments.toString(),));
     case '/task-detail':
-      return MaterialPageRoute(builder: (_) => const TaskDetailScreen());
+      return MaterialPageRoute(builder: (_) => TaskDetailScreen(taskId: settings.arguments.toString(),));
     case '/cage-detail':
       return MaterialPageRoute(builder: (_) => CageDetailScreen(cageId: settings.arguments.toString(),));
     default:

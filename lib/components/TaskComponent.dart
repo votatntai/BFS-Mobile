@@ -88,7 +88,7 @@ class TaskComponent extends StatelessWidget {
         
       ]),
     ).onTap((){
-      Navigator.pushNamed(context, '/task-detail');
+      Navigator.pushNamed(context, '/task-detail', arguments: task.id);
     });
   }
 }
