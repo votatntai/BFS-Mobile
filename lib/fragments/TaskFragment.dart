@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/cubit/task/task_cubit.dart';
 import 'package:flutter_application_1/cubit/task/task_state.dart';
+import 'package:flutter_application_1/domain/models/tasks.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -24,8 +25,7 @@ class _TaskFragmentState extends State<TaskFragment> {
   }
 
   void _onItemTapped(int index) {
-    _pageController.animateToPage(index,
-        duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+    _pageController.animateToPage(index, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
   }
 
   @override
@@ -38,25 +38,30 @@ class _TaskFragmentState extends State<TaskFragment> {
               color: transparentColor,
               child: BlocProvider<TaskCubit>(
                 create: (context) => TaskCubit()..getTasks(),
-                child: BlocBuilder<TaskCubit, TaskState>(
-                  builder: (context, state) {
-                    if (state is TasksLoadingState) {
-                      return CircularProgressIndicator().center();
-                    }
-                    if (state is TasksSuccessState) {
+                child: BlocBuilder<TaskCubit, TaskState>(builder: (context, state) {
+                  if (state is TasksLoadingState) {
+                    return const CircularProgressIndicator().center();
+                  }
+                  if (state is TasksSuccessState) {
                     var tasks = state.tasks;
+                    var toDoTasks = tasks.tasks!.where((task) => task.status == 'To do').toList();
+                    var inProgressTasks = tasks.tasks!.where((task) => task.status == 'In progress').toList();
+                    var workFinishedTasks = tasks.tasks!.where((task) => task.status == 'Work finished').toList();
+                    var doneTasks = tasks.tasks!.where((task) => task.status == 'Done').toList();
                     return Column(
                       children: <Widget>[
                         // Custom TabBar
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             // Custom tab buttons
                             Expanded(child: CustomTab(title: 'To Do', index: 0, selectedIndex: _selectedIndex).onTap(() => _onItemTapped(0))),
-                            Gap.k16.width,
+                            Gap.k8.width,
                             Expanded(child: CustomTab(title: 'In progress', index: 1, selectedIndex: _selectedIndex).onTap(() => _onItemTapped(1))),
-                            Gap.k16.width,
-                            Expanded(child: CustomTab(title: 'Done', index: 2, selectedIndex: _selectedIndex).onTap(() => _onItemTapped(2))),
+                            Gap.k8.width,
+                            Expanded(child: CustomTab(title: 'Work finished', index: 2, selectedIndex: _selectedIndex).onTap(() => _onItemTapped(2))),
+                            Gap.k8.width,
+                            Expanded(child: CustomTab(title: 'Done', index: 3, selectedIndex: _selectedIndex).onTap(() => _onItemTapped(3))),
                           ],
                         ),
                         Expanded(
@@ -69,37 +74,51 @@ class _TaskFragmentState extends State<TaskFragment> {
                             },
                             children: <Widget>[
                               // Nội dung của mỗi "tab"
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Expanded(
-                                    child: ListView.separated(
-                                        physics: const BouncingScrollPhysics(),
-                                        itemBuilder: (context, index) =>
-                                            TaskComponent(task: tasks.tasks![index],),
-                                        separatorBuilder: (context, indext) =>
-                                            Gap.k16.height,
-                                        itemCount: tasks.tasks!.length),
-                                  )
-                                ],
-                              ).paddingTop(32),
-                              Center(child: Text('Search Tab Content')),
-                              Center(child: Text('Notifications Tab Content')),
+                              TaskTabView(tasks: toDoTasks).paddingTop(32),
+                              TaskTabView(tasks: inProgressTasks).paddingTop(32),
+                              TaskTabView(tasks: workFinishedTasks).paddingTop(32),
+                              TaskTabView(tasks: doneTasks).paddingTop(32),
                             ],
                           ),
                         ),
                       ],
                     );
-                    }
-                    return const SizedBox.shrink();
                   }
-                ),
+                  return const SizedBox.shrink();
+                }),
               ),
             ),
           ),
         ],
       ).paddingOnly(left: 16, right: 16, top: 32),
     );
+  }
+}
+
+class TaskTabView extends StatelessWidget {
+  const TaskTabView({
+    super.key,
+    required this.tasks,
+  });
+
+  final List<Task> tasks;
+
+  @override
+  Widget build(BuildContext context) {
+    return tasks.isNotEmpty ? Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Expanded(
+          child: ListView.separated(
+              physics: const BouncingScrollPhysics(),
+              itemBuilder: (context, index) => TaskComponent(
+                    task: tasks[index],
+                  ),
+              separatorBuilder: (context, indext) => Gap.k16.height,
+              itemCount: tasks.length),
+        )
+      ],
+    ) : const Center(child: Text('No task'));
   }
 }

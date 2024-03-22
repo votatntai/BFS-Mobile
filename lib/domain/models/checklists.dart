@@ -1,20 +1,17 @@
-import 'cages.dart';
-import 'checklists.dart';
-
-class Tasks {
+class Checklists {
   Pagination? pagination;
-  List<Task>? tasks;
+  List<Checklist>? checklists;
 
-  Tasks({this.pagination, this.tasks});
+  Checklists({this.pagination, this.checklists});
 
-  Tasks.fromJson(Map<String, dynamic> json) {
+  Checklists.fromJson(Map<String, dynamic> json) {
     pagination = json['pagination'] != null
         ? new Pagination.fromJson(json['pagination'])
         : null;
     if (json['data'] != null) {
-      tasks = <Task>[];
+      checklists = <Checklist>[];
       json['data'].forEach((v) {
-        tasks!.add(new Task.fromJson(v));
+        checklists!.add(new Checklist.fromJson(v));
       });
     }
   }
@@ -24,8 +21,8 @@ class Tasks {
     if (this.pagination != null) {
       data['pagination'] = this.pagination!.toJson();
     }
-    if (this.tasks != null) {
-      data['data'] = this.tasks!.map((v) => v.toJson()).toList();
+    if (this.checklists != null) {
+      data['data'] = this.checklists!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -53,90 +50,69 @@ class Pagination {
   }
 }
 
-class Task {
+class Checklist {
   String? id;
-  Cage? cage;
   String? title;
-  String? description;
-  Manager? manager;
-  String? deadLine;
+  Assignee? assignee;
+  bool? status;
+  int? order;
   String? createAt;
-  List<Checklist>? checkLists;
-  String? status;
 
-  Task(
+  Checklist(
       {this.id,
-      this.cage,
       this.title,
-      this.description,
-      this.manager,
-      this.deadLine,
-      this.createAt,
-      this.checkLists,
-      this.status});
+      this.assignee,
+      this.status,
+      this.order,
+      this.createAt});
 
-  Task.fromJson(Map<String, dynamic> json) {
+  Checklist.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    cage = json['cage'] != null ? new Cage.fromJson(json['cage']) : null;
     title = json['title'];
-    description = json['description'];
-    manager =
-        json['manager'] != null ? new Manager.fromJson(json['manager']) : null;
-    deadLine = json['deadLine'];
-    createAt = json['createAt'];
-    if (json['checkLists'] != null) {
-      checkLists = <Checklist>[];
-      json['checkLists'].forEach((v) {
-        checkLists!.add(new Checklist.fromJson(v));
-      });
-    }
+    assignee =
+        json['asignee'] != null ? new Assignee.fromJson(json['asignee']) : null;
     status = json['status'];
+    order = json['order'];
+    createAt = json['createAt'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    if (this.cage != null) {
-      data['cage'] = this.cage!.toJson();
-    }
     data['title'] = this.title;
-    data['description'] = this.description;
-    if (this.manager != null) {
-      data['manager'] = this.manager!.toJson();
-    }
-    data['deadLine'] = this.deadLine;
-    data['createAt'] = this.createAt;
-     if (this.checkLists != null) {
-      data['checkLists'] = this.checkLists!.map((v) => v.toJson()).toList();
+    if (this.assignee != null) {
+      data['asignee'] = this.assignee!.toJson();
     }
     data['status'] = this.status;
+    data['order'] = this.order;
+    data['createAt'] = this.createAt;
     return data;
   }
 }
 
-class Manager {
+class Assignee {
   String? id;
   String? name;
   String? avatarUrl;
   String? email;
   String? phone;
-  String? status;
+  Null? janglee;
 
-  Manager(
+  Assignee(
       {this.id,
       this.name,
       this.avatarUrl,
       this.email,
       this.phone,
-      this.status});
+      this.janglee});
 
-  Manager.fromJson(Map<String, dynamic> json) {
+  Assignee.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     avatarUrl = json['avatarUrl'];
     email = json['email'];
     phone = json['phone'];
-    status = json['status'];
+    janglee = json['janglee'];
   }
 
   Map<String, dynamic> toJson() {
@@ -146,7 +122,17 @@ class Manager {
     data['avatarUrl'] = this.avatarUrl;
     data['email'] = this.email;
     data['phone'] = this.phone;
-    data['status'] = this.status;
+    data['janglee'] = this.janglee;
     return data;
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Assignee &&
+          runtimeType == other.runtimeType &&
+          id == other.id;
+
+  @override
+  int get hashCode => id.hashCode;
 }

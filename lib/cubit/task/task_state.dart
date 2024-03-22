@@ -25,3 +25,15 @@ class TaskDetailFailedState extends TaskState {
   final String msg;
   TaskDetailFailedState(this.msg);
 }
+
+class TaskUpdateLoadingState extends TaskState {}
+
+class TaskUpdateSuccessState extends TaskState {
+  final int statusCode;
+  TaskUpdateSuccessState({required this.statusCode});
+}
+
+class TaskUpdateFailedState extends TaskState {
+  final String msg;
+  TaskUpdateFailedState(this.msg);
+}

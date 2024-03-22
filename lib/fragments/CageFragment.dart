@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/cubit/bird/bird_cubit.dart';
-import 'package:flutter_application_1/cubit/bird/bird_state.dart';
 import 'package:flutter_application_1/cubit/cage/cage_cubit.dart';
 import 'package:flutter_application_1/cubit/cage/cage_state.dart';
-import 'package:flutter_application_1/domain/models/cages.dart';
-import 'package:flutter_application_1/domain/repositories/cage_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../components/BirdComponent.dart';
 import '../components/CageComponent.dart';
 import '../utils/app_assets.dart';
 import '../utils/colors.dart';

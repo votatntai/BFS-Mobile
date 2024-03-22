@@ -18,33 +18,15 @@ class TaskComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: white,
         borderRadius: BorderRadius.circular(24),
       ),
-      child: Column(children: [
-        Row(
-          mainAxisAlignment:
-              MainAxisAlignment.spaceBetween,
-          children: [
-            const Text('Food and water',
-                style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: textGrayColor)),
-            Container(
-              padding: EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                  color: peru.withOpacity(0.4),
-                  borderRadius:
-                      BorderRadius.circular(10)),
-              child: SvgPicture.asset(AppAssets.food_svg,
-                  width: 16, height: 16, color: peru),
-            ),
-          ],
-        ),
-        Gap.k4.height,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+        
         Row(
           mainAxisAlignment:
               MainAxisAlignment.spaceBetween,
@@ -56,6 +38,12 @@ class TaskComponent extends StatelessWidget {
           ],
         ),
         Gap.k8.height,
+        Text(task.cage!.species!.name!,
+            style: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+                color: textGrayColor)),
+        Gap.k4.height,
         Row(
           mainAxisAlignment:
               MainAxisAlignment.spaceBetween,
@@ -73,13 +61,13 @@ class TaskComponent extends StatelessWidget {
               ],
             ),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               decoration: BoxDecoration(
-                  color: greenColor.withOpacity(0.3),
+                  color: task.status == 'Done' ? forestGreen.withOpacity(0.3) : task.status == 'In progress' ? goldenRod.withOpacity(0.3) : task.status == 'To do' ? dodgerBlue.withOpacity(0.3) : slateBlue.withOpacity(0.3),
                   borderRadius:
                       BorderRadius.circular(10)),
-              child: Text('Done', style: TextStyle(
-                color: greenColor,
+              child: Text(task.status!, style: TextStyle(
+                color: task.status == 'Done' ? forestGreen : task.status == 'In progress' ? goldenRod : task.status == 'To do' ? dodgerBlue : slateBlue,
                 fontWeight: FontWeight.w500,
               )),
             ),

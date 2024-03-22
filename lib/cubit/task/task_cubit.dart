@@ -1,7 +1,8 @@
-import 'package:flutter_application_1/domain/repositories/task_repo.dart';
-import 'package:flutter_application_1/utils/get_it.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../domain/repositories/task_repo.dart';
+import '../../utils/get_it.dart';
 import 'task_state.dart';
 
 class TaskCubit extends Cubit<TaskState> {
@@ -25,6 +26,16 @@ class TaskCubit extends Cubit<TaskState> {
       emit(TaskDetailSuccessState(task: task));
     } catch (e) {
       emit(TaskDetailFailedState(e.toString()));
+    }
+  }
+
+  Future<void> updateTask({required String taskId, String? cageId, String? title, String? description, String? deadline, String? status}) async {
+    // emit(TaskUpdateLoadingState());
+    try {
+      var task = await _taskRepo.updateTask(taskId: taskId, cageId: cageId, title: title, description: description, deadline: deadline, status: status);
+      emit(TaskDetailSuccessState(task: task));
+    } catch (e) {
+      emit(TaskUpdateFailedState(e.toString()));
     }
   }
 }

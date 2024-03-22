@@ -1,12 +1,10 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/cubit/bird/bird_cubit.dart';
 import 'package:flutter_application_1/fragments/CageFragment.dart';
 import 'package:flutter_application_1/fragments/ProfileFragment.dart';
 import 'package:flutter_application_1/utils/app_assets.dart';
 import 'package:flutter_application_1/utils/colors.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -18,7 +16,7 @@ import '../widgets/Background.dart';
 class DashboardScreen extends StatefulWidget {
   DashboardScreen({super.key, this.tabIndex});
   final int? tabIndex;
-  static const String routeName = '/home';
+  static const String routeName = '/dashboard';
 
   @override
   State<DashboardScreen> createState() => _DashboardScreenState();

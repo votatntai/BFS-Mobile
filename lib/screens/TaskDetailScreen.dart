@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/cubit/checklist/checklist_cubit.dart';
+import 'package:flutter_application_1/cubit/checklist/checklist_state.dart';
 import 'package:flutter_application_1/cubit/task/task_cubit.dart';
 import 'package:flutter_application_1/cubit/task/task_state.dart';
+import 'package:flutter_application_1/screens/DashboardScreen.dart';
 import 'package:flutter_application_1/utils/colors.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -8,6 +11,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+import '../domain/models/checklists.dart';
 import '../domain/models/tasks.dart';
 import '../utils/app_assets.dart';
 import '../utils/gap.dart';
@@ -26,7 +30,7 @@ class TaskDetailScreen extends StatefulWidget {
 }
 
 class _TaskDetailScreenState extends State<TaskDetailScreen> {
-  String status = 'progress';
+  String status = '';
   List<Map<String, bool>> checklists = [
     {'Cho chim A ăn 1 lượng cám 3g': false},
     {'Kiểm tra tình trạng chim B': false},
@@ -55,10 +59,12 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
       appBar: const MyAppBar(
         title: 'Task Detail',
         leadingIcon: AppAssets.angle_left_svg,
+        previousScreen: DashboardScreen.routeName,
       ),
       body: Background(
-          widget: BlocProvider<TaskCubit>(
-        create: (context) => TaskCubit()..getTaskDetail(widget.taskId),
+          widget: MultiBlocProvider(
+        providers: [BlocProvider(create: (context) => TaskCubit()..getTaskDetail(widget.taskId)), BlocProvider(create: (context) => ChecklistCubit()..getChecklist())],
+        // create: (context) => TaskCubit()..getTaskDetail(widget.taskId),
         child: BlocBuilder<TaskCubit, TaskState>(builder: (context, state) {
           if (state is TaskDetailLoadingState) {
             return const Center(child: CircularProgressIndicator());
@@ -67,7 +73,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
             var task = state.task;
             TaskStatus currentStatus = _convertStatusToEnum(task.status!);
 
-            bool _shouldDisplayTitle(TaskStatus containerStatus) {
+            bool shouldDisplayTitle(TaskStatus containerStatus) {
               return currentStatus.index <= containerStatus.index;
             }
 
@@ -78,7 +84,6 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                 uniqueAssignees.add(checklist.assignee!);
               }
             }
-            print(uniqueAssignees);
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -108,7 +113,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                               ],
                             ),
                             Gap.k16.height,
-                            Gap.k2.height,
+                            // Gap.k2.height,
                             Row(
                               children: [
                                 SvgPicture.asset(AppAssets.clock_svg, height: 16, color: Colors.grey),
@@ -192,7 +197,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                                     child: Row(
                                       children: [
                                         SvgPicture.asset(AppAssets.circle_svg, width: 14, height: 14, color: task.status == 'To do' ? dodgerBlue : grey),
-                                        if (_shouldDisplayTitle(TaskStatus.toDo))
+                                        if (shouldDisplayTitle(TaskStatus.toDo))
                                           Row(
                                             children: [
                                               Gap.k4.width,
@@ -201,11 +206,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                                           )
                                       ],
                                     ),
-                                  ).onTap(() {
-                                    setState(() {
-                                      status = 'To do';
-                                    });
-                                  }),
+                                  ),
                                   Gap.k8.width,
                                   Container(
                                     padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
@@ -213,7 +214,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                                     child: Row(
                                       children: [
                                         SvgPicture.asset(AppAssets.circle_half_stroke_svg, width: 14, height: 14, color: task.status == 'In progress' ? goldenRod : grey),
-                                        if (_shouldDisplayTitle(TaskStatus.inProgress))
+                                        if (shouldDisplayTitle(TaskStatus.inProgress))
                                           Row(
                                             children: [
                                               Gap.k4.width,
@@ -222,32 +223,24 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                                           ),
                                       ],
                                     ),
-                                  ).onTap(() {
-                                    setState(() {
-                                      status = 'In progress';
-                                    });
-                                  }),
+                                  ),
                                   Gap.k8.width,
                                   Container(
                                     padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-                                    decoration: BoxDecoration(color: task.status == 'Work finished' ? goldenRod.withOpacity(0.3) : grey.withOpacity(0.2), borderRadius: BorderRadius.circular(10)),
+                                    decoration: BoxDecoration(color: task.status == 'Work finished' ? slateBlue.withOpacity(0.3) : grey.withOpacity(0.2), borderRadius: BorderRadius.circular(10)),
                                     child: Row(
                                       children: [
-                                        SvgPicture.asset(AppAssets.solid_circle, width: 14, height: 14, color: task.status == 'Work finished' ? goldenRod : grey),
-                                        if (_shouldDisplayTitle(TaskStatus.workFinished))
+                                        SvgPicture.asset(AppAssets.solid_circle, width: 14, height: 14, color: task.status == 'Work finished' ? slateBlue : grey),
+                                        if (shouldDisplayTitle(TaskStatus.workFinished))
                                           Row(
                                             children: [
                                               Gap.k4.width,
-                                              Text('Work finished', style: TextStyle(fontSize: 14, color: task.status == 'Work finished' ? goldenRod : grey, fontWeight: FontWeight.bold)),
+                                              Text('Work finished', style: TextStyle(fontSize: 14, color: task.status == 'Work finished' ? slateBlue : grey, fontWeight: FontWeight.bold)),
                                             ],
                                           ),
                                       ],
                                     ),
-                                  ).onTap(() {
-                                    setState(() {
-                                      status = 'Work finished';
-                                    });
-                                  }),
+                                  ),
                                   Gap.k8.width,
                                   Container(
                                     padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
@@ -255,7 +248,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                                     child: Row(
                                       children: [
                                         SvgPicture.asset(AppAssets.circle_check_svg, width: 14, height: 14, color: task.status == 'Done' ? forestGreen : grey),
-                                        if (_shouldDisplayTitle(TaskStatus.done))
+                                        if (shouldDisplayTitle(TaskStatus.done))
                                           Row(
                                             children: [
                                               Gap.k4.width,
@@ -264,20 +257,17 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                                           ),
                                       ],
                                     ),
-                                  ).onTap(() {
-                                    setState(() {
-                                      status = 'Done';
-                                    });
-                                  }),
+                                  ),
                                 ],
                               ),
                             ),
                             Gap.k16.height,
-                            Text(DateFormat("hh:mm dd-MM-yyyy").format(DateTime.parse(task.deadLine!)), style: primaryTextStyle(size: 14, weight: FontWeight.w500)),
+                            Gap.k2.height,
+                            Text(DateFormat("HH:mm dd-MM-yyyy").format(DateTime.parse(task.deadLine!)), style: primaryTextStyle(size: 14, weight: FontWeight.w500)),
                             Gap.k16.height,
                             Text(task.cage!.species!.name!, style: primaryTextStyle(size: 14, weight: FontWeight.w500)),
                             Gap.k16.height,
-                            Gap.k2.height,
+                            // Gap.k2.height,
                             Text(task.cage!.name!, style: primaryTextStyle(size: 14, weight: FontWeight.w500)),
                             Gap.k16.height,
                             Text(task.cage!.careMode!.name!, style: primaryTextStyle(size: 14, weight: FontWeight.w500)),
@@ -289,39 +279,53 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                 ),
                 Gap.kSection.height,
                 Text('Checklists', style: secondaryTextStyle(size: 14)),
-                ListView.separated(
-                    shrinkWrap: true,
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Flexible(
-                            flex: 7,
-                            child: Text(task.checkLists![index].title!, style: primaryTextStyle(size: 14, weight: FontWeight.w500)),
-                          ),
-                          Flexible(
-                            flex: 3,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Checkbox(
-                                    activeColor: primaryColor,
-                                    value: task.checkLists![index].status,
-                                    onChanged: (context) {
-                                      setState(() {
-                                        checklists[index] = {checklists[index].keys.first: !checklists[index].values.first};
-                                      });
-                                    }),
-                                IconButton(onPressed: () {}, icon: SvgPicture.asset(AppAssets.pen_to_square_svg, width: 16, height: 16, color: Colors.grey))
-                              ],
-                            ),
-                          ),
-                        ],
-                      );
-                    },
-                    separatorBuilder: (context, index) => Gap.k8.height,
-                    itemCount: task.checkLists!.length),
+                BlocBuilder<ChecklistCubit, ChecklistState>(builder: (context, state) {
+                  // if (state is ChecklistLoadingState) {
+                  //   return const Center(child: CircularProgressIndicator());
+                  // }
+                  if (state is ChecklistSuccessState) {
+                    var checklists = state.checkLists.checklists;
+                    return ListView.separated(
+                        shrinkWrap: true,
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          var updateChecklistCubit = context.read<ChecklistCubit>();
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Flexible(
+                                flex: 7,
+                                child: Text(task.checkLists![index].title!, style: primaryTextStyle(size: 14, weight: FontWeight.w500)),
+                              ),
+                              Flexible(
+                                flex: 3,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Checkbox(
+                                        activeColor: primaryColor,
+                                        value: checklists![index].status,
+                                        onChanged: (value) {
+                                          updateChecklistCubit.updateChecklistStatus(checklists[index].id!, value!);
+                                          if (updateChecklistCubit is UpdateChecklistFailedState) {
+                                            Fluttertoast.showToast(msg: (updateChecklistCubit.state as UpdateChecklistFailedState).message);
+                                          }
+                                          // setState(() {
+                                          //   checklists[index] = {checklists[index].keys.first: !checklists[index].values.first};
+                                          // });
+                                        }),
+                                    IconButton(onPressed: () {}, icon: SvgPicture.asset(AppAssets.pen_to_square_svg, width: 16, height: 16, color: Colors.grey))
+                                  ],
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                        separatorBuilder: (context, index) => Gap.k8.height,
+                        itemCount: task.checkLists!.length);
+                  }
+                  return const SizedBox.shrink();
+                }),
               ],
             ).paddingSymmetric(horizontal: 16, vertical: 16);
           }

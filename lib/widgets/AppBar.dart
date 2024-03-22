@@ -11,10 +11,11 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool? centerTitle;
   final double? elevation;
   final String? leadingIcon;
+  final String? previousScreen;
   const MyAppBar({
     Key? key,
     required this.title,
-    this.actions = const [], this.automaticallyImplyLeading, this.backgroundColor, this.titleColor, this.centerTitle, this.elevation = 0, this.leadingIcon,
+    this.actions = const [], this.automaticallyImplyLeading, this.backgroundColor, this.titleColor, this.centerTitle, this.elevation = 0, this.leadingIcon, this.previousScreen,
   }) : super(key: key);
 
   @override
@@ -40,7 +41,11 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           ],
         ),
         child: SvgPicture.asset(leadingIcon!, color: textPrimaryColor).onTap(() {
-          Navigator.pop(context);
+          if(previousScreen != null) {
+            Navigator.pushReplacementNamed(context, previousScreen!);
+          } else {
+            Navigator.pop(context);
+          }
         },).paddingSymmetric(vertical: 18),
       ).paddingLeft(16) : null,
     );
