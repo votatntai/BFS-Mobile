@@ -82,41 +82,32 @@ class _DashboardScreenState extends State<DashboardScreen> {
         child: BottomAppBar(
           shape:
               const CircularNotchedRectangle(), // Định hình cho notch xung quanh FAB
-          notchMargin: 6.0, // Khoảng cách giữa notch và FAB
+          notchMargin: 10.0, // Khoảng cách giữa notch và FAB
           clipBehavior: Clip.antiAlias,
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 100.0, sigmaY: 100.0),
-            child: Container(
-              height: 60,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              decoration: BoxDecoration(
-                  color: blueViolet.withOpacity(0.1),
-                  borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(24),
-                      topRight: Radius.circular(24))),
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  IconButton(
-                      icon: SvgPicture.asset(AppAssets.list_check_svg,
-                          color: primaryColor, height: 20),
-                      onPressed: () {onTapSelection(0);}),
-                  IconButton(
-                      icon: SvgPicture.asset(AppAssets.cage_svg,
-                          color: primaryColor, height: 28),
-                      onPressed: () {onTapSelection(1);}).paddingTop(4),
-                  const SizedBox(width: 48), // Tạo khoảng trống cho FAB
-                  IconButton(
-                      icon: SvgPicture.asset(AppAssets.food_svg,
-                          color: primaryColor, height: 20),
-                      onPressed: () {onTapSelection(3);}),
-                  IconButton(
-                      icon: SvgPicture.asset(AppAssets.user_svg,
-                          color: primaryColor, height: 20),
-                      onPressed: () {onTapSelection(4);}),
-                ],
-              ),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                IconButton(
+                    icon: SvgPicture.asset(AppAssets.list_check_svg,
+                        color: primaryColor, height: 20),
+                    onPressed: () {onTapSelection(0);}),
+                IconButton(
+                    icon: SvgPicture.asset(AppAssets.cage_svg,
+                        color: primaryColor, height: 28),
+                    onPressed: () {onTapSelection(1);}).paddingTop(4),
+                const SizedBox(width: 48), // Tạo khoảng trống cho FAB
+                IconButton(
+                    icon: SvgPicture.asset(AppAssets.food_svg,
+                        color: primaryColor, height: 20),
+                    onPressed: () {onTapSelection(3);}),
+                IconButton(
+                    icon: SvgPicture.asset(AppAssets.user_svg,
+                        color: primaryColor, height: 20),
+                    onPressed: () {onTapSelection(4);}),
+              ],
             ),
           ),
         ),
