@@ -21,7 +21,7 @@ class ChecklistCubit extends Cubit<ChecklistState> {
   Future<void> updateChecklistStatus(String id, bool status) async {
     // emit(UpdateChecklistLoadingState());
     try {
-      var checkList = await _checklistRepo.updateChecklistStatus(id, status);
+      await _checklistRepo.updateChecklistStatus(id, status);
       // emit(UpdateChecklistSuccessState(checkList));
       getChecklist();
     } catch (e) {

@@ -12,7 +12,6 @@ import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../domain/models/checklists.dart';
-import '../domain/models/tasks.dart';
 import '../utils/app_assets.dart';
 import '../utils/gap.dart';
 import '../widgets/AppBar.dart';
