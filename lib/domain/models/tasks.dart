@@ -82,7 +82,7 @@ class Task {
     description = json['description'];
     manager =
         json['manager'] != null ? new Manager.fromJson(json['manager']) : null;
-    deadLine = json['deadLine'];
+    deadLine = json['deadline'];
     createAt = json['createAt'];
     if (json['checkLists'] != null) {
       checkLists = <Checklist>[];
@@ -104,7 +104,7 @@ class Task {
     if (this.manager != null) {
       data['manager'] = this.manager!.toJson();
     }
-    data['deadLine'] = this.deadLine;
+    data['deadline'] = this.deadLine;
     data['createAt'] = this.createAt;
      if (this.checkLists != null) {
       data['checkLists'] = this.checkLists!.map((v) => v.toJson()).toList();
