@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -27,6 +28,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
       titleTextStyle: TextStyle(color: titleColor ?? textPrimaryColor, fontSize: 20, fontWeight: FontWeight.bold,),
       centerTitle: centerTitle ?? true,
       elevation: elevation,
+      systemOverlayStyle: SystemUiOverlayStyle(statusBarColor: backgroundColor ?? Colors.transparent, statusBarIconBrightness: Brightness.dark),
       leading: leadingIcon != null ? Container(
         decoration: BoxDecoration(
           shape: BoxShape.circle,

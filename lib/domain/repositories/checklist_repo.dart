@@ -5,9 +5,9 @@ import 'package:flutter_application_1/utils/get_it.dart';
 final Dio _apiClient = getIt.get<Dio>();
 
 class ChecklistRepo {
-  Future<Checklist> updateChecklistStatus(String id, bool status) async {
+  Future<Checklist> updateChecklistStatus({required String id, bool? status, String? assigneeId}) async {
     try {
-      var res = await _apiClient.put('/api/task-check-lists/$id', data: FormData.fromMap({'status': status}), options: Options(contentType: Headers.multipartFormDataContentType));
+      var res = await _apiClient.put('/api/task-check-lists/$id', data: FormData.fromMap({'assigneeId' : assigneeId, 'status': status}), options: Options(contentType: Headers.multipartFormDataContentType));
       return Checklist.fromJson(res.data);
     } on DioException catch (e) {
       throw Exception(e.response!.data);

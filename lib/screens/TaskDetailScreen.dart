@@ -61,7 +61,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
         previousScreen: DashboardScreen.routeName,
       ),
       body: Background(
-          widget: MultiBlocProvider(
+          child: MultiBlocProvider(
         providers: [BlocProvider(create: (context) => TaskCubit()..getTaskDetail(widget.taskId)), BlocProvider(create: (context) => ChecklistCubit()..getChecklist())],
         // create: (context) => TaskCubit()..getTaskDetail(widget.taskId),
         child: BlocBuilder<TaskCubit, TaskState>(builder: (context, state) {
@@ -293,7 +293,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                                         activeColor: primaryColor,
                                         value: checklists![index].status,
                                         onChanged: (value) {
-                                          updateChecklistCubit.updateChecklistStatus(checklists[index].id!, value!);
+                                          updateChecklistCubit.updateChecklistStatus(id: checklists[index].id!, status: value!);
                                           if (updateChecklistCubit is UpdateChecklistFailedState) {
                                             Fluttertoast.showToast(msg: (updateChecklistCubit.state as UpdateChecklistFailedState).message);
                                           }

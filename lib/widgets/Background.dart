@@ -36,10 +36,10 @@ class DotPainter extends CustomPainter {
 class Background extends StatelessWidget {
   const Background({
     super.key,
-    required this.widget,
+    required this.child,
   });
 
-  final Widget widget;
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +58,7 @@ class Background extends StatelessWidget {
               0), // Container phải có màu nhưng có thể trong suốt
         ),
       ),
-      widget
+      child
     ]);
   }
 }

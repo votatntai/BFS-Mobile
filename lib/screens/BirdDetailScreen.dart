@@ -24,7 +24,7 @@ class BirdDetailScreen extends StatelessWidget {
     return Scaffold(
         appBar: const MyAppBar(title: 'Bird Detail', leadingIcon: AppAssets.angle_left_svg),
         body: Background(
-          widget: SingleChildScrollView(
+          child: SingleChildScrollView(
             child: BlocProvider<BirdCubit>(
               create: (context) => BirdCubit()..getBirdDetail(birdId),
               child: BlocBuilder<BirdCubit, BirdState>(builder: (context, state) {

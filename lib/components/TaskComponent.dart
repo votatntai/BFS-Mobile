@@ -27,16 +27,12 @@ class TaskComponent extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
         
-        Row(
-          mainAxisAlignment:
-              MainAxisAlignment.spaceBetween,
-          children: [
-            Text(task.title!,
-                style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500)),
-          ],
-        ),
+        Text(task.title!,
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
+            style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w500)),
         // Gap.k8.height,
         // Text(task.cage!.species!.name!,
         //     style: const TextStyle(

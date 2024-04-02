@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/screens/AddTicketScreen.dart';
 import 'package:flutter_application_1/screens/LoginScreen.dart';
+import 'package:flutter_application_1/screens/TicketsScreen.dart';
 
 import '../screens/BirdDetailScreen.dart';
 import '../screens/CageDetailScreen.dart';
@@ -22,6 +24,10 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (_) => TaskDetailScreen(taskId: settings.arguments.toString(),));
     case '/cage-detail':
       return MaterialPageRoute(builder: (_) => CageDetailScreen(cageId: settings.arguments.toString(),));
+    case TicketsScreen.routeName:
+      return MaterialPageRoute(builder: (_) => TicketsScreen(cageId: settings.arguments.toString(),));
+    case AddTicketScreen.routeName:
+      return MaterialPageRoute(builder: (_) => const AddTicketScreen());
     default:
       return MaterialPageRoute(builder: (_) => const NotFoundScreen());
   }

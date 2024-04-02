@@ -22,7 +22,7 @@ class CageDetailScreen extends StatelessWidget {
         appBar: const MyAppBar(
             title: 'Cage Detail', leadingIcon: AppAssets.angle_left_svg),
         body: Background(
-          widget: SingleChildScrollView(
+          child: SingleChildScrollView(
             child: BlocProvider<CageCubit>(
               create: (context) => CageCubit()..getCageDetail(cageId),
               child: BlocBuilder<CageCubit, CageState>(

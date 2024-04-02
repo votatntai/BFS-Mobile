@@ -24,4 +24,5 @@ class AppAssets {
   static const String phone = 'assets/icons/phone.svg';
   static const String envelope = 'assets/icons/envelope.svg';
   static const String solid_circle = 'assets/icons/solid-circle.svg';
+  static const String camera = 'assets/icons/camera.svg';
 }
