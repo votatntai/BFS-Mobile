@@ -3,7 +3,6 @@ import 'package:flutter_application_1/cubit/checklist/checklist_cubit.dart';
 import 'package:flutter_application_1/cubit/checklist/checklist_state.dart';
 import 'package:flutter_application_1/cubit/task/task_cubit.dart';
 import 'package:flutter_application_1/cubit/task/task_state.dart';
-import 'package:flutter_application_1/screens/DashboardScreen.dart';
 import 'package:flutter_application_1/utils/colors.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -58,7 +57,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
       appBar: const MyAppBar(
         title: 'Task Detail',
         leadingIcon: AppAssets.angle_left_svg,
-        previousScreen: DashboardScreen.routeName,
+        isRefresh: true,
       ),
       body: Background(
           child: MultiBlocProvider(

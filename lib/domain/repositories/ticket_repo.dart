@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_application_1/utils/get_it.dart';
@@ -23,19 +22,20 @@ class TicketRepo {
     }
   }
 
-  Future<Tickets> addTicket({String? ticketCategory, String? creatorId, String? priority, String? description, String? assigneeId, String? cageId, XFile? image }) async {
+  Future<bool> addTicket({required String title, String? ticketCategory, String? creatorId, String? priority, required String description, String? assigneeId, String? cageId, required XFile image }) async {
     try {
       FormData formData = FormData.fromMap({
+        'title': title,
         'ticketCategory': ticketCategory,
         'creatorId': creatorId,
         'priority': priority,
         'description': description,
         'assigneeId': assigneeId,
         'cageId': cageId,
-        'ticketImage': await MultipartFile.fromFile(image!.path, filename: 'ticketImage'),
+        'ticketImage': await MultipartFile.fromFile(image.path, filename: 'ticketImage-$title'),
       });
-      final response = await _apiClient.post('/api/tickets', data: formData);
-      return Tickets.fromJson(response.data);
+      await _apiClient.post('/api/tickets', data: formData);
+      return true;
     } catch (e) {
       throw Exception(e);
     }

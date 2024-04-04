@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_application_1/cubit/ticket/ticket_cubit.dart';
 import 'package:flutter_application_1/cubit/ticket/ticket_state.dart';
-import 'package:flutter_application_1/domain/repositories/ticket_repo.dart';
 import 'package:flutter_application_1/screens/AddTicketScreen.dart';
 import 'package:flutter_application_1/utils/app_assets.dart';
 import 'package:flutter_application_1/utils/gap.dart';
@@ -65,7 +63,7 @@ class _TicketsScreenState extends State<TicketsScreen> {
                       ),
                       child: const Text('Add ticket', style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold), textAlign: TextAlign.center,)
                     ).onTap(() {
-                      Navigator.pushNamed(context, AddTicketScreen.routeName);
+                      Navigator.pushNamed(context, AddTicketScreen.routeName, arguments: widget.cageId);
                     }).expand(),
                   ],
                 ),

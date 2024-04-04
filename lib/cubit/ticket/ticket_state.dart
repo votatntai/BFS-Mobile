@@ -13,3 +13,12 @@ class GetTicketFailedState extends TicketState {
   final String message;
   GetTicketFailedState(this.message);
 }
+
+class CreateTicketLoadingState extends TicketState {}
+
+class CreateTicketSuccessState extends TicketState {}
+
+class CreateTicketFailedState extends TicketState {
+  final String message;
+  CreateTicketFailedState(this.message);
+}

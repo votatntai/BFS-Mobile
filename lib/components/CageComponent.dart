@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/screens/TasksScreen.dart';
 import 'package:flutter_application_1/screens/TicketsScreen.dart';
 import 'package:flutter_application_1/utils/colors.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -69,15 +70,29 @@ class CageComponent extends StatelessWidget {
               Column(
                 children: [
                   Container(
+                    width: 60,
                     padding: EdgeInsets.all(4),
                     decoration: BoxDecoration(
                       color: white,
                       borderRadius: BorderRadius.circular(8),
                       border: Border.all(color: primaryColor),
                     ),
-                    child: Text('Ticket', style: primaryTextStyle(size: 14, color: primaryColor)),
+                    child: Text('Ticket', style: primaryTextStyle(size: 14, color: primaryColor), textAlign: TextAlign.center,),
                   ).onTap(() {
                     Navigator.pushNamed(context, TicketsScreen.routeName, arguments: cage.id);
+                  }),
+                  Spacer(),
+                  Container(
+                    width: 60,
+                    padding: EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      color: white,
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: primaryColor),
+                    ),
+                    child: Text('Task', style: primaryTextStyle(size: 14, color: primaryColor), textAlign: TextAlign.center,),
+                  ).onTap(() {
+                    Navigator.pushNamed(context, TasksScreen.routeName, arguments: cage.id);
                   }),
                 ],
               ),
