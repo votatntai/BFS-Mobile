@@ -62,7 +62,7 @@ class _TasksScreenState extends State<TasksScreen> {
                       tasks.isNotEmpty ? ListView.separated(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        itemCount: tasks!.length,
+                        itemCount: tasks.length,
                         separatorBuilder: (context, index) => Gap.k8.height,
                         itemBuilder: (context, index) => TaskComponent(task: tasks[index]),
                       ) : Center(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_application_1/cubit/checklist/checklist_cubit.dart';
 import 'package:flutter_application_1/cubit/checklist/checklist_state.dart';
 import 'package:flutter_application_1/cubit/task/task_cubit.dart';
@@ -300,7 +301,45 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                                           //   checklists[index] = {checklists[index].keys.first: !checklists[index].values.first};
                                           // });
                                         }),
-                                    IconButton(onPressed: () {}, icon: SvgPicture.asset(AppAssets.pen_to_square_svg, width: 16, height: 16, color: Colors.grey))
+                                    IconButton(
+                                        onPressed: () {
+                                          showDialog(
+                                              context: context,
+                                              builder: ((context) => AlertDialog(
+                                                    title: Text('Note', style:  primaryTextStyle(),),
+                                                    content: Column(
+                                                      mainAxisSize: MainAxisSize.min,
+                                                      children: [
+                                                        Container(
+                                                          padding: EdgeInsets.symmetric(horizontal: 16),
+                                                          decoration: BoxDecoration(border: Border.all(color: Colors.grey), borderRadius: BorderRadius.circular(8)),
+                                                          child: TextField(
+                                                            // controller: TextEditingController(text: task.checkLists![index].note),
+                                                            onChanged: (value) {
+                                                              // task.checkLists![index].note = value;
+                                                            },
+                                                            decoration: InputDecoration(hintText: 'Enter note', border: InputBorder.none, hintStyle: secondaryTextStyle()),
+                                                            maxLines: 5,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    actions: [
+                                                      Container(
+                                                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                                              decoration: BoxDecoration(color: primaryColor, borderRadius: BorderRadius.circular(8)),
+                                                              child: Text('Save', style: primaryTextStyle(color: white, size: 14)),
+                                                            ),
+                                                            Gap.k8.width,
+                                                            Container(
+                                                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                                              decoration: BoxDecoration(color: Colors.grey, borderRadius: BorderRadius.circular(8)),
+                                                              child: Text('Cancel', style: primaryTextStyle(color: white, size: 14)),
+                                                            ),
+                                                    ],
+                                                  )));
+                                        },
+                                        icon: SvgPicture.asset(AppAssets.pen_to_square_svg, width: 16, height: 16, color: Colors.grey))
                                   ],
                                 ),
                               ),
