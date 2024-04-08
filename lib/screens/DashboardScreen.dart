@@ -1,14 +1,17 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/cubit/staff/staff_cubit.dart';
 import 'package:flutter_application_1/fragments/CageFragment.dart';
 import 'package:flutter_application_1/fragments/FoodFragment.dart';
 import 'package:flutter_application_1/fragments/ProfileFragment.dart';
 import 'package:flutter_application_1/utils/app_assets.dart';
 import 'package:flutter_application_1/utils/colors.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+import '../cubit/staff/staff_state.dart';
 import '../fragments/BirdFragment.dart';
 import '../fragments/TaskFragment.dart';
 import '../widgets/Background.dart';
@@ -49,23 +52,39 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(children: [
-        CustomPaint(
-          painter: DotPainter(),
-          child: Container(
-            height: MediaQuery.of(context).size.height,
-            decoration: const BoxDecoration(),
-          ),
+      body: MultiBlocProvider(
+        providers: [
+          BlocProvider<StaffCubit>(create: (context) => StaffCubit()..getStaffInformation()),
+        ],
+        child: MultiBlocListener(
+          listeners: [
+            BlocListener<StaffCubit, StaffState>(
+              listener: (context, state) {
+                // if (state is StaffFailedState) {
+                //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.error)));
+                // }
+              },
+            ),
+          ],
+          child: Stack(children: [
+            CustomPaint(
+              painter: DotPainter(),
+              child: Container(
+                height: MediaQuery.of(context).size.height,
+                decoration: const BoxDecoration(),
+              ),
+            ),
+            BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 70, sigmaY: 70),
+              child: Container(
+                color: Colors.black.withOpacity(
+                    0), // Container phải có màu nhưng có thể trong suốt
+              ),
+            ),
+            widgetOption.elementAt(selectedItem)
+          ]),
         ),
-        BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 70, sigmaY: 70),
-          child: Container(
-            color: Colors.black.withOpacity(
-                0), // Container phải có màu nhưng có thể trong suốt
-          ),
-        ),
-        widgetOption.elementAt(selectedItem)
-      ]),
+      ),
       floatingActionButton: FloatingActionButton(
         child: SvgPicture.asset(AppAssets.dove_svg,
             color: selectedItem == 2 ? white : primaryColor, width: 24, height: 24),

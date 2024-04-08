@@ -7,6 +7,7 @@ import '../../utils/messages.dart';
 import '../models/staff.dart';
 
 class UserRepo {
+  static Staff user = Staff();
   final Dio apiClient = getIt.get<Dio>();
   Future<void> login({required String email, required String password}) async {
     try {
@@ -31,6 +32,7 @@ class UserRepo {
   Future<Staff> getStaffInformation() async {
     try {
       var res = await apiClient.get('/api/staffs/informations');
+      user = Staff.fromJson(res.data);
       return Staff.fromJson(res.data);
     } on DioException {
       throw Exception(msg_server_error);

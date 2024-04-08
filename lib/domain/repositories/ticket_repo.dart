@@ -32,9 +32,10 @@ class TicketRepo {
         'description': description,
         'assigneeId': assigneeId,
         'cageId': cageId,
-        'ticketImage': await MultipartFile.fromFile(image.path, filename: 'ticketImage-$title'),
+        'status': 'Processing',
+        'image': await MultipartFile.fromFile(image.path, filename: 'ticketImage-$title'),
       });
-      await _apiClient.post('/api/tickets', data: formData);
+      await _apiClient.post('/api/tickets', data: formData, options: Options(contentType: Headers.multipartFormDataContentType));
       return true;
     } catch (e) {
       throw Exception(e);
