@@ -128,14 +128,14 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                             //     Text('Species', style: secondaryTextStyle(size: 14)),
                             //   ],
                             // ),
-                            14.height,
-                            Row(
-                              children: [
-                                SvgPicture.asset(AppAssets.cage_svg, height: 24, color: Colors.grey),
-                                Gap.k8.width,
-                                Text('Cage', style: secondaryTextStyle(size: 14)),
-                              ],
-                            ),
+                            // 14.height,
+                            // Row(
+                            //   children: [
+                            //     SvgPicture.asset(AppAssets.cage_svg, height: 24, color: Colors.grey),
+                            //     Gap.k8.width,
+                            //     Text('Cage', style: secondaryTextStyle(size: 14)),
+                            //   ],
+                            // ),
                           ],
                         ),
                       ),
@@ -255,9 +255,9 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                             Gap.k16.height,
                             Gap.k2.height,
                             Text(DateFormat("HH:mm dd-MM-yyyy").format(DateTime.parse(task.deadLine!)), style: primaryTextStyle(size: 14, weight: FontWeight.w500)),
-                            Gap.k16.height,
+                            // Gap.k16.height,
                             // Gap.k2.height,
-                            Text(task.cage!.name!, style: primaryTextStyle(size: 14, weight: FontWeight.w500)),
+                            // Text(task.cage!.name!, style: primaryTextStyle(size: 14, weight: FontWeight.w500)),
                           ],
                         ),
                       )

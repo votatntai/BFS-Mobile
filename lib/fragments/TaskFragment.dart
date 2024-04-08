@@ -44,45 +44,49 @@ class _TaskFragmentState extends State<TaskFragment> {
                   }
                   if (state is TasksSuccessState) {
                     var tasks = state.tasks;
-                    var toDoTasks = tasks.tasks!.where((task) => task.status == 'To do').toList();
-                    var inProgressTasks = tasks.tasks!.where((task) => task.status == 'In progress').toList();
-                    var workFinishedTasks = tasks.tasks!.where((task) => task.status == 'Work finished').toList();
-                    var doneTasks = tasks.tasks!.where((task) => task.status == 'Done').toList();
-                    return Column(
-                      children: <Widget>[
-                        // Custom TabBar
-                        Row(
-                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            // Custom tab buttons
-                            Expanded(child: CustomTab(title: 'To Do', index: 0, selectedIndex: _selectedIndex).onTap(() => _onItemTapped(0))),
-                            Gap.k8.width,
-                            Expanded(child: CustomTab(title: 'In progress', index: 1, selectedIndex: _selectedIndex).onTap(() => _onItemTapped(1))),
-                            Gap.k8.width,
-                            Expanded(child: CustomTab(title: 'Work finished', index: 2, selectedIndex: _selectedIndex).onTap(() => _onItemTapped(2))),
-                            Gap.k8.width,
-                            Expanded(child: CustomTab(title: 'Done', index: 3, selectedIndex: _selectedIndex).onTap(() => _onItemTapped(3))),
-                          ],
-                        ),
-                        Expanded(
-                          child: PageView(
-                            controller: _pageController,
-                            onPageChanged: (index) {
-                              setState(() {
-                                _selectedIndex = index;
-                              });
-                            },
+                    if (tasks.tasks != null) {
+                      var toDoTasks = tasks.tasks!.where((task) => task.status == 'To do').toList();
+                      var inProgressTasks = tasks.tasks!.where((task) => task.status == 'In progress').toList();
+                      var workFinishedTasks = tasks.tasks!.where((task) => task.status == 'Work finished').toList();
+                      var doneTasks = tasks.tasks!.where((task) => task.status == 'Done').toList();
+                      return Column(
+                        children: <Widget>[
+                          // Custom TabBar
+                          Row(
+                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
-                              // Nội dung của mỗi "tab"
-                              TaskTabView(tasks: toDoTasks).paddingTop(32),
-                              TaskTabView(tasks: inProgressTasks).paddingTop(32),
-                              TaskTabView(tasks: workFinishedTasks).paddingTop(32),
-                              TaskTabView(tasks: doneTasks).paddingTop(32),
+                              // Custom tab buttons
+                              Expanded(child: CustomTab(title: 'To Do', index: 0, selectedIndex: _selectedIndex).onTap(() => _onItemTapped(0))),
+                              Gap.k8.width,
+                              Expanded(child: CustomTab(title: 'In progress', index: 1, selectedIndex: _selectedIndex).onTap(() => _onItemTapped(1))),
+                              Gap.k8.width,
+                              Expanded(child: CustomTab(title: 'Work finished', index: 2, selectedIndex: _selectedIndex).onTap(() => _onItemTapped(2))),
+                              Gap.k8.width,
+                              Expanded(child: CustomTab(title: 'Done', index: 3, selectedIndex: _selectedIndex).onTap(() => _onItemTapped(3))),
                             ],
                           ),
-                        ),
-                      ],
-                    );
+                          Expanded(
+                            child: PageView(
+                              controller: _pageController,
+                              onPageChanged: (index) {
+                                setState(() {
+                                  _selectedIndex = index;
+                                });
+                              },
+                              children: <Widget>[
+                                // Nội dung của mỗi "tab"
+                                TaskTabView(tasks: toDoTasks).paddingTop(32),
+                                TaskTabView(tasks: inProgressTasks).paddingTop(32),
+                                TaskTabView(tasks: workFinishedTasks).paddingTop(32),
+                                TaskTabView(tasks: doneTasks).paddingTop(32),
+                              ],
+                            ),
+                          ),
+                        ],
+                      );
+                    } else {
+                      return Center(child: const Text('No task'));
+                    }
                   }
                   return const SizedBox.shrink();
                 }),
@@ -105,20 +109,22 @@ class TaskTabView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return tasks.isNotEmpty ? Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Expanded(
-          child: ListView.separated(
-              physics: const BouncingScrollPhysics(),
-              itemBuilder: (context, index) => TaskComponent(
-                    task: tasks[index],
-                  ),
-              separatorBuilder: (context, indext) => Gap.k16.height,
-              itemCount: tasks.length),
-        )
-      ],
-    ) : const Center(child: Text('No task'));
+    return tasks.isNotEmpty
+        ? Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                child: ListView.separated(
+                    physics: const BouncingScrollPhysics(),
+                    itemBuilder: (context, index) => TaskComponent(
+                          task: tasks[index],
+                        ),
+                    separatorBuilder: (context, indext) => Gap.k16.height,
+                    itemCount: tasks.length),
+              )
+            ],
+          )
+        : const Center(child: Text('No task'));
   }
 }

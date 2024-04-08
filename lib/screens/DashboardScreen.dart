@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/fragments/CageFragment.dart';
+import 'package:flutter_application_1/fragments/FoodFragment.dart';
 import 'package:flutter_application_1/fragments/ProfileFragment.dart';
 import 'package:flutter_application_1/utils/app_assets.dart';
 import 'package:flutter_application_1/utils/colors.dart';
@@ -41,7 +42,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     TaskFragment(),
     CageFragment(),
     BirdFragment(),
-    TaskFragment(),
+    const FoodFragment(),
     const ProfileFragment(),
   ];
 
@@ -67,9 +68,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
       ]),
       floatingActionButton: FloatingActionButton(
         child: SvgPicture.asset(AppAssets.dove_svg,
-            color: whiteColor, width: 24, height: 24),
-        backgroundColor: primaryColor,
-        elevation: 15.0,
+            color: selectedItem == 2 ? white : primaryColor, width: 24, height: 24),
+        backgroundColor: selectedItem == 2 ? primaryColor : primaryColor.withOpacity(0.2),
+        elevation: 0,
         onPressed: () {
           onTapSelection(2);
         },
@@ -92,20 +93,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
               children: <Widget>[
                 IconButton(
                     icon: SvgPicture.asset(AppAssets.list_check_svg,
-                        color: primaryColor, height: 20),
+                        color: selectedItem == 0 ? primaryColor : gray, height: 20),
                     onPressed: () {onTapSelection(0);}),
                 IconButton(
                     icon: SvgPicture.asset(AppAssets.cage_svg,
-                        color: primaryColor, height: 28),
+                        color: selectedItem == 1 ? primaryColor : gray, height: 28),
                     onPressed: () {onTapSelection(1);}).paddingTop(4),
                 const SizedBox(width: 48), // Tạo khoảng trống cho FAB
                 IconButton(
                     icon: SvgPicture.asset(AppAssets.food_svg,
-                        color: primaryColor, height: 20),
+                        color: selectedItem == 3 ? primaryColor : gray, height: 20),
                     onPressed: () {onTapSelection(3);}),
                 IconButton(
                     icon: SvgPicture.asset(AppAssets.user_svg,
-                        color: primaryColor, height: 20),
+                        color: selectedItem == 4 ? primaryColor : gray, height: 20),
                     onPressed: () {onTapSelection(4);}),
               ],
             ),

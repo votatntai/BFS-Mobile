@@ -3,6 +3,7 @@ import 'package:flutter_application_1/cubit/staff/staff_cubit.dart';
 import 'package:flutter_application_1/domain/repositories/bird_repo.dart';
 import 'package:flutter_application_1/domain/repositories/cage_repo.dart';
 import 'package:flutter_application_1/domain/repositories/checklist_repo.dart';
+import 'package:flutter_application_1/domain/repositories/food_repo.dart';
 import 'package:flutter_application_1/domain/repositories/ticket_repo.dart';
 import 'package:flutter_application_1/domain/repositories/user_repo.dart';
 import 'package:flutter_application_1/utils/dio.dart';
@@ -21,6 +22,7 @@ Future<void> initialGetIt() async {
   getIt.registerLazySingleton(() => TaskRepo());
   getIt.registerLazySingleton(() => ChecklistRepo());
   getIt.registerLazySingleton(() => TicketRepo());
+  getIt.registerLazySingleton(() => FoodRepo());
 
   getIt.registerLazySingleton(() => StaffCubit());
 }
