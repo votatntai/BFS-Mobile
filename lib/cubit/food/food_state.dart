@@ -25,3 +25,12 @@ class UpdateFoodFailedState extends FoodState {
   final String msg;
   UpdateFoodFailedState(this.msg);
 }
+
+class CreateFoodReportLoadingState extends FoodState {}
+
+class CreateFoodReportSuccessState extends FoodState {}
+
+class CreateFoodReportFailedState extends FoodState {
+  final String msg;
+  CreateFoodReportFailedState(this.msg);
+}

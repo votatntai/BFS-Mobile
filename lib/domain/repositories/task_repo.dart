@@ -6,6 +6,19 @@ import '../models/tasks.dart';
 final Dio _apiClient = getIt.get<Dio>();
 
 class TaskRepo {
+  Future<Tasks> getTasksStaff({int? pageNumber, int? pageSize}) async {
+    try {
+      Map<String, dynamic> queryParameters = {};
+      if (pageNumber != null) queryParameters['pageNumber'] = pageNumber;
+      if (pageSize != null) queryParameters['pageSize'] = pageSize;
+
+      var res = await _apiClient.get('/api/tasks/staffs', queryParameters: queryParameters);
+      return Tasks.fromJson(res.data);
+    } on DioException catch (e) {
+      throw Exception(e.response!.data);
+    }
+  }
+
   Future<Tasks> getTasks({String? title, String? cageId, String? managerId, bool? status, int? pageNumber, int? pageSize}) async {
     try {
       Map<String, dynamic> queryParameters = {};

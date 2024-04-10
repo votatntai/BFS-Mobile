@@ -37,7 +37,7 @@ class _TaskFragmentState extends State<TaskFragment> {
             child: Material(
               color: transparentColor,
               child: BlocProvider<TaskCubit>(
-                create: (context) => TaskCubit()..getTasks(),
+                create: (context) => TaskCubit()..getTasksStaff(),
                 child: BlocBuilder<TaskCubit, TaskState>(builder: (context, state) {
                   if (state is TasksLoadingState) {
                     return const CircularProgressIndicator().center();

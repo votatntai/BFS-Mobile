@@ -9,10 +9,10 @@ class FoodCubit extends Cubit<FoodState>{
   FoodCubit() : super(FoodState());
   final FoodRepo _foodRepo = getIt.get<FoodRepo>();
 
-  Future<void> getFoods({String? name, int? pageNumber, int? pageSize}) async {
+  Future<void> getFoods({String? name, String? status, int? pageNumber, int? pageSize}) async {
     emit(FoodLoadingState());
     try {
-      var foods = await _foodRepo.getFoods(name: name, pageNumber: pageNumber, pageSize: pageSize);
+      var foods = await _foodRepo.getFoods(name: name, status: status, pageNumber: pageNumber, pageSize: pageSize);
       emit(FoodSuccessState(foods));
     } catch (e) {
       emit(FoodFailedState(e.toString()));
@@ -26,6 +26,16 @@ class FoodCubit extends Cubit<FoodState>{
       emit(UpdateFoodSuccessState(food));
     } catch (e) {
       emit(UpdateFoodFailedState(e.toString()));
+    }
+  }
+
+  Future<void> createFoodReport({required String staffId, required String foodId, required double lastQuantity, required double remainQuantity, String? description}) async {
+    emit(CreateFoodReportLoadingState());
+    try {
+      await _foodRepo.createFoodReport(staffId: staffId, foodId: foodId, lastQuantity: lastQuantity, remainQuantity: remainQuantity, description: description);
+      emit(CreateFoodReportSuccessState());
+    } catch (e) {
+      emit(CreateFoodReportFailedState(e.toString()));
     }
   }
 }

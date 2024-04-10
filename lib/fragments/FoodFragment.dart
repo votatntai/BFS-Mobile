@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_application_1/cubit/food/food_cubit.dart';
 import 'package:flutter_application_1/cubit/food/food_state.dart';
+import 'package:flutter_application_1/domain/repositories/user_repo.dart';
 import 'package:flutter_application_1/utils/app_assets.dart';
+import 'package:flutter_application_1/utils/colors.dart';
 import 'package:flutter_application_1/utils/gap.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -17,11 +20,12 @@ class FoodFragment extends StatefulWidget {
 
 class _FoodFragmentState extends State<FoodFragment> {
   TextEditingController quantityController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
         child: BlocProvider<FoodCubit>(
-      create: (context) => FoodCubit()..getFoods(),
+      create: (context) => FoodCubit()..getFoods(status: 'Available'),
       child: BlocBuilder<FoodCubit, FoodState>(builder: (context, state) {
         if (state is FoodLoadingState) {
           return const Center(child: CircularProgressIndicator());
@@ -36,7 +40,7 @@ class _FoodFragmentState extends State<FoodFragment> {
                   ListView.separated(
                     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                     shrinkWrap: true,
-                    itemCount: state.foods.foods!.length,
+                    itemCount: foods.length,
                     separatorBuilder: (context, index) => Gap.k8.height,
                     itemBuilder: (context, index) {
                       return Container(
@@ -58,10 +62,13 @@ class _FoodFragmentState extends State<FoodFragment> {
                                 Gap.k4.height,
                                 Row(
                                   children: [
-                                    Text(
-                                      foods[index].foodCategory!.name!,
-                                      style: secondaryTextStyle(),
-                                    ).expand(),
+                                    SizedBox(
+                                      width: 120,
+                                      child: Text(
+                                        foods[index].foodCategory!.name!,
+                                        style: secondaryTextStyle(),
+                                      ),
+                                    ),
                                     Text(
                                       'Quantity: ',
                                       style: secondaryTextStyle(),
@@ -84,22 +91,25 @@ class _FoodFragmentState extends State<FoodFragment> {
                                             return BlocProvider.value(
                                               value: cubit,
                                               child: BlocConsumer<FoodCubit, FoodState>(listener: (context, state) {
-                                                if (state is UpdateFoodSuccessState) {
+                                                if (state is CreateFoodReportSuccessState) {
                                                   // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Updated')));
                                                   Fluttertoast.showToast(msg: 'Updated');
                                                   Navigator.pop(context);
                                                   context.read<FoodCubit>().getFoods();
                                                   // setState(() {});
                                                 }
-                                                if (state is UpdateFoodFailedState) {
+                                                if (state is CreateFoodReportFailedState) {
                                                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.msg.replaceAll('Exception: ', '')), backgroundColor: tomato,));
                                                 }
                                               }, builder: (context, state) {
                                                 return AlertDialog(
-                                                  title: const Text('Quantity'),
+                                                  title: const Text('Food report'),
                                                   content: Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
                                                     mainAxisSize: MainAxisSize.min,
                                                     children: [
+                                                      Text(foods[index].name!, style: boldTextStyle(size: 20),),
+                                                      Gap.k16.height,
                                                       TextField(
                                                         controller: quantityController = TextEditingController(text: foods[index].quantity.toString()),
                                                         keyboardType: TextInputType.number,
@@ -109,16 +119,48 @@ class _FoodFragmentState extends State<FoodFragment> {
                                                         ),
                                                       ),
                                                       Gap.k8.height,
-                                                      ElevatedButton(
-                                                        onPressed: () {
-                                                          context.read<FoodCubit>().updateFood(id: foods[index].id!, quantity: quantityController.text.toDouble());
-                                                          // Navigator.pop(context);
-                                                          // setState(() {});
-                                                        },
-                                                        child: const Text('Save'),
-                                                      )
+                                                      TextField(
+                                                        controller: descriptionController,
+                                                        keyboardType: TextInputType.text,
+                                                        maxLines: 5,
+                                                        decoration: const InputDecoration(
+                                                          contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                                                          alignLabelWithHint: true,
+                                                          labelText: 'Description',
+                                                          border: OutlineInputBorder(),
+                                                        ),
+                                                      ),
+
                                                     ],
                                                   ),
+                                                  actions: [
+                                                    Container(
+                                                      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                                                      decoration: BoxDecoration(
+                                                        color: primaryColor,
+                                                        borderRadius: BorderRadius.circular(8),
+                                                      ),
+                                                      child: Text(
+                                                        'Save', style: boldTextStyle(color: white),
+                                                      ),
+                                                    ).onTap((){
+                                                      // context.read<FoodCubit>().updateFood(id: foods[index].id!, quantity: quantityController.text.toDouble());
+                                                      context.read<FoodCubit>().createFoodReport(staffId: UserRepo.user.id!, foodId: foods[index].id!, lastQuantity: foods[index].quantity!, remainQuantity: quantityController.text.toDouble(), description: descriptionController.text);
+                                                    }),
+                                                    Container(
+                                                      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                                                      decoration: BoxDecoration(
+                                                        color: white,
+                                                        borderRadius: BorderRadius.circular(8),
+                                                      ),
+                                                      child: Text(
+                                                        'Cancel', style: boldTextStyle(color: primaryColor),
+                                                      ),
+                                                    ).onTap((){
+                                                      Navigator.pop(context);
+                                                    }),
+                                                   
+                                                  ],
                                                 );
                                               }),
                                             );

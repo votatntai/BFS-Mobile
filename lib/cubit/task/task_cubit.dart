@@ -9,6 +9,16 @@ class TaskCubit extends Cubit<TaskState> {
   final TaskRepo _taskRepo = getIt<TaskRepo>();
   TaskCubit() : super(TaskState());
 
+  Future<void> getTasksStaff({int? pageNumber, int? pageSize}) async {
+    emit(TasksLoadingState());
+    try {
+      var tasks = await _taskRepo.getTasksStaff(pageNumber: pageNumber, pageSize: pageSize);
+      emit(TasksSuccessState(tasks: tasks));
+    } catch (e) {
+      emit(TasksFailedState(e.toString()));
+    }
+  }
+
   Future<void> getTasks({String? title, String? cageId, String? managerId, bool? status, int? pageNumber, int? pageSize}) async {
     emit(TasksLoadingState());
     try {
