@@ -7,7 +7,7 @@ final Dio _apiClient = getIt.get<Dio>();
 class ChecklistRepo {
   Future<Checklist> updateChecklistStatus({required String id, bool? status, String? assigneeId}) async {
     try {
-      var res = await _apiClient.put('/api/task-check-lists/$id', data: FormData.fromMap({'assigneeId' : assigneeId, 'status': status}), options: Options(contentType: Headers.multipartFormDataContentType));
+      var res = await _apiClient.put('/api/task-check-lists/$id', data:{'assigneeId' : assigneeId, 'status': status});
       return Checklist.fromJson(res.data);
     } on DioException catch (e) {
       throw Exception(e.response!.data);

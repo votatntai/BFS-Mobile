@@ -30,12 +30,6 @@ class TaskDetailScreen extends StatefulWidget {
 
 class _TaskDetailScreenState extends State<TaskDetailScreen> {
   String status = '';
-  List<Map<String, bool>> checklists = [
-    {'Cho chim A ăn 1 lượng cám 3g': false},
-    {'Kiểm tra tình trạng chim B': false},
-    {'Đo nhiệt độ chim C': false},
-    {'Đo nhiệt độ chim Czzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz': false}
-  ];
 
   TaskStatus _convertStatusToEnum(String status) {
     switch (status) {
@@ -52,6 +46,21 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
     }
   }
 
+  void showLoader(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
+  }
+
+  void hideLoader(BuildContext context) {
+    Navigator.of(context, rootNavigator: true).pop('dialog');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,12 +71,11 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
       ),
       body: Background(
           child: MultiBlocProvider(
-        providers: [BlocProvider(create: (context) => TaskCubit()..getTaskDetail(widget.taskId)), BlocProvider(create: (context) => ChecklistCubit()..getChecklist())],
-        // create: (context) => TaskCubit()..getTaskDetail(widget.taskId),
+        providers: [BlocProvider(create: (context) => TaskCubit()..getTaskDetail(widget.taskId)), BlocProvider(create: (context) => ChecklistCubit()..getChecklist(pageSize: 100))],
         child: BlocBuilder<TaskCubit, TaskState>(builder: (context, state) {
-          if (state is TaskDetailLoadingState) {
-            return const Center(child: CircularProgressIndicator());
-          }
+          // if (state is TaskDetailLoadingState) {
+          //   return const Center(child: CircularProgressIndicator());
+          // }
           if (state is TaskDetailSuccessState) {
             var task = state.task;
             TaskStatus currentStatus = _convertStatusToEnum(task.status!);
@@ -120,22 +128,6 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                                 Text('Deadline', style: secondaryTextStyle(size: 14)),
                               ],
                             ),
-                            // Gap.k16.height,
-                            // Row(
-                            //   children: [
-                            //     SvgPicture.asset(AppAssets.dove_svg, height: 16, color: Colors.grey),
-                            //     Gap.k8.width,
-                            //     Text('Species', style: secondaryTextStyle(size: 14)),
-                            //   ],
-                            // ),
-                            // 14.height,
-                            // Row(
-                            //   children: [
-                            //     SvgPicture.asset(AppAssets.cage_svg, height: 24, color: Colors.grey),
-                            //     Gap.k8.width,
-                            //     Text('Cage', style: secondaryTextStyle(size: 14)),
-                            //   ],
-                            // ),
                           ],
                         ),
                       ),
@@ -266,90 +258,108 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                 ),
                 Gap.kSection.height,
                 Text('Checklists', style: secondaryTextStyle(size: 14)),
-                BlocBuilder<ChecklistCubit, ChecklistState>(builder: (context, state) {
+                BlocConsumer<ChecklistCubit, ChecklistState>(listener: (context, state) {
+                  // if(state is UpdateChecklistLoadingState){
+                  //   showLoader(context);
+                  // }
+                  if (state is UpdateChecklistFailedState) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.message.replaceAll('Exception: ', ''))));
+                    // hideLoader(context);
+                  }
+                  if (state is UpdateChecklistSuccessState) {
+                    Fluttertoast.showToast(msg: 'Update ${state.checkList.title} success!');
+                    // hideLoader(context);
+                    // setState(() {
+                    //   context.read<TaskCubit>().getTaskDetail(widget.taskId);
+                    // });
+                  }
+                }, builder: (context, state) {
                   // if (state is ChecklistLoadingState) {
                   //   return const Center(child: CircularProgressIndicator());
                   // }
-                  if (state is ChecklistSuccessState) {
-                    var checklists = state.checkLists.checklists;
-                    return ListView.separated(
-                        shrinkWrap: true,
-                        physics: const AlwaysScrollableScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          var updateChecklistCubit = context.read<ChecklistCubit>();
-                          return Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Flexible(
-                                flex: 7,
-                                child: Text(task.checkLists![index].title!, style: primaryTextStyle(size: 14, weight: FontWeight.w500)),
-                              ),
-                              Flexible(
-                                flex: 3,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Checkbox(
-                                        activeColor: primaryColor,
-                                        value: checklists![index].status,
-                                        onChanged: (value) {
-                                          updateChecklistCubit.updateChecklistStatus(id: checklists[index].id!, status: value!);
-                                          if (updateChecklistCubit is UpdateChecklistFailedState) {
-                                            Fluttertoast.showToast(msg: (updateChecklistCubit.state as UpdateChecklistFailedState).message);
-                                          }
-                                          // setState(() {
-                                          //   checklists[index] = {checklists[index].keys.first: !checklists[index].values.first};
-                                          // });
-                                        }),
-                                    IconButton(
-                                        onPressed: () {
-                                          showDialog(
-                                              context: context,
-                                              builder: ((context) => AlertDialog(
-                                                    title: Text('Note', style:  primaryTextStyle(),),
-                                                    content: Column(
-                                                      mainAxisSize: MainAxisSize.min,
-                                                      children: [
-                                                        Container(
-                                                          padding: EdgeInsets.symmetric(horizontal: 16),
-                                                          decoration: BoxDecoration(border: Border.all(color: Colors.grey), borderRadius: BorderRadius.circular(8)),
-                                                          child: TextField(
-                                                            // controller: TextEditingController(text: task.checkLists![index].note),
-                                                            onChanged: (value) {
-                                                              // task.checkLists![index].note = value;
-                                                            },
-                                                            decoration: InputDecoration(hintText: 'Enter note', border: InputBorder.none, hintStyle: secondaryTextStyle()),
-                                                            maxLines: 5,
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    actions: [
+                  // if (state is ChecklistSuccessState) {
+                  // var checklists = state.checkLists.checklists;
+                  var checklists = task.checkLists;
+                  checklists!.sort((a, b) => a.order!.compareTo(b.order!));
+                  return ListView.separated(
+                      shrinkWrap: true,
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        var updateChecklistCubit = context.read<ChecklistCubit>();
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Flexible(
+                              flex: 7,
+                              child: Text(checklists[index].title!, style: primaryTextStyle(size: 14, weight: FontWeight.w500)),
+                            ),
+                            Flexible(
+                              flex: 3,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Checkbox(
+                                      activeColor: primaryColor,
+                                      value: checklists[index].status,
+                                      onChanged: (value) {
+                                        checklists[index].status = value;
+                                        updateChecklistCubit.updateChecklistStatus(id: checklists[index].id!, status: value!);
+                                        // setState(() {
+                                        //   checklists[index] = {checklists[index].keys.first: !checklists[index].values.first};
+                                        // });
+                                      }),
+                                  IconButton(
+                                      onPressed: () {
+                                        showDialog(
+                                            context: context,
+                                            builder: ((context) => AlertDialog(
+                                                  title: Text(
+                                                    'Note',
+                                                    style: primaryTextStyle(),
+                                                  ),
+                                                  content: Column(
+                                                    mainAxisSize: MainAxisSize.min,
+                                                    children: [
                                                       Container(
-                                                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                                                              decoration: BoxDecoration(color: primaryColor, borderRadius: BorderRadius.circular(8)),
-                                                              child: Text('Save', style: primaryTextStyle(color: white, size: 14)),
-                                                            ),
-                                                            Gap.k8.width,
-                                                            Container(
-                                                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                                                              decoration: BoxDecoration(color: Colors.grey, borderRadius: BorderRadius.circular(8)),
-                                                              child: Text('Cancel', style: primaryTextStyle(color: white, size: 14)),
-                                                            ),
+                                                        padding: EdgeInsets.symmetric(horizontal: 16),
+                                                        decoration: BoxDecoration(border: Border.all(color: Colors.grey), borderRadius: BorderRadius.circular(8)),
+                                                        child: TextField(
+                                                          // controller: TextEditingController(text: task.checkLists![index].note),
+                                                          onChanged: (value) {
+                                                            // task.checkLists![index].note = value;
+                                                          },
+                                                          decoration: InputDecoration(hintText: 'Enter note', border: InputBorder.none, hintStyle: secondaryTextStyle()),
+                                                          maxLines: 5,
+                                                        ),
+                                                      ),
                                                     ],
-                                                  )));
-                                        },
-                                        icon: SvgPicture.asset(AppAssets.pen_to_square_svg, width: 16, height: 16, color: Colors.grey))
-                                  ],
-                                ),
+                                                  ),
+                                                  actions: [
+                                                    Container(
+                                                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                                      decoration: BoxDecoration(color: primaryColor, borderRadius: BorderRadius.circular(8)),
+                                                      child: Text('Save', style: primaryTextStyle(color: white, size: 14)),
+                                                    ),
+                                                    Gap.k8.width,
+                                                    Container(
+                                                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                                      decoration: BoxDecoration(color: Colors.grey, borderRadius: BorderRadius.circular(8)),
+                                                      child: Text('Cancel', style: primaryTextStyle(color: white, size: 14)),
+                                                    ),
+                                                  ],
+                                                )));
+                                      },
+                                      icon: SvgPicture.asset(AppAssets.pen_to_square_svg, width: 16, height: 16, color: Colors.grey))
+                                ],
                               ),
-                            ],
-                          );
-                        },
-                        separatorBuilder: (context, index) => Gap.k8.height,
-                        itemCount: task.checkLists!.length);
-                  }
-                  return const SizedBox.shrink();
+                            ),
+                          ],
+                        );
+                      },
+                      separatorBuilder: (context, index) => Gap.k8.height,
+                      itemCount: task.checkLists!.length);
+                  // }
+                  // return const SizedBox.shrink();
                 }),
               ],
             ).paddingSymmetric(horizontal: 16, vertical: 16);

@@ -33,82 +33,85 @@ class _TicketsScreenState extends State<TicketsScreen> {
             return const Center(child: CircularProgressIndicator());
           } else if (state is GetTicketSuccessState) {
             var tickets = state.tickets.tickets!.where((t) => t.ticketCategory!.toLowerCase().contains(searchController.text.toLowerCase())).toList();
-            return Column(
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      width: context.width() * 0.65,
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      decoration: BoxDecoration(
-                        color: white,
-                        borderRadius: BorderRadius.circular(16),
+            return SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        width: context.width() * 0.65,
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        decoration: BoxDecoration(
+                          color: white,
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child:  TextField(
+                          onChanged: (value) => setState(() {}),
+                          controller: searchController,
+                          decoration: const InputDecoration(
+                            hintText: 'Search',
+                            prefixIcon: Icon(Icons.search),
+                            border: InputBorder.none,
+                          ), 
+                        ),
                       ),
-                      child:  TextField(
-                        onChanged: (value) => setState(() {}),
-                        controller: searchController,
-                        decoration: const InputDecoration(
-                          hintText: 'Search',
-                          prefixIcon: Icon(Icons.search),
-                          border: InputBorder.none,
-                        ), 
-                      ),
-                    ),
-                    Gap.k8.width,
-                    Container(
-                      padding: const EdgeInsets.all(14),
-                      decoration: BoxDecoration(
-                        color: white,
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: const Text('Add ticket', style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold), textAlign: TextAlign.center,)
-                    ).onTap(() {
-                      Navigator.pushNamed(context, AddTicketScreen.routeName, arguments: widget.cageId);
-                    }).expand(),
-                  ],
-                ),
-                Gap.k16.height, 
-                ListView.separated(
-                  shrinkWrap: true,
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  itemCount: tickets.length,
-                  separatorBuilder: (context, index) => Gap.k16.height,
-                  itemBuilder: (context, index) {
-                    final ticket = tickets[index];
-                    return Container(
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(24),
-                      ),
-                      child: Row(
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(20),
-                            child: FadeInImage.assetNetwork(
-                              image: ticket.image!,
-                              placeholder: AppAssets.placeholder,
-                              fit: BoxFit.cover,
-                              width: 80,
-                              height: 80,
+                      Gap.k8.width,
+                      Container(
+                        padding: const EdgeInsets.all(14),
+                        decoration: BoxDecoration(
+                          color: white,
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: const Text('Add ticket', style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold), textAlign: TextAlign.center,)
+                      ).onTap(() {
+                        Navigator.pushNamed(context, AddTicketScreen.routeName, arguments: widget.cageId);
+                      }).expand(),
+                    ],
+                  ),
+                  Gap.k16.height, 
+                  ListView.separated(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: tickets.length,
+                    separatorBuilder: (context, index) => Gap.k16.height,
+                    itemBuilder: (context, index) {
+                      final ticket = tickets[index];
+                      return Container(
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(24),
+                        ),
+                        child: Row(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: FadeInImage.assetNetwork(
+                                image: ticket.image!,
+                                placeholder: AppAssets.placeholder,
+                                fit: BoxFit.cover,
+                                width: 80,
+                                height: 80,
+                              ),
                             ),
-                          ),
-                          Gap.k16.width,
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(ticket.ticketCategory!, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                              const SizedBox(height: 8),
-                              Text(ticket.description!, style: const TextStyle(fontSize: 16)),
-                            ],
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                ),
-              ],
-            ).paddingSymmetric(horizontal: 16);
+                            Gap.k16.width,
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(ticket.ticketCategory!, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                                const SizedBox(height: 8),
+                                SizedBox(width: context.width() * 0.6, child: Text(ticket.description!, style: const TextStyle(fontSize: 16), overflow: TextOverflow.ellipsis,)),
+                              ],
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ).paddingOnly(left: 16, right: 16, bottom: 16),
+            );
           } 
           return const SizedBox.shrink();
         },),),

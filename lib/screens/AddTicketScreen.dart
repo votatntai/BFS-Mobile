@@ -95,7 +95,6 @@ class _AddTicketScreenState extends State<AddTicketScreen> {
 
   @override
   Widget build(BuildContext context) {
-    
     return BlocProvider<TicketCubit>(
       create: (context) => TicketCubit(),
       child: BlocConsumer<TicketCubit, TicketState>(listener: (context, state) {
@@ -251,16 +250,19 @@ class _AddTicketScreenState extends State<AddTicketScreen> {
                         textAlign: TextAlign.center,
                       ),
                     ).onTap(() {
-                      if (titleController.text.isNotEmpty && descriptionController.text.isNotEmpty && imageFile != null && ticketCategory != null && priority != null) {
-                        context.read<TicketCubit>().addTicket(
-                            title: titleController.text,
-                            description: descriptionController.text,
-                            cageId: widget.cageId,
-                            image: imageFile!,
-                            ticketCategory: ticketCategory,
-                            priority: priority,
-                            creatorId: UserRepo.user.id!);
-                      }
+                      showConfirmDialog(context, 'This action is irreversible', onAccept: () {
+                        if (titleController.text.isNotEmpty && descriptionController.text.isNotEmpty && imageFile != null && ticketCategory != null && priority != null) {
+                          context.read<TicketCubit>().addTicket(
+                              title: titleController.text,
+                              description: descriptionController.text,
+                              cageId: widget.cageId,
+                              image: imageFile!,
+                              ticketCategory: ticketCategory,
+                              priority: priority,
+                              creatorId: UserRepo.user.id!);
+                        }
+
+                      });
                     })
                   ],
                 ).paddingSymmetric(horizontal: 16, vertical: 16),
