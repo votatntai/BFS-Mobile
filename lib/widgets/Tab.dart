@@ -19,7 +19,7 @@ class CustomTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding:
-          EdgeInsets.symmetric(vertical: 8),
+          const EdgeInsets.symmetric(vertical: 8),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           color: _selectedIndex == _index
@@ -28,6 +28,7 @@ class CustomTab extends StatelessWidget {
       child: Center(
         child: Text(
           _title,
+          overflow: TextOverflow.ellipsis,
           style: TextStyle(
             fontSize: 12,
               color: _selectedIndex == _index ? white : primaryColor,
