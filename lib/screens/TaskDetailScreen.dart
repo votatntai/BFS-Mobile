@@ -12,6 +12,7 @@ import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../domain/models/checklists.dart';
+import '../domain/repositories/user_repo.dart';
 import '../utils/app_assets.dart';
 import '../utils/gap.dart';
 import '../widgets/AppBar.dart';
@@ -73,9 +74,9 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
           child: MultiBlocProvider(
         providers: [BlocProvider(create: (context) => TaskCubit()..getTaskDetail(widget.taskId)), BlocProvider(create: (context) => ChecklistCubit()..getChecklist(pageSize: 100))],
         child: BlocBuilder<TaskCubit, TaskState>(builder: (context, state) {
-          // if (state is TaskDetailLoadingState) {
-          //   return const Center(child: CircularProgressIndicator());
-          // }
+          if (state is TaskDetailLoadingState) {
+            return const Center(child: CircularProgressIndicator());
+          }
           if (state is TaskDetailSuccessState) {
             var task = state.task;
             TaskStatus currentStatus = _convertStatusToEnum(task.status!);
@@ -279,8 +280,9 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                   // }
                   // if (state is ChecklistSuccessState) {
                   // var checklists = state.checkLists.checklists;
-                  var checklists = task.checkLists;
-                  checklists!.sort((a, b) => a.order!.compareTo(b.order!));
+                  var checklists = task.checkLists!.where((c) => c.assignee!.id == UserRepo.user.id).toList();
+                  checklists.sort((a, b) => a.order!.compareTo(b.order!));
+
                   return ListView.separated(
                       shrinkWrap: true,
                       physics: const AlwaysScrollableScrollPhysics(),
@@ -308,48 +310,48 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                                         //   checklists[index] = {checklists[index].keys.first: !checklists[index].values.first};
                                         // });
                                       }),
-                                  IconButton(
-                                      onPressed: () {
-                                        showDialog(
-                                            context: context,
-                                            builder: ((context) => AlertDialog(
-                                                  title: Text(
-                                                    'Note',
-                                                    style: primaryTextStyle(),
-                                                  ),
-                                                  content: Column(
-                                                    mainAxisSize: MainAxisSize.min,
-                                                    children: [
-                                                      Container(
-                                                        padding: EdgeInsets.symmetric(horizontal: 16),
-                                                        decoration: BoxDecoration(border: Border.all(color: Colors.grey), borderRadius: BorderRadius.circular(8)),
-                                                        child: TextField(
-                                                          // controller: TextEditingController(text: task.checkLists![index].note),
-                                                          onChanged: (value) {
-                                                            // task.checkLists![index].note = value;
-                                                          },
-                                                          decoration: InputDecoration(hintText: 'Enter note', border: InputBorder.none, hintStyle: secondaryTextStyle()),
-                                                          maxLines: 5,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  actions: [
-                                                    Container(
-                                                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                                                      decoration: BoxDecoration(color: primaryColor, borderRadius: BorderRadius.circular(8)),
-                                                      child: Text('Save', style: primaryTextStyle(color: white, size: 14)),
-                                                    ),
-                                                    Gap.k8.width,
-                                                    Container(
-                                                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                                                      decoration: BoxDecoration(color: Colors.grey, borderRadius: BorderRadius.circular(8)),
-                                                      child: Text('Cancel', style: primaryTextStyle(color: white, size: 14)),
-                                                    ),
-                                                  ],
-                                                )));
-                                      },
-                                      icon: SvgPicture.asset(AppAssets.pen_to_square_svg, width: 16, height: 16, color: Colors.grey))
+                                  // IconButton(
+                                  //     onPressed: () {
+                                  //       showDialog(
+                                  //           context: context,
+                                  //           builder: ((context) => AlertDialog(
+                                  //                 title: Text(
+                                  //                   'Note',
+                                  //                   style: primaryTextStyle(),
+                                  //                 ),
+                                  //                 content: Column(
+                                  //                   mainAxisSize: MainAxisSize.min,
+                                  //                   children: [
+                                  //                     Container(
+                                  //                       padding: EdgeInsets.symmetric(horizontal: 16),
+                                  //                       decoration: BoxDecoration(border: Border.all(color: Colors.grey), borderRadius: BorderRadius.circular(8)),
+                                  //                       child: TextField(
+                                  //                         // controller: TextEditingController(text: task.checkLists![index].note),
+                                  //                         onChanged: (value) {
+                                  //                           // task.checkLists![index].note = value;
+                                  //                         },
+                                  //                         decoration: InputDecoration(hintText: 'Enter note', border: InputBorder.none, hintStyle: secondaryTextStyle()),
+                                  //                         maxLines: 5,
+                                  //                       ),
+                                  //                     ),
+                                  //                   ],
+                                  //                 ),
+                                  //                 actions: [
+                                  //                   Container(
+                                  //                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                  //                     decoration: BoxDecoration(color: primaryColor, borderRadius: BorderRadius.circular(8)),
+                                  //                     child: Text('Save', style: primaryTextStyle(color: white, size: 14)),
+                                  //                   ),
+                                  //                   Gap.k8.width,
+                                  //                   Container(
+                                  //                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                  //                     decoration: BoxDecoration(color: Colors.grey, borderRadius: BorderRadius.circular(8)),
+                                  //                     child: Text('Cancel', style: primaryTextStyle(color: white, size: 14)),
+                                  //                   ),
+                                  //                 ],
+                                  //               )));
+                                  //     },
+                                  //     icon: SvgPicture.asset(AppAssets.pen_to_square_svg, width: 16, height: 16, color: Colors.grey))
                                 ],
                               ),
                             ),
@@ -357,7 +359,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                         );
                       },
                       separatorBuilder: (context, index) => Gap.k8.height,
-                      itemCount: task.checkLists!.length);
+                      itemCount: checklists.length);
                   // }
                   // return const SizedBox.shrink();
                 }),

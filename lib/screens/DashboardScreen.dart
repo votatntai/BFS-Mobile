@@ -2,7 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/cubit/staff/staff_cubit.dart';
-import 'package:flutter_application_1/fragments/CageFragment.dart';
+import 'package:flutter_application_1/cubit/task/task_cubit.dart';
+import 'package:flutter_application_1/cubit/task/task_state.dart';
 import 'package:flutter_application_1/fragments/FoodFragment.dart';
 import 'package:flutter_application_1/fragments/ProfileFragment.dart';
 import 'package:flutter_application_1/utils/app_assets.dart';
@@ -14,6 +15,7 @@ import 'package:nb_utils/nb_utils.dart';
 import '../cubit/staff/staff_state.dart';
 import '../fragments/BirdFragment.dart';
 import '../fragments/TaskFragment.dart';
+import '../fragments/TicketFragment.dart';
 import '../widgets/Background.dart';
 
 // ignore: must_be_immutable
@@ -43,7 +45,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   List<Widget> widgetOption = <Widget>[
     TaskFragment(),
-    CageFragment(),
+    const TicketFragment(),
     BirdFragment(),
     const FoodFragment(),
     const ProfileFragment(),
@@ -55,6 +57,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       body: MultiBlocProvider(
         providers: [
           BlocProvider<StaffCubit>(create: (context) => StaffCubit()..getStaffInformation()),
+          BlocProvider<TaskCubit>(create: (context) => TaskCubit()..getTasksStaff())
         ],
         child: MultiBlocListener(
           listeners: [
@@ -65,6 +68,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 // }
               },
             ),
+            BlocListener<TaskCubit, TaskState>(listener: (context, state) {})
           ],
           child: Stack(children: [
             CustomPaint(
@@ -115,8 +119,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         color: selectedItem == 0 ? primaryColor : gray, height: 20),
                     onPressed: () {onTapSelection(0);}),
                 IconButton(
-                    icon: SvgPicture.asset(AppAssets.cage_svg,
-                        color: selectedItem == 1 ? primaryColor : gray, height: 28),
+                    icon: SvgPicture.asset(AppAssets.ticket,
+                        color: selectedItem == 1 ? primaryColor : gray, width: 28,),
                     onPressed: () {onTapSelection(1);}).paddingTop(4),
                 const SizedBox(width: 48), // Tạo khoảng trống cho FAB
                 IconButton(

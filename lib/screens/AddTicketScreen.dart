@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/cubit/ticket/ticket_cubit.dart';
 import 'package:flutter_application_1/cubit/ticket/ticket_state.dart';
 import 'package:flutter_application_1/domain/repositories/user_repo.dart';
+import 'package:flutter_application_1/screens/DashboardScreen.dart';
 import 'package:flutter_application_1/screens/TicketsScreen.dart';
 import 'package:flutter_application_1/utils/app_assets.dart';
 import 'package:flutter_application_1/utils/colors.dart';
@@ -18,9 +19,8 @@ import 'package:nb_utils/nb_utils.dart';
 import '../utils/enum.dart';
 
 class AddTicketScreen extends StatefulWidget {
-  const AddTicketScreen({super.key, required this.cageId});
+  const AddTicketScreen({super.key});
   static const String routeName = '/add-ticket';
-  final String cageId;
 
   @override
   State<AddTicketScreen> createState() => _AddTicketScreenState();
@@ -105,14 +105,13 @@ class _AddTicketScreenState extends State<AddTicketScreen> {
           hideLoader(context);
           Fluttertoast.showToast(msg: 'Ticket created successfully');
           Navigator.pop(context);
-          Navigator.pushReplacementNamed(context, TicketsScreen.routeName);
+          Navigator.pushReplacementNamed(context, DashboardScreen.routeName, arguments: 1);
         } else if (state is CreateTicketFailedState) {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text(state.message.replaceFirst('Exception: ', '')),
             backgroundColor: tomato,
           ));
           hideLoader(context);
-          print(state.message);
         }
       }, builder: (context, state) {
         return Scaffold(
@@ -255,7 +254,7 @@ class _AddTicketScreenState extends State<AddTicketScreen> {
                           context.read<TicketCubit>().addTicket(
                               title: titleController.text,
                               description: descriptionController.text,
-                              cageId: widget.cageId,
+                              // cageId: widget.cageId,
                               image: imageFile!,
                               ticketCategory: ticketCategory,
                               priority: priority,

@@ -16,7 +16,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case LoginScreen.routeName:
       return MaterialPageRoute(builder: (_) => const LoginScreen());
     case DashboardScreen.routeName:
-      return MaterialPageRoute(builder: (_) => DashboardScreen());
+      return MaterialPageRoute(builder: (_) => DashboardScreen(tabIndex: settings.arguments as int,));
     case '/settings':
       return MaterialPageRoute(builder: (_) => const SettingsScreen());
     case '/bird-detail':
@@ -28,7 +28,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case TicketsScreen.routeName:
       return MaterialPageRoute(builder: (_) => TicketsScreen(cageId: settings.arguments.toString(),));
     case AddTicketScreen.routeName:
-      return MaterialPageRoute(builder: (_) => AddTicketScreen(cageId: settings.arguments.toString(),));
+      return MaterialPageRoute(builder: (_) => const AddTicketScreen());
     case TasksScreen.routeName:
       return MaterialPageRoute(builder: (_) => TasksScreen(cageId: settings.arguments.toString(),));
     default:

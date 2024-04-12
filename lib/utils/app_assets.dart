@@ -25,4 +25,5 @@ class AppAssets {
   static const String envelope = 'assets/icons/envelope.svg';
   static const String solid_circle = 'assets/icons/solid-circle.svg';
   static const String camera = 'assets/icons/camera.svg';
+  static const String ticket = 'assets/icons/ticket.svg';
 }
