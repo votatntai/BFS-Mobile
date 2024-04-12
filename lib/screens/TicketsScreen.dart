@@ -32,7 +32,7 @@ class _TicketsScreenState extends State<TicketsScreen> {
           if (state is GetTicketLoadingState) {
             return const Center(child: CircularProgressIndicator());
           } else if (state is GetTicketSuccessState) {
-            var tickets = state.tickets.tickets!.where((t) => t.ticketCategory!.toLowerCase().contains(searchController.text.toLowerCase())).toList();
+            var tickets = state.tickets.tickets!.where((t) => t.ticketCategory!.toLowerCase().contains(searchController.text.toLowerCase()) || t.status!.toLowerCase().contains(searchController.text.toLowerCase())).toList();
             return SingleChildScrollView(
               physics: const AlwaysScrollableScrollPhysics(),
               child: Column(
@@ -50,7 +50,7 @@ class _TicketsScreenState extends State<TicketsScreen> {
                           onChanged: (value) => setState(() {}),
                           controller: searchController,
                           decoration: const InputDecoration(
-                            hintText: 'Search',
+                            hintText: 'Search by category or status',
                             prefixIcon: Icon(Icons.search),
                             border: InputBorder.none,
                           ), 
@@ -84,6 +84,7 @@ class _TicketsScreenState extends State<TicketsScreen> {
                           borderRadius: BorderRadius.circular(24),
                         ),
                         child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             ClipRRect(
                               borderRadius: BorderRadius.circular(20),
@@ -101,9 +102,17 @@ class _TicketsScreenState extends State<TicketsScreen> {
                               children: [
                                 Text(ticket.ticketCategory!, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                                 const SizedBox(height: 8),
-                                SizedBox(width: context.width() * 0.6, child: Text(ticket.description!, style: const TextStyle(fontSize: 16), overflow: TextOverflow.ellipsis,)),
+                                SizedBox(width: context.width() * 0.4, child: Text(ticket.description!, style: const TextStyle(fontSize: 16), overflow: TextOverflow.ellipsis,)),
                               ],
-                            ),
+                            ).expand(),
+                            Gap.k16.width,
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                              decoration: BoxDecoration(
+                                border: Border.all(color: ticket.status == 'Done' ? forestGreen : ticket.status == 'Rejected' ? redColor : goldenRod),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Text(ticket.status!, style: primaryTextStyle(color: ticket.status == 'Done' ? forestGreen : ticket.status == 'Rejected' ? redColor : goldenRod),),)
                           ],
                         ),
                       );
