@@ -16,7 +16,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case LoginScreen.routeName:
       return MaterialPageRoute(builder: (_) => const LoginScreen());
     case DashboardScreen.routeName:
-      return MaterialPageRoute(builder: (_) => DashboardScreen(tabIndex: settings.arguments as int,));
+      return MaterialPageRoute(builder: (_) => DashboardScreen());
     case '/settings':
       return MaterialPageRoute(builder: (_) => const SettingsScreen());
     case '/bird-detail':

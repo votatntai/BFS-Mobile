@@ -36,7 +36,7 @@ Widget _fetchAuthAndInitialRoute() {
   try {
     var accessToken = getStringAsync(AppConstant.TOKEN_KEY);
     if (accessToken.isNotEmpty) {
-      return DashboardScreen();
+      return DashboardScreen(tabIndex: 0,);
     }
   } catch (e) {
     debugPrint("ex ${e.toString()}"); // Print exception 

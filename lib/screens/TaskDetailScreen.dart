@@ -273,6 +273,9 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                     // setState(() {
                     //   context.read<TaskCubit>().getTaskDetail(widget.taskId);
                     // });
+                    setState(() {
+                      context.read<TaskCubit>().getTaskDetail(widget.taskId);
+                    });
                   }
                 }, builder: (context, state) {
                   // if (state is ChecklistLoadingState) {

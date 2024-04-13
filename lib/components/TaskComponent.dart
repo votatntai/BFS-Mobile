@@ -10,8 +10,9 @@ import '../utils/gap.dart';
 
 class TaskComponent extends StatelessWidget {
   final Task task;
+  final VoidCallback? onBack;
   const TaskComponent({
-    super.key, required this.task,
+    super.key, required this.task, this.onBack,
   });
 
   @override
@@ -71,8 +72,11 @@ class TaskComponent extends StatelessWidget {
         ),
         
       ]),
-    ).onTap((){
-      Navigator.pushNamed(context, '/task-detail', arguments: task.id);
+    ).onTap(() async {
+      var isRefresh = await Navigator.pushNamed(context, '/task-detail', arguments: task.id);
+      if (isRefresh == true) {
+        onBack!();
+      }
     });
   }
 }

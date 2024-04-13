@@ -75,10 +75,22 @@ class _TaskFragmentState extends State<TaskFragment> {
                               },
                               children: <Widget>[
                                 // Nội dung của mỗi "tab"
-                                TaskTabView(tasks: toDoTasks).paddingTop(32),
-                                TaskTabView(tasks: inProgressTasks).paddingTop(32),
-                                TaskTabView(tasks: workFinishedTasks).paddingTop(32),
-                                TaskTabView(tasks: doneTasks).paddingTop(32),
+                                TaskTabView(tasks: toDoTasks, onBack: () {
+                                  context.read<TaskCubit>().getTasksStaff();
+                                  setState(() {
+                                    _selectedIndex = 0;
+                                  });
+                                  // _onItemTapped(0);
+                                },).paddingTop(32),
+                                TaskTabView(tasks: inProgressTasks, onBack: () {
+                                  context.read<TaskCubit>().getTasksStaff();
+                                  setState(() {
+                                    _selectedIndex = 0;
+                                  });
+                                  // _pageController.animateToPage(1, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+                                },).paddingTop(32),
+                                TaskTabView(tasks: workFinishedTasks, onBack: () => context.read<TaskCubit>().getTasksStaff(),).paddingTop(32),
+                                TaskTabView(tasks: doneTasks, onBack: () => context.read<TaskCubit>().getTasksStaff(),).paddingTop(32),
                               ],
                             ),
                           ),
@@ -102,10 +114,11 @@ class _TaskFragmentState extends State<TaskFragment> {
 class TaskTabView extends StatelessWidget {
   const TaskTabView({
     super.key,
-    required this.tasks,
+    required this.tasks, this.onBack,
   });
 
   final List<Task> tasks;
+  final VoidCallback? onBack;
 
   @override
   Widget build(BuildContext context) {
@@ -116,9 +129,10 @@ class TaskTabView extends StatelessWidget {
             children: [
               Expanded(
                 child: ListView.separated(
-                    physics: const BouncingScrollPhysics(),
+                    physics: const AlwaysScrollableScrollPhysics(),
                     itemBuilder: (context, index) => TaskComponent(
                           task: tasks[index],
+                          onBack: onBack,
                         ),
                     separatorBuilder: (context, indext) => Gap.k16.height,
                     itemCount: tasks.length),
