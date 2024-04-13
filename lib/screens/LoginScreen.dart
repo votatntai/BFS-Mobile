@@ -35,7 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
             showDialog(context: context, builder: (context) => const Center(child: CircularProgressIndicator()));
           }
           if (state is LoginSuccessState) {
-            Navigator.pushReplacementNamed(context, DashboardScreen.routeName);
+            Navigator.pushReplacementNamed(context, DashboardScreen.routeName, arguments: 0);
           } else if (state is LoginFailedState) {
             showModalBottomSheet(context: context, builder: (context) => AlertDialog(
               title: const Text(msg_login_failed_title),
