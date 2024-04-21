@@ -22,3 +22,24 @@ class CreateTicketFailedState extends TicketState {
   final String message;
   CreateTicketFailedState(this.message);
 }
+
+class GetTicketByIdLoadingState extends TicketState {}
+
+class GetTicketByIdSuccessState extends TicketState {
+  final Ticket ticket;
+  GetTicketByIdSuccessState(this.ticket);
+}
+
+class GetTicketByIdFailedState extends TicketState {
+  final String message;
+  GetTicketByIdFailedState(this.message);
+}
+
+class UpdateTicketLoadingState extends TicketState {}
+
+class UpdateTicketSuccessState extends TicketState {}
+
+class UpdateTicketFailedState extends TicketState {
+  final String message;
+  UpdateTicketFailedState(this.message);
+}

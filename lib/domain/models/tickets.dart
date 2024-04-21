@@ -1,4 +1,5 @@
 import 'cages.dart';
+import 'staff.dart';
 
 class Tickets {
   Pagination? pagination;
@@ -54,39 +55,48 @@ class Pagination {
 
 class Ticket {
   String? id;
+  String? title;
   String? ticketCategory;
-  Creator? creator;
+  Staff? creator;
   String? priority;
-  Creator? assignee;
+  Staff? assignee;
   Cage? cage;
   String? description;
+  String? resultDescription;
+  String? resultImage;
   String? image;
   String? status;
   String? createAt;
 
   Ticket(
       {this.id,
+      this.title,
       this.ticketCategory,
       this.creator,
       this.priority,
       this.assignee,
       this.cage,
       this.description,
+      this.resultDescription,
+      this.resultImage,
       this.image,
       this.status,
       this.createAt});
 
   Ticket.fromJson(Map<String, dynamic> json) {
     id = json['id'];
+    title = json['title'];
     ticketCategory = json['ticketCategory'];
     creator =
-        json['creator'] != null ? new Creator.fromJson(json['creator']) : null;
+        json['creator'] != null ? new Staff.fromJson(json['creator']) : null;
     priority = json['priority'];
     assignee = json['assignee'] != null
-        ? new Creator.fromJson(json['assignee'])
+        ? new Staff.fromJson(json['assignee'])
         : null;
     cage = json['cage'] != null ? new Cage.fromJson(json['cage']) : null;
     description = json['description'];
+    resultDescription = json['resultDescription'];
+    resultImage = json['resultImage'];
     image = json['image'];
     status = json['status'];
     createAt = json['createAt'];
@@ -95,6 +105,7 @@ class Ticket {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
+    data['title'] = this.title;
     data['ticketCategory'] = this.ticketCategory;
     if (this.creator != null) {
       data['creator'] = this.creator!.toJson();
@@ -107,46 +118,11 @@ class Ticket {
       data['cage'] = this.cage!.toJson();
     }
     data['description'] = this.description;
+    data['resultDescription'] = this.resultDescription;
+    data['resultImage'] = this.resultImage;
     data['image'] = this.image;
     data['status'] = this.status;
     data['createAt'] = this.createAt;
-    return data;
-  }
-}
-
-class Creator {
-  String? id;
-  String? name;
-  String? avatarUrl;
-  String? email;
-  String? phone;
-  Null? janglee;
-
-  Creator(
-      {this.id,
-      this.name,
-      this.avatarUrl,
-      this.email,
-      this.phone,
-      this.janglee});
-
-  Creator.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    avatarUrl = json['avatarUrl'];
-    email = json['email'];
-    phone = json['phone'];
-    janglee = json['janglee'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['avatarUrl'] = this.avatarUrl;
-    data['email'] = this.email;
-    data['phone'] = this.phone;
-    data['janglee'] = this.janglee;
     return data;
   }
 }

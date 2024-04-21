@@ -28,4 +28,24 @@ class TicketCubit extends Cubit<TicketState>{
       emit(CreateTicketFailedState(e.toString()));
     }
   }
+
+  Future<void> getTicketById({required String ticketId}) async {
+    emit(GetTicketByIdLoadingState());
+    try {
+      final ticket = await ticketRepo.getTicketById(ticketId);
+      emit(GetTicketByIdSuccessState(ticket));
+    } catch (e) {
+      emit(GetTicketByIdFailedState(e.toString()));
+    }
+  }
+
+  Future<void> updateTicket({required String ticketId, String? status, String? ticketCategory, String? creatorId, String? title, String? assigneeId, String? cageId, String? description, XFile? image, String? resultDescription, XFile? resultImage}) async {
+    emit(UpdateTicketLoadingState());
+    try {
+      await ticketRepo.updateTicket(ticketId: ticketId, status: status, ticketCategory: ticketCategory, creatorId: creatorId, title: title, assigneeId: assigneeId, cageId: cageId, description: description, image: image, resultDescription: resultDescription, resultImage: resultImage);
+      emit(UpdateTicketSuccessState());
+    } catch (e) {
+      emit(UpdateTicketFailedState(e.toString()));
+    }
+  }
 }

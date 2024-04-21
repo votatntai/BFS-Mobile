@@ -39,7 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
           } else if (state is LoginFailedState) {
             showModalBottomSheet(context: context, builder: (context) => AlertDialog(
               title: const Text(msg_login_failed_title),
-                content: Text('$msg_login_failed_content\n${state.error.toString().replaceFirst('Exception: ', '')}'),
+                content: const Text(msg_login_failed_content),
               actions: [
                 TextButton(
                   onPressed: () {
@@ -61,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   painter: DotPainter(),
                   child: Container(
                     height: MediaQuery.of(context).size.height,
-                    decoration: BoxDecoration(),
+                    decoration: const BoxDecoration(),
                   ),
                 ),
                 BackdropFilter(

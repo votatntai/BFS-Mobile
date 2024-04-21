@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../screens/AddTicketScreen.dart';
 import '../screens/BirdDetailScreen.dart';
 import '../screens/CageDetailScreen.dart';
@@ -9,6 +8,7 @@ import '../screens/NotFoundScreen.dart';
 import '../screens/SettingScreen.dart';
 import '../screens/TaskDetailScreen.dart';
 import '../screens/TasksScreen.dart';
+import '../screens/TicketDetailScreen.dart';
 import '../screens/TicketsScreen.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
@@ -31,6 +31,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (_) => const AddTicketScreen());
     case TasksScreen.routeName:
       return MaterialPageRoute(builder: (_) => TasksScreen(cageId: settings.arguments.toString(),));
+    case TicketDetailScreen.routeName:
+      return MaterialPageRoute(builder: (_) => TicketDetailScreen(ticketId: settings.arguments.toString(),));
     default:
       return MaterialPageRoute(builder: (_) => const NotFoundScreen());
   }

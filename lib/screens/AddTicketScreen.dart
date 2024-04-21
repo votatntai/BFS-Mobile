@@ -1,22 +1,21 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/cubit/ticket/ticket_cubit.dart';
-import 'package:flutter_application_1/cubit/ticket/ticket_state.dart';
-import 'package:flutter_application_1/domain/repositories/user_repo.dart';
-import 'package:flutter_application_1/screens/DashboardScreen.dart';
-import 'package:flutter_application_1/screens/TicketsScreen.dart';
-import 'package:flutter_application_1/utils/app_assets.dart';
-import 'package:flutter_application_1/utils/colors.dart';
-import 'package:flutter_application_1/utils/gap.dart';
-import 'package:flutter_application_1/widgets/AppBar.dart';
-import 'package:flutter_application_1/widgets/Background.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+import '../cubit/ticket/ticket_cubit.dart';
+import '../cubit/ticket/ticket_state.dart';
+import '../domain/repositories/user_repo.dart';
+import '../utils/app_assets.dart';
+import '../utils/colors.dart';
 import '../utils/enum.dart';
+import '../utils/gap.dart';
+import '../widgets/AppBar.dart';
+import '../widgets/Background.dart';
+import 'DashboardScreen.dart';
 
 class AddTicketScreen extends StatefulWidget {
   const AddTicketScreen({super.key});
@@ -166,7 +165,7 @@ class _AddTicketScreenState extends State<AddTicketScreen> {
                           hintStyle: primaryTextStyle(color: gray),
                           hintText: 'Title',
                           border: InputBorder.none,
-                          contentPadding: EdgeInsets.all(16),
+                          contentPadding: const EdgeInsets.all(16),
                         ),
                       ),
                     ),
@@ -178,7 +177,7 @@ class _AddTicketScreenState extends State<AddTicketScreen> {
                             hintText: 'Category',
                             hintStyle: primaryTextStyle(color: gray),
                             border: InputBorder.none,
-                            contentPadding: EdgeInsets.all(16),
+                            contentPadding: const EdgeInsets.all(16),
                           ),
                           items: const [
                             DropdownMenuItem(value: 'Food', child: Text('Food')),
@@ -200,7 +199,7 @@ class _AddTicketScreenState extends State<AddTicketScreen> {
                             hintText: 'Priority',
                             hintStyle: primaryTextStyle(color: gray),
                             border: InputBorder.none,
-                            contentPadding: EdgeInsets.all(16),
+                            contentPadding: const EdgeInsets.all(16),
                           ),
                           // items: const [
                           //   DropdownMenuItem(value: '1', child: Text('Food')),
@@ -230,7 +229,7 @@ class _AddTicketScreenState extends State<AddTicketScreen> {
                           hintText: 'Description',
                           hintStyle: primaryTextStyle(color: gray),
                           border: InputBorder.none,
-                          contentPadding: EdgeInsets.all(16),
+                          contentPadding: const EdgeInsets.all(16),
                         ),
                       ),
                     ),

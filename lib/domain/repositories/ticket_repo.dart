@@ -41,4 +41,44 @@ class TicketRepo {
       throw Exception(e);
     }
   }
+
+  Future<Ticket> getTicketById(String ticketId) async {
+    try {
+      final response = await _apiClient.get('/api/tickets/$ticketId');
+      return Ticket.fromJson(response.data);
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future<bool> updateTicket({required String ticketId, String? status, String? ticketCategory, String? creatorId, String? title, String? assigneeId, String? cageId, String? description, XFile? image, String? resultDescription, XFile? resultImage}) async {
+    try {
+      FormData formData = FormData.fromMap({
+        if(ticketCategory != null)
+        'ticketCategory': ticketCategory,
+        if(creatorId != null)
+        'creatorId': creatorId,
+        if(title != null)
+        'title': title,
+        if(assigneeId != null)
+        'assigneeId': assigneeId,
+        if(cageId != null)
+        'cageId': cageId,
+        if(description != null)
+        'description': description,
+        if(image != null)
+        'image': await MultipartFile.fromFile(image.path, filename: 'ticketImage-$title'),
+        if(status != null)
+        'status': status,
+        if(resultDescription != null)
+        'resultDescription': resultDescription,
+        if(resultImage != null)
+        'resultImage': await MultipartFile.fromFile(resultImage.path, filename: 'ticketResultImage-$title'),
+      });
+      await _apiClient.put('/api/tickets/$ticketId', data: formData, options: Options(contentType: Headers.multipartFormDataContentType));
+      return true;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
 }
