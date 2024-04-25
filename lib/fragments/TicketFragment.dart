@@ -46,7 +46,10 @@ class _TicketFragmentState extends State<TicketFragment> {
                   .where((t) => t.ticketCategory!.toLowerCase().contains(searchController.text.toLowerCase()) || t.status!.toLowerCase().contains(searchController.text.toLowerCase()))
                   .toList();
               if (_selectedIndex == 1) {
-                tickets = tickets.where((t) => t.assignee!.id == UserRepo.user.id).toList();
+                tickets = tickets.where((t) {
+                  if(t.assignee != null){ return t.assignee!.id == UserRepo.user.id;}
+                  return false;
+                }).toList();
               }
               return RefreshIndicator(
                 onRefresh: () async {
