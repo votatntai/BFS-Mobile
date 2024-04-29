@@ -182,11 +182,11 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> with SingleTick
                       constraints: BoxConstraints(maxHeight: context.height() * 0.55),
                       child: PageView(
                         controller: _pageController,
-                        // onPageChanged: (index) {
-                        //   setState(() {
-                        //     _tabIndex = index;
-                        //   });
-                        // },
+                        onPageChanged: (index) {
+                          setState(() {
+                            _tabIndex = index;
+                          });
+                        },
                         children: <Widget>[
                           SizedBox(
                             width: context.width(),
