@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/domain/repositories/user_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -73,6 +74,7 @@ class _TicketFragmentState extends State<TicketFragment> {
                               controller: searchController,
                               decoration: const InputDecoration(
                                 hintText: 'Search by category or status',
+                                hintStyle: TextStyle(color: Colors.grey, fontWeight: FontWeight.w400, fontSize: 14),
                                 prefixIcon: Icon(Icons.search),
                                 border: InputBorder.none,
                               ),

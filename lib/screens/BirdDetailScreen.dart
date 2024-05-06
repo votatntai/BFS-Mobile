@@ -92,17 +92,15 @@ class BirdDetailScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      Gap.k8.height,
-                      Text(
-                          bird.characteristic!,
-                          textAlign: TextAlign.justify,
-                          style: secondaryTextStyle(size: 16)),
+                      if (bird.characteristic != null) ...[
+                        Gap.k8.height,
+                        Text(bird.characteristic!, textAlign: TextAlign.justify, style: secondaryTextStyle(size: 16)),
+                      ],
                     ],
                   ).paddingSymmetric(horizontal: 16, vertical: 16);
                 }
                 return const SizedBox.shrink();
-              }
-              ),
+              }),
             ),
           ),
         ));

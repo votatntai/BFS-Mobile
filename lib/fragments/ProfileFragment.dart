@@ -39,13 +39,13 @@ class _ProfileFragmentState extends State<ProfileFragment> {
                           children: [
                             ClipRRect(
                               borderRadius: BorderRadius.circular(60),
-                              child: FadeInImage.assetNetwork(
+                              child: staff.avatarUrl != null ? FadeInImage.assetNetwork(
                                 placeholder: AppAssets.placeholder,
                                 image: staff.avatarUrl!,
                                 height: 120,
                                 width: 120,
                                 fit: BoxFit.cover,
-                              ),
+                              ) : Image.asset(AppAssets.placeholder, height: 120, width: 120, fit: BoxFit.cover),
                             ),
                             Gap.k16.height,
                             Text(staff.name!, style: boldTextStyle(size: 20)),

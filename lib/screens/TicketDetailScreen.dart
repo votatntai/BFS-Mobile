@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_application_1/cubit/ticket/ticket_cubit.dart';
 import 'package:flutter_application_1/cubit/ticket/ticket_state.dart';
+import 'package:flutter_application_1/domain/repositories/user_repo.dart';
 import 'package:flutter_application_1/utils/app_assets.dart';
 import 'package:flutter_application_1/utils/colors.dart';
 import 'package:flutter_application_1/utils/gap.dart';
@@ -260,14 +261,14 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> with SingleTick
                                 hideLoader(context);
                               }
                             }, builder: (context, state) {
-                              return Column(
+                              return ticket.resultDescription != null || ticket.resultImage != null || UserRepo.user.id == ticket.assignee?.id ? Column(
                                 children: [
                                   Row(
                                     children: [
                                       // Text('Result Description: ', style: secondaryTextStyle()),
                                       ticket.resultDescription != null
                                           ? Text(ticket.resultDescription!, style: primaryTextStyle())
-                                          : Expanded(
+                                          : ticket.assignee != null && ticket.assignee!.id == UserRepo.user.id ? Expanded(
                                               child: Container(
                                                 decoration: BoxDecoration(
                                                   borderRadius: BorderRadius.circular(8),
@@ -281,18 +282,18 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> with SingleTick
                                                   maxLines: 5,
                                                 ),
                                               ),
-                                            ),
+                                            ) : const SizedBox.shrink(),
                                     ],
                                   ),
                                   Gap.k8.height,
-                                  ticket.resultImage != null
+                                  ticket.resultImage != null 
                                       ? SizedBox(
                                           width: context.width(),
                                           height: context.width() * 9 / 16,
                                           child: ClipRRect(
                                               borderRadius: BorderRadius.circular(16),
                                               child: FadeInImage.assetNetwork(placeholder: AppAssets.placeholder, image: ticket.resultImage!, fit: BoxFit.cover)))
-                                      : imageFile == null
+                                      : ticket.assignee?.id == UserRepo.user.id
                                           ? Container(
                                               width: context.width(),
                                               height: context.width() * 9 / 16,
@@ -314,12 +315,12 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> with SingleTick
                                             ).onTap(() {
                                               _imageModalBottomSheet(context);
                                             })
-                                          : SizedBox(
+                                          : imageFile != null ? SizedBox(
                                               width: context.width(),
                                               height: context.width() * 9 / 16,
-                                              child: ClipRRect(borderRadius: BorderRadius.circular(16), child: Image.file(File(imageFile!.path), fit: BoxFit.cover))),
+                                              child: ClipRRect(borderRadius: BorderRadius.circular(16), child: Image.file(File(imageFile!.path), fit: BoxFit.cover))) : const SizedBox.shrink(),
                                   const Spacer(),
-                                  (ticket.resultDescription == null && ticket.resultImage == null) ? Container(
+                                  ((ticket.resultDescription == null || ticket.resultImage == null) && ticket.assignee != null && ticket.assignee!.id == UserRepo.user.id) ? Container(
                                     width: context.width(),
                                     height: 48,
                                     decoration: BoxDecoration(
@@ -340,7 +341,7 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> with SingleTick
                                   }) : const SizedBox.shrink(),
 
                                 ],
-                              );
+                              ) : const Center(child: Text('This ticket has no results yet'),);
                             }),
                           ),
                         ],
