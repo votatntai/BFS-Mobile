@@ -293,7 +293,7 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> with SingleTick
                                           child: ClipRRect(
                                               borderRadius: BorderRadius.circular(16),
                                               child: FadeInImage.assetNetwork(placeholder: AppAssets.placeholder, image: ticket.resultImage!, fit: BoxFit.cover)))
-                                      : ticket.assignee?.id == UserRepo.user.id
+                                      : ticket.assignee?.id == UserRepo.user.id && imageFile == null
                                           ? Container(
                                               width: context.width(),
                                               height: context.width() * 9 / 16,
@@ -333,7 +333,7 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> with SingleTick
                                   ).onTap(() {
                                     if (resultDescriptionController.text.isNotEmpty && imageFile != null) {
                                       showConfirmDialog(context, 'The action cannot be undone or edited', onAccept: () {
-                                        context.read<TicketCubit>().updateTicket(ticketId: ticket.id!, status: 'Work finished', resultDescription: resultDescriptionController.text, resultImage: imageFile);
+                                        context.read<TicketCubit>().updateTicket(ticketId: ticket.id!, assigneeId: ticket.assignee!.id, status: 'Work finished', resultDescription: resultDescriptionController.text, resultImage: imageFile);
                                       });
                                     } else {
                                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Please fill all fields'), backgroundColor: tomato,));
