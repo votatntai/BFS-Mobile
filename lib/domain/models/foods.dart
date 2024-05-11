@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 class Foods {
   Pagination? pagination;
   List<Food>? foods;

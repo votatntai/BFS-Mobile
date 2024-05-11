@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-
 import '../../utils/get_it.dart';
 import '../models/birds.dart';
 

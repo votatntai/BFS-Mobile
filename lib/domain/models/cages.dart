@@ -59,10 +59,9 @@ class Cage {
   double? height;
   double? width;
   double? depth;
+  int? numberOfBird;
   String? thumbnailUrl;
-  CareMode? careMode;
-  Species? species;
-  Species? area;
+  Area? area;
   String? createAt;
 
   Cage(
@@ -74,9 +73,8 @@ class Cage {
       this.height,
       this.width,
       this.depth,
+      this.numberOfBird,
       this.thumbnailUrl,
-      this.careMode,
-      this.species,
       this.area,
       this.createAt});
 
@@ -89,37 +87,28 @@ class Cage {
     height = json['height'];
     width = json['width'];
     depth = json['depth'];
+    numberOfBird = json['numberOfBird'];
     thumbnailUrl = json['thumbnailUrl'];
-    careMode = json['careMode'] != null
-        ? new CareMode.fromJson(json['careMode'])
-        : null;
-    species =
-        json['species'] != null ? new Species.fromJson(json['species']) : null;
-    area = json['area'] != null ? new Species.fromJson(json['area']) : null;
+    area = json['area'] != null ? Area.fromJson(json['area']) : null;
     createAt = json['createAt'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['code'] = this.code;
-    data['name'] = this.name;
-    data['material'] = this.material;
-    data['description'] = this.description;
-    data['height'] = this.height;
-    data['width'] = this.width;
-    data['depth'] = this.depth;
-    data['thumbnailUrl'] = this.thumbnailUrl;
-    if (this.careMode != null) {
-      data['careMode'] = this.careMode!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['code'] = code;
+    data['name'] = name;
+    data['material'] = material;
+    data['description'] = description;
+    data['height'] = height;
+    data['width'] = width;
+    data['depth'] = depth;
+    data['numberOfBird'] = numberOfBird;
+    data['thumbnailUrl'] = thumbnailUrl;
+    if (area != null) {
+      data['area'] = area!.toJson();
     }
-    if (this.species != null) {
-      data['species'] = this.species!.toJson();
-    }
-    if (this.area != null) {
-      data['area'] = this.area!.toJson();
-    }
-    data['createAt'] = this.createAt;
+    data['createAt'] = createAt;
     return data;
   }
 }
@@ -170,6 +159,31 @@ class Species {
     data['thumbnailUrl'] = this.thumbnailUrl;
     data['name'] = this.name;
     data['createAt'] = this.createAt;
+    return data;
+  }
+}
+
+class Area {
+  String? id;
+  String? name;
+  String? thumbnailUrl;
+  String? createAt;
+
+  Area({this.id, this.name, this.thumbnailUrl, this.createAt});
+
+  Area.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    thumbnailUrl = json['thumbnailUrl'];
+    createAt = json['createAt'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['thumbnailUrl'] = thumbnailUrl;
+    data['createAt'] = createAt;
     return data;
   }
 }

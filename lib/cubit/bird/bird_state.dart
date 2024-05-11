@@ -25,3 +25,4 @@ class BirdDetailFailedState extends BirdState {
   final String error;
   BirdDetailFailedState(this.error);
 }
+

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/screens/MealPlanDetailScreen.dart';
 import '../screens/AddTicketScreen.dart';
 import '../screens/BirdDetailScreen.dart';
 import '../screens/CageDetailScreen.dart';
@@ -33,6 +34,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (_) => TasksScreen(cageId: settings.arguments.toString(),));
     case TicketDetailScreen.routeName:
       return MaterialPageRoute(builder: (_) => TicketDetailScreen(ticketId: settings.arguments.toString(),));
+    case MealPlanDetailScreen.routeName:
+      return MaterialPageRoute(builder: (_) => MealPlanDetailScreen(mealPlanId: settings.arguments.toString(),));
     default:
       return MaterialPageRoute(builder: (_) => const NotFoundScreen());
   }
