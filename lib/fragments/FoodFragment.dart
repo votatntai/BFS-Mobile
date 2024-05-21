@@ -38,7 +38,7 @@ class _FoodFragmentState extends State<FoodFragment> {
               child: Column(
                 children: [
                   ListView.separated(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                    padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
                     shrinkWrap: true,
                     itemCount: foods.length,
                     separatorBuilder: (context, index) => Gap.k8.height,

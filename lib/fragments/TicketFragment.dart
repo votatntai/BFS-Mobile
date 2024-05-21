@@ -122,7 +122,7 @@ class _TicketFragmentState extends State<TicketFragment> {
                         },
                       ) : const Center(child: Text('No ticket')),
                     ],
-                  ).paddingOnly(left: 16, right: 16, bottom: 16, top: 16),
+                  ).paddingOnly(left: 16, right: 16, bottom: 16),
                 ),
               );
             }

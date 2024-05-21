@@ -89,15 +89,25 @@ class _TaskFragmentState extends State<TaskFragment> {
                                   });
                                   // _pageController.animateToPage(1, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
                                 },).paddingTop(32),
-                                TaskTabView(tasks: workFinishedTasks, onBack: () => context.read<TaskCubit>().getTasksStaff(),).paddingTop(32),
-                                TaskTabView(tasks: doneTasks, onBack: () => context.read<TaskCubit>().getTasksStaff(),).paddingTop(32),
+                                TaskTabView(tasks: workFinishedTasks, onBack: () {
+                                  context.read<TaskCubit>().getTasksStaff();
+                                   setState(() {
+                                    _selectedIndex = 0;
+                                  });
+                                },).paddingTop(32),
+                                TaskTabView(tasks: doneTasks, onBack: () {
+                                  context.read<TaskCubit>().getTasksStaff();
+                                   setState(() {
+                                    _selectedIndex = 0;
+                                  });
+                                },).paddingTop(32),
                               ],
                             ),
                           ),
                         ],
                       );
                     } else {
-                      return Center(child: const Text('No task'));
+                      return const Center(child: Text('No task'));
                     }
                   }
                   return const SizedBox.shrink();
@@ -106,7 +116,7 @@ class _TaskFragmentState extends State<TaskFragment> {
             ),
           ),
         ],
-      ).paddingOnly(left: 16, right: 16, top: 32),
+      ).paddingOnly(left: 16, right: 16, bottom: 16),
     );
   }
 }

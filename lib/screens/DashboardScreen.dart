@@ -1,6 +1,8 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_application_1/cubit/notification/notification_cubit.dart';
 import 'package:flutter_application_1/cubit/staff/staff_cubit.dart';
 import 'package:flutter_application_1/cubit/task/task_cubit.dart';
 import 'package:flutter_application_1/cubit/task/task_state.dart';
@@ -12,16 +14,17 @@ import 'package:flutter_application_1/utils/colors.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:badges/badges.dart' as badges;
 import '../cubit/staff/staff_state.dart';
 import '../fragments/BirdFragment.dart';
 import '../fragments/TaskFragment.dart';
 import '../fragments/TicketFragment.dart';
+import '../utils/app_shared.dart';
 import '../widgets/Background.dart';
 
 // ignore: must_be_immutable
 class DashboardScreen extends StatefulWidget {
-  DashboardScreen({super.key, this.tabIndex});
+  const DashboardScreen({super.key, this.tabIndex});
   final int? tabIndex;
   static const String routeName = '/dashboard';
 
@@ -56,8 +59,43 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      extendBody: true,
+      appBar: AppBar(
+        systemOverlayStyle: const SystemUiOverlayStyle(statusBarColor: transparentColor, statusBarIconBrightness: Brightness.dark),
+        backgroundColor: transparentColor,
+        actions: [
+          GestureDetector(
+              onTap: () => Navigator.pushNamed(context, '/notification'),
+              child: StreamBuilder<int>(
+                  stream: watchCountNotify(),
+                  builder: (context, snapshot) {
+                    var count = snapshot.data ?? 0;
+                    return count > 0
+                        ? badges.Badge(
+                            position: badges.BadgePosition.topEnd(top: -10, end: 10),
+                            badgeContent: Text(
+                              count.toString(),
+                              style: secondaryTextStyle(size: 10, color: white),
+                            ),
+                            child: SvgPicture.asset(
+                              AppAssets.bell,
+                              color: gray,
+                              width: 16,
+                            ).paddingSymmetric(horizontal: 16),
+                          )
+                        : SvgPicture.asset(
+                            AppAssets.bell,
+                            color: gray,
+                            width: 16,
+                          ).paddingSymmetric(horizontal: 16);
+                  }),
+            )
+        ],
+      ),
       body: MultiBlocProvider(
-        providers: [BlocProvider<StaffCubit>(create: (context) => StaffCubit()..getStaffInformation()), BlocProvider<TaskCubit>(create: (context) => TaskCubit()..getTasksStaff())],
+        providers: [BlocProvider<StaffCubit>(create: (context) => StaffCubit()..getStaffInformation()), BlocProvider<TaskCubit>(create: (context) => TaskCubit()..getTasksStaff()),
+        BlocProvider<NotificationCubit>(create: (context) => NotificationCubit()..getNotifications(pageSize: 1000)),],
         child: MultiBlocListener(
           listeners: [
             BlocListener<StaffCubit, StaffState>(

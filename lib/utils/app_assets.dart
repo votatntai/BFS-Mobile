@@ -1,6 +1,7 @@
 class AppAssets {
   static const String placeholder = 'assets/images/placeholder.jpg';
   static const String food_placeholder = 'assets/images/food-placeholder.png';
+  static const String task = 'assets/images/task.png';
 
   static const String dove_svg = 'assets/icons/dove.svg';
   static const String user_svg = 'assets/icons/user.svg';
@@ -28,4 +29,6 @@ class AppAssets {
   static const String camera = 'assets/icons/camera.svg';
   static const String ticket = 'assets/icons/ticket.svg';
   static const String stock = 'assets/icons/stock.svg';
+  static const String envelope_open = 'assets/icons/envelope-open.svg';
+  static const String bell = 'assets/icons/bell.svg';
 }

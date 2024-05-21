@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/MealPlanDetailScreen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../cubit/notification/notification_cubit.dart';
 import '../screens/AddTicketScreen.dart';
 import '../screens/BirdDetailScreen.dart';
 import '../screens/CageDetailScreen.dart';
 import '../screens/DashboardScreen.dart';
 import '../screens/LoginScreen.dart';
 import '../screens/NotFoundScreen.dart';
+import '../screens/NotificationScreen.dart';
 import '../screens/SettingScreen.dart';
 import '../screens/TaskDetailScreen.dart';
 import '../screens/TasksScreen.dart';
@@ -36,6 +39,12 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (_) => TicketDetailScreen(ticketId: settings.arguments.toString(),));
     case MealPlanDetailScreen.routeName:
       return MaterialPageRoute(builder: (_) => MealPlanDetailScreen(mealPlanId: settings.arguments.toString(),));
+    case NotificationScreen.routeName:
+      return MaterialPageRoute(
+          builder: (_) => MultiBlocProvider(providers: [
+                BlocProvider<NotificationCubit>(create: (context) => NotificationCubit()..getNotifications(pageSize: 1000)),
+                BlocProvider<MarkAsReadNotificationCubit>(create: (context) => MarkAsReadNotificationCubit())
+              ], child: const NotificationScreen()));
     default:
       return MaterialPageRoute(builder: (_) => const NotFoundScreen());
   }

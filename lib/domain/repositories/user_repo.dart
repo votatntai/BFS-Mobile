@@ -36,7 +36,16 @@ class UserRepo {
       return Staff.fromJson(res.data);
     } on DioException {
       throw Exception(msg_server_error);
-      
+    }
+  }
+
+  Future<void> sendDeviceToken() async {
+    var deviceToken = getStringAsync(AppConstant.DEVICE_TOKEN);
+    try {
+      await apiClient.post('/api/device-tokens/staffs', data: {'deviceToken': deviceToken});
+    } on DioException catch (e) {
+      print(e);
+      throw Exception(e);
     }
   }
 }

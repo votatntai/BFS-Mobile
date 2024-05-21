@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_application_1/cubit/cage/cage_cubit.dart';
 import 'package:flutter_application_1/cubit/cage/cage_state.dart';
 import 'package:flutter_application_1/cubit/meal_plan/meal_plan_cubit.dart';
@@ -10,6 +8,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+import '../components/MealPlanComponent.dart';
 import '../cubit/meal_plan/meal_plan_state.dart';
 import '../screens/MealPlanDetailScreen.dart';
 import '../utils/app_assets.dart';
@@ -199,57 +198,7 @@ class _MealPlanFragmentState extends State<MealPlanFragment> {
                             }
                           }
 
-                          return Container(
-                            padding: const EdgeInsets.all(16),
-                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(12), color: primaryColor.withOpacity(0.1)),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    Text(
-                                      mealPlan.title!,
-                                      style: boldTextStyle(color: gray, weight: FontWeight.w500),
-                                    ),
-                                    const Spacer(),
-                                    Container(
-                                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                                      // decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: primaryColor.withOpacity(0.1)),
-                                      child: Text("Processing", style: primaryTextStyle(color: goldenRod)),
-                                    ),
-                                  ],
-                                ),
-                                Gap.k8.height,
-                                Row(
-                                  children: [
-                                    Text(
-                                      '${DateFormat("dd/MM/yyyy").format(DateTime.parse(mealPlan.from!))} - ${DateFormat("dd/MM/yyyy").format(DateTime.parse(mealPlan.to!))}',
-                                      style: secondaryTextStyle(color: gray),
-                                    ),
-                                    const Spacer(),
-                                    HorizontalList(
-                                      physics: const NeverScrollableScrollPhysics(),
-                                      itemBuilder: (context, index) {
-                                        return ClipRRect(
-                                          borderRadius: BorderRadius.circular(8),
-                                          child: FadeInImage.assetNetwork(placeholder: AppAssets.food_placeholder, image: thumbnailUrls[index], width: 30, height: 30, fit: BoxFit.cover),
-                                        );
-                                      }, itemCount: thumbnailUrls.length > 3 ? 3 : thumbnailUrls.length,),
-                                    thumbnailUrls.length > 3
-                                        ? Container(
-                                            padding: const EdgeInsets.all(4),
-                                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: primaryColor.withOpacity(0.1)),
-                                            child: Text(
-                                              '+${thumbnailUrls.length - 2}',
-                                              style: secondaryTextStyle(color: gray),
-                                            ),
-                                          )
-                                        : const SizedBox.shrink(),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ).onTap(() {
+                          return MealPlanComponent(mealPlan: mealPlan, thumbnailUrls: thumbnailUrls).onTap(() {
                             Navigator.pushNamed(context, MealPlanDetailScreen.routeName, arguments: mealPlan.id);
                           });
                         },
@@ -268,8 +217,9 @@ class _MealPlanFragmentState extends State<MealPlanFragment> {
               }),
             ),
           ],
-        ).paddingOnly(top: 16, bottom: 16, left: 16, right: 0),
+        ).paddingOnly(bottom: 16, left: 16, right: 0),
       ),
     );
   }
 }
+

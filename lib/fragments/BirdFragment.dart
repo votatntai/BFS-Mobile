@@ -113,7 +113,13 @@ class _BirdFragmentState extends State<BirdFragment> {
                                       items: categories.map<DropdownMenuItem<BirdCategory>>((BirdCategory value) {
                                         return DropdownMenuItem<BirdCategory>(
                                           value: value,
-                                          child: SizedBox(width: 130, child: Text(value.name!, style: boldTextStyle(color: primaryColor, weight: FontWeight.w500, size: 14), overflow: TextOverflow.ellipsis,)),
+                                          child: SizedBox(
+                                              width: 130,
+                                              child: Text(
+                                                value.name!,
+                                                style: boldTextStyle(color: primaryColor, weight: FontWeight.w500, size: 14),
+                                                overflow: TextOverflow.ellipsis,
+                                              )),
                                         );
                                       }).toList(),
                                       onChanged: (newValue) {
@@ -144,10 +150,9 @@ class _BirdFragmentState extends State<BirdFragment> {
                     Expanded(
                         child: BlocProvider<SpeciesCubit>(
                       create: (context) => SpeciesCubit()..getSpecies(pageSize: 100),
-                      child: BlocBuilder<SpeciesCubit, SpeciesState>(
-                        builder: (context, state) {
-                          if (state is SpeciesSuccessState) {
-                            var species = state.species.data;
+                      child: BlocBuilder<SpeciesCubit, SpeciesState>(builder: (context, state) {
+                        if (state is SpeciesSuccessState) {
+                          var species = state.species.data;
                           return Container(
                             padding: const EdgeInsets.symmetric(horizontal: 16),
                             decoration: BoxDecoration(borderRadius: BorderRadius.circular(12), color: selectedCategory != null ? primaryColor.withOpacity(0.1) : gray.withOpacity(0.1)),
@@ -164,6 +169,7 @@ class _BirdFragmentState extends State<BirdFragment> {
                                             setState(() {
                                               selectedSpeies = null;
                                             });
+                                            context.read<BirdCubit>().getBirds(pageSize: 1000, categoryId: selectedCategory!.id);
                                           }),
                                           Gap.k8.width,
                                         ],
@@ -184,7 +190,7 @@ class _BirdFragmentState extends State<BirdFragment> {
                                             setState(() {
                                               selectedSpeies = newValue;
                                             });
-                                            context.read<BirdCubit>().getBirds(pageSize: 1000, categoryId: newValue!.id);
+                                            context.read<BirdCubit>().getBirds(pageSize: 1000, categoryId: selectedCategory!.id, speciesId: newValue!.id);
                                           },
                                     value: selectedSpeies,
                                     hint: Text(
@@ -196,10 +202,9 @@ class _BirdFragmentState extends State<BirdFragment> {
                               ],
                             ),
                           );
-                          }
-                          return const SizedBox.shrink();
                         }
-                      ),
+                        return const SizedBox.shrink();
+                      }),
                     )),
                   ],
                 ),
@@ -347,7 +352,7 @@ class _BirdFragmentState extends State<BirdFragment> {
               ],
             ))
           ],
-        ).paddingOnly(left: 16, right: 16, top: 16),
+        ).paddingOnly(left: 16, right: 16, bottom: 16),
       ),
     );
   }

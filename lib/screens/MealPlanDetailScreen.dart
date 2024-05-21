@@ -3,12 +3,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/cubit/meal_plan/meal_plan_cubit.dart';
 import 'package:flutter_application_1/cubit/meal_plan/meal_plan_state.dart';
+import 'package:flutter_application_1/domain/repositories/meal_plan_repo.dart';
 import 'package:flutter_application_1/utils/app_assets.dart';
 import 'package:flutter_application_1/utils/format.dart';
 import 'package:flutter_application_1/utils/gap.dart';
 import 'package:flutter_application_1/widgets/AppBar.dart';
 import 'package:flutter_application_1/widgets/Background.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../utils/colors.dart';
@@ -42,6 +45,7 @@ class _MealPlanDetailScreenState extends State<MealPlanDetailScreen> {
               return Column(
                 children: [
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -57,19 +61,51 @@ class _MealPlanDetailScreenState extends State<MealPlanDetailScreen> {
                         ],
                       ),
                       const Spacer(),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: primaryColor.withOpacity(0.1)),
-                        child: DropdownButtonHideUnderline(
-                          child: DropdownButton<String>(
-                            value: "Processing",
-                            items: ["Processing", "Done"].map<DropdownMenuItem<String>>((String value) => DropdownMenuItem(
-                              value: value,
-                              child: Text(value, style: primaryTextStyle(),))).toList(),
-                            onChanged: (String? value) {},
-                          ),
-                        ),
-                      )
+                      SvgPicture.asset(
+                        AppAssets.list_check_svg,
+                        width: 24,
+                        height: 24,
+                        color: gray,
+                      ).onTap(() {
+                        showModalBottomSheet(
+                          isScrollControlled: true,
+                          context: context,
+                          builder: (context) {
+                            var planDetails = mealPlan.planDetails!;
+                            planDetails.sort((a, b) => a.date!.compareTo(b.date!));
+                            return StatefulBuilder(builder: (context, StateSetter setState) {
+                              return SizedBox(
+                                height: context.height() * 0.8,
+                                child: Column(
+                                  children: [
+                                    Expanded(
+                                      // Sử dụng Expanded để ListView chiếm hết không gian còn lại
+                                      child: ListView.separated(
+                                        shrinkWrap: true,
+                                        physics: const AlwaysScrollableScrollPhysics(),
+                                        itemBuilder: (context, index) {
+                                          return CheckboxListTile(
+                                            title: Text(DateFormat('dd/MM/yyyy').format(DateTime.parse(planDetails[index].date!)).toString()),
+                                            value: planDetails[index].status,
+                                            onChanged: (value) {
+                                              setState(() {
+                                                planDetails[index].status = value!;
+                                              });
+                                              MealPlanRepo().updatePlanDetailStatus(planDetailId: planDetails[index].id!, status: value!);
+                                            },
+                                          );
+                                        },
+                                        separatorBuilder: (context, index) => Gap.k8.height,
+                                        itemCount: planDetails.length,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            });
+                          },
+                        );
+                      }),
                     ],
                   ),
                   Gap.k16.height,

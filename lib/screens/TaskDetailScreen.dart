@@ -155,11 +155,11 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                                               decoration: const BoxDecoration(shape: BoxShape.circle),
                                               child: ClipRRect(
                                                   borderRadius: BorderRadius.circular(15),
-                                                  child: FadeInImage.assetNetwork(
+                                                  child: uniqueAssignees.toList()[index].avatarUrl != null ? FadeInImage.assetNetwork(
                                                     placeholder: AppAssets.placeholder,
                                                     image: uniqueAssignees.toList()[index].avatarUrl!,
                                                     fit: BoxFit.cover,
-                                                  ))),
+                                                  ): Image.asset(AppAssets.placeholder, fit: BoxFit.cover)),),
                                           Gap.k8.width,
                                           Text(uniqueAssignees.toList()[index].name!, style: primaryTextStyle(weight: FontWeight.w500, size: 14)),
                                           Gap.k4.width

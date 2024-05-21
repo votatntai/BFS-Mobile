@@ -31,4 +31,14 @@ class MealPlanRepo {
       throw Exception(e.response!.data);
     }
   }
+
+  Future<bool> updatePlanDetailStatus({required String planDetailId, required bool status}) async {
+    try {
+      var res = await _apiClient.put('/api/plans/details/$planDetailId', data: {'status': status});
+      return res.statusCode == 200;
+    } on DioException catch (e) {
+      print("Error at updatePlanDetailStatus: $e");
+      throw Exception(e.response!.data);
+    }
+  }
 }

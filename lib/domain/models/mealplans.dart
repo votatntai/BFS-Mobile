@@ -59,6 +59,7 @@ class MealPlan {
   String? to;
   Menu? menu;
   Cage? cage;
+  List<PlanDetails>? planDetails;
   String? createAt;
 
   MealPlan(
@@ -68,6 +69,7 @@ class MealPlan {
       this.to,
       this.menu,
       this.cage,
+      this.planDetails,
       this.createAt});
 
   MealPlan.fromJson(Map<String, dynamic> json) {
@@ -77,6 +79,12 @@ class MealPlan {
     to = json['to'];
     menu = json['menu'] != null ? Menu.fromJson(json['menu']) : null;
     cage = json['cage'] != null ? Cage.fromJson(json['cage']) : null;
+    if (json['planDetails'] != null) {
+      planDetails = <PlanDetails>[];
+      json['planDetails'].forEach((v) {
+        planDetails!.add(new PlanDetails.fromJson(v));
+      });
+    }
     createAt = json['createAt'];
   }
 
@@ -91,6 +99,9 @@ class MealPlan {
     }
     if (cage != null) {
       data['cage'] = cage!.toJson();
+    }
+     if (this.planDetails != null) {
+      data['planDetails'] = this.planDetails!.map((v) => v.toJson()).toList();
     }
     data['createAt'] = createAt;
     return data;
@@ -266,6 +277,28 @@ class FoodCategory {
     data['id'] = id;
     data['name'] = name;
     data['createAt'] = createAt;
+    return data;
+  }
+}
+
+class PlanDetails {
+  String? id;
+  String? date;
+  bool? status;
+
+  PlanDetails({this.id, this.date, this.status});
+
+  PlanDetails.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    date = json['date'];
+    status = json['status'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['date'] = this.date;
+    data['status'] = this.status;
     return data;
   }
 }

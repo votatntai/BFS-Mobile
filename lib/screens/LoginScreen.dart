@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/cubit/login/login_cubit.dart';
 import 'package:flutter_application_1/cubit/login/login_state.dart';
+import 'package:flutter_application_1/domain/repositories/user_repo.dart';
 import 'package:flutter_application_1/utils/colors.dart';
 import 'package:flutter_application_1/utils/gap.dart';
 import 'package:flutter_application_1/utils/messages.dart';
@@ -35,6 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
             showDialog(context: context, builder: (context) => const Center(child: CircularProgressIndicator()));
           }
           if (state is LoginSuccessState) {
+            UserRepo().sendDeviceToken();
             Navigator.pushReplacementNamed(context, DashboardScreen.routeName, arguments: 0);
           } else if (state is LoginFailedState) {
             showModalBottomSheet(context: context, builder: (context) => AlertDialog(

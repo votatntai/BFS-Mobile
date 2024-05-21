@@ -6,6 +6,7 @@ import 'package:flutter_application_1/domain/repositories/cage_repo.dart';
 import 'package:flutter_application_1/domain/repositories/checklist_repo.dart';
 import 'package:flutter_application_1/domain/repositories/food_repo.dart';
 import 'package:flutter_application_1/domain/repositories/meal_plan_repo.dart';
+import 'package:flutter_application_1/domain/repositories/notification_repo.dart';
 import 'package:flutter_application_1/domain/repositories/species_repo.dart';
 import 'package:flutter_application_1/domain/repositories/ticket_repo.dart';
 import 'package:flutter_application_1/domain/repositories/user_repo.dart';
@@ -29,6 +30,6 @@ Future<void> initialGetIt() async {
   getIt.registerLazySingleton(() => MealPlanRepo());
   getIt.registerLazySingleton(() => BirdCategoryRepo());
   getIt.registerLazySingleton(() => SpeciesRepo());
-
+  getIt.registerLazySingleton(() => NotificationRepo());
   getIt.registerLazySingleton(() => StaffCubit());
 }

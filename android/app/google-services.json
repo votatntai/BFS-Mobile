@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "584944175812",
+    "project_id": "bird-farm-meal-system",
+    "storage_bucket": "bird-farm-meal-system.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:584944175812:android:a4d8d2c973c508eddf9791",
+        "android_client_info": {
+          "package_name": "com.example.bfs_mobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrqrd3yiWpETShZ26Kc8R4pTKUosHHwxQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

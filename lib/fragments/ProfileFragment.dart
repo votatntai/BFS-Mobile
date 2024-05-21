@@ -81,7 +81,7 @@ class _ProfileFragmentState extends State<ProfileFragment> {
                               },
                             ),
                           ],
-                        ).paddingSymmetric(horizontal: 16, vertical: 32);
+                        ).paddingOnly(right: 16, left: 16, bottom: 16);
                       }
                       return const SizedBox.shrink();
                     }),

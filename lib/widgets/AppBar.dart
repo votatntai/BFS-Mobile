@@ -35,23 +35,9 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: centerTitle ?? true,
       elevation: elevation,
       bottom: bottom,
-      leading: leadingIcon != null ? Container(
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 1,
-              blurRadius: 3,
-              offset: const Offset(0, 1), // changes position of shadow
-            ),
-          ],
-        ),
-        child: SvgPicture.asset(leadingIcon!, color: leadingIconColor ?? textPrimaryColor).onTap(() {
+      leading: leadingIcon != null ?  SvgPicture.asset(leadingIcon!, color: leadingIconColor ?? textPrimaryColor).onTap(() {
           Navigator.pop(context, isRefresh);
-        },).paddingSymmetric(vertical: 18),
-      ).paddingLeft(16) : null,
+        },).paddingSymmetric(vertical: 18) : null,
     );
   }
 

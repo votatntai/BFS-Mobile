@@ -325,7 +325,7 @@ class _CageFragmentState extends State<CageFragment> {
             ],
           ))
         ],
-      ).paddingOnly(left: 16, right: 16, top: 16),
+      ).paddingOnly(left: 16, right: 16, bottom: 16),
     ));
   }
 }
