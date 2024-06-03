@@ -261,7 +261,14 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> with SingleTick
                                 hideLoader(context);
                               }
                             }, builder: (context, state) {
-                              return ticket.resultDescription != null || ticket.resultImage != null || UserRepo.user.id == ticket.assignee?.id ? Column(
+                              if (ticket.resultDescription != null) {
+                                resultDescriptionController.text = ticket.resultDescription!;
+                              }
+                              // if (ticket.resultImage != null) {
+                              //   imageFile = XFile(ticket.resultImage!);
+                                
+                              // }
+                              return UserRepo.user.id == ticket.assignee?.id ? Column(
                                 children: [
                                   Row(
                                     children: [
@@ -320,7 +327,7 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> with SingleTick
                                               height: context.width() * 9 / 16,
                                               child: ClipRRect(borderRadius: BorderRadius.circular(16), child: Image.file(File(imageFile!.path), fit: BoxFit.cover))) : const SizedBox.shrink(),
                                   const Spacer(),
-                                  ((ticket.resultDescription == null || ticket.resultImage == null) && ticket.assignee != null && ticket.assignee!.id == UserRepo.user.id) ? Container(
+                                  (ticket.resultDescription == null || ticket.resultImage == null) ? Container(
                                     width: context.width(),
                                     height: 48,
                                     decoration: BoxDecoration(
@@ -341,7 +348,7 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> with SingleTick
                                   }) : const SizedBox.shrink(),
 
                                 ],
-                              ) : const Center(child: Text('This ticket has no results yet'),);
+                              ) : const Center(child: Text('You are not authorized to view this ticket'),);
                             }),
                           ),
                         ],
