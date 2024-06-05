@@ -286,7 +286,7 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> with SingleTick
                                                   onChanged: (value) => setState(() {}),
                                                   decoration:
                                                       InputDecoration(hintText: 'Result description', contentPadding: const EdgeInsets.all(8), border: InputBorder.none, hintStyle: secondaryTextStyle()),
-                                                  maxLines: 5,
+                                                  maxLines: 4,
                                                 ),
                                               ),
                                             ) : const SizedBox.shrink(),
