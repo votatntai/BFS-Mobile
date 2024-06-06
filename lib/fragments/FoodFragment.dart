@@ -19,7 +19,9 @@ class FoodFragment extends StatefulWidget {
 }
 
 class _FoodFragmentState extends State<FoodFragment> {
+  TextEditingController planQuantityController = TextEditingController();
   TextEditingController quantityController = TextEditingController();
+  TextEditingController quantityWillUpdateController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,7 @@ class _FoodFragmentState extends State<FoodFragment> {
           return const Center(child: CircularProgressIndicator());
         }
         if (state is FoodSuccessState) {
-          var foods = state.foods.foods!;
+          var foods = state.foods;
           return SingleChildScrollView(
             child: RefreshIndicator(
               onRefresh: () => context.read<FoodCubit>().getFoods(),
@@ -50,25 +52,27 @@ class _FoodFragmentState extends State<FoodFragment> {
                           children: [
                             ClipRRect(
                                 borderRadius: const BorderRadius.horizontal(left: Radius.circular(16)),
-                                child: FadeInImage.assetNetwork(placeholder: AppAssets.placeholder, image: foods[index].thumbnailUrl!, width: 70, height: 70, fit: BoxFit.cover)),
+                                child: FadeInImage.assetNetwork(placeholder: AppAssets.placeholder, image: foods[index].food!.thumbnailUrl!, width: 70, height: 70, fit: BoxFit.cover)),
                             Gap.k8.width,
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  foods[index].name!,
+                                  foods[index].food!.name!,
                                   style: boldTextStyle(),
                                 ),
                                 Gap.k4.height,
                                 Row(
                                   children: [
-                                    SizedBox(
-                                      width: 120,
-                                      child: Text(
-                                        foods[index].foodCategory!.name!,
-                                        style: secondaryTextStyle(),
-                                      ),
-                                    ),
+                                    foods[index].food!.foodCategory != null
+                                        ? SizedBox(
+                                            width: 120,
+                                            child: Text(
+                                              foods[index].food!.foodCategory!.name!,
+                                              style: secondaryTextStyle(),
+                                            ),
+                                          )
+                                        : const SizedBox.shrink(),
                                     Text(
                                       'Quantity: ',
                                       style: secondaryTextStyle(),
@@ -80,7 +84,7 @@ class _FoodFragmentState extends State<FoodFragment> {
                                       ),
                                       padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
                                       child: Text(
-                                        foods[index].quantity.toString(),
+                                        foods[index].food!.quantity.toString(),
                                         style: primaryTextStyle(),
                                       ),
                                     ).onTap(() {
@@ -99,67 +103,106 @@ class _FoodFragmentState extends State<FoodFragment> {
                                                   // setState(() {});
                                                 }
                                                 if (state is CreateFoodReportFailedState) {
-                                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.msg.replaceAll('Exception: ', '')), backgroundColor: tomato,));
+                                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                                    content: Text(state.msg.replaceAll('Exception: ', '')),
+                                                    backgroundColor: tomato,
+                                                  ));
                                                 }
                                               }, builder: (context, state) {
                                                 return AlertDialog(
                                                   title: const Text('Food report'),
-                                                  content: Column(
-                                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                                    mainAxisSize: MainAxisSize.min,
-                                                    children: [
-                                                      Text(foods[index].name!, style: boldTextStyle(size: 20),),
-                                                      Gap.k16.height,
-                                                      TextField(
-                                                        controller: quantityController = TextEditingController(text: foods[index].quantity.toString()),
-                                                        keyboardType: TextInputType.number,
-                                                        decoration: const InputDecoration(
-                                                          labelText: 'Quantity',
-                                                          border: OutlineInputBorder(),
+                                                  content: SingleChildScrollView(
+                                                    physics: const AlwaysScrollableScrollPhysics(),
+                                                    child: Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      mainAxisSize: MainAxisSize.min,
+                                                      children: [
+                                                        Text(
+                                                          foods[index].food!.name!,
+                                                          style: boldTextStyle(size: 20),
                                                         ),
-                                                      ),
-                                                      Gap.k8.height,
-                                                      TextField(
-                                                        controller: descriptionController,
-                                                        keyboardType: TextInputType.text,
-                                                        maxLines: 5,
-                                                        decoration: const InputDecoration(
-                                                          contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                                                          alignLabelWithHint: true,
-                                                          labelText: 'Description',
-                                                          border: OutlineInputBorder(),
+                                                        Gap.k8.height,
+                                                        TextField(
+                                                          readOnly: true,
+                                                          controller: quantityController = TextEditingController(text: foods[index].food!.quantity.toString()),
+                                                          keyboardType: TextInputType.number,
+                                                          decoration: const InputDecoration(
+                                                            labelText: 'Quantity',
+                                                            border: OutlineInputBorder(),
+                                                          ),
                                                         ),
-                                                      ),
-
-                                                    ],
+                                                        Gap.k8.height,
+                                                        TextField(
+                                                          readOnly: true,
+                                                          controller: planQuantityController = TextEditingController(text: foods[index].planQuantity.toString()),
+                                                          keyboardType: TextInputType.number,
+                                                          decoration: const InputDecoration(
+                                                            labelText: 'Plan Quantity',
+                                                            border: OutlineInputBorder(),
+                                                          ),
+                                                        ),
+                                                        Gap.k8.height,
+                                                        TextField(
+                                                          controller: quantityWillUpdateController =
+                                                              TextEditingController(text: (foods[index].food!.quantity! - foods[index].planQuantity!).toString()),
+                                                          keyboardType: TextInputType.number,
+                                                          decoration: const InputDecoration(
+                                                            labelText: 'Quantity will update',
+                                                            border: OutlineInputBorder(),
+                                                          ),
+                                                        ),
+                                                        Gap.k8.height,
+                                                        TextField(
+                                                          controller: descriptionController,
+                                                          keyboardType: TextInputType.text,
+                                                          maxLines: 3,
+                                                          decoration: const InputDecoration(
+                                                            contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                                                            alignLabelWithHint: true,
+                                                            labelText: 'Description',
+                                                            border: OutlineInputBorder(),
+                                                          ),
+                                                        ),
+                                                        Gap.k8.height,
+                                                        Text("Note: Minimum 'Quantity will update' greater than 0 and smaller than Quantity - Plan quantity", style: secondaryTextStyle()),
+                                                      ],
+                                                    ),
                                                   ),
                                                   actions: [
                                                     Container(
-                                                      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                                                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                                                       decoration: BoxDecoration(
-                                                        color: primaryColor,
+                                                        color:primaryColor,
                                                         borderRadius: BorderRadius.circular(8),
                                                       ),
                                                       child: Text(
-                                                        'Save', style: boldTextStyle(color: white),
+                                                        'Save',
+                                                        style: boldTextStyle(color: white),
                                                       ),
-                                                    ).onTap((){
-                                                      // context.read<FoodCubit>().updateFood(id: foods[index].id!, quantity: quantityController.text.toDouble());
-                                                      context.read<FoodCubit>().createFoodReport(staffId: UserRepo.user.id!, foodId: foods[index].id!, lastQuantity: foods[index].quantity!, remainQuantity: quantityController.text.toDouble(), description: descriptionController.text);
+                                                    ).onTap(() {
+                                                      // context.read<FoodCubit>().updateFood(id: foods[index].food!.id!, quantity: quantityController.text.toDouble());
+                                                      if (quantityWillUpdateController.text.toDouble() > 0 && quantityWillUpdateController.text.toDouble() < foods[index].food!.quantity! - foods[index].planQuantity!){
+                                                        context.read<FoodCubit>().createFoodReport(
+                                                            staffId: UserRepo.user.id!,
+                                                            foodId: foods[index].food!.id!,
+                                                            lastQuantity: foods[index].food!.quantity!,
+                                                            remainQuantity: quantityWillUpdateController.text.toDouble(),
+                                                            description: descriptionController.text);
+                                                      }
                                                     }),
                                                     Container(
-                                                      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                                                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                                                       decoration: BoxDecoration(
                                                         color: white,
                                                         borderRadius: BorderRadius.circular(8),
                                                       ),
                                                       child: Text(
-                                                        'Cancel', style: boldTextStyle(color: primaryColor),
+                                                        'Cancel',
+                                                        style: boldTextStyle(color: primaryColor),
                                                       ),
-                                                    ).onTap((){
+                                                    ).onTap(() {
                                                       Navigator.pop(context);
                                                     }),
-                                                   
                                                   ],
                                                 );
                                               }),
@@ -167,10 +210,12 @@ class _FoodFragmentState extends State<FoodFragment> {
                                           });
                                     }),
                                     Gap.k4.width,
-                                    Text(
-                                      foods[index].unitOfMeasurement!.name!,
-                                      style: secondaryTextStyle(),
-                                    ),
+                                    foods[index].food!.unitOfMeasurement != null
+                                        ? Text(
+                                            foods[index].food!.unitOfMeasurement!.name!,
+                                            style: secondaryTextStyle(),
+                                          )
+                                        : const SizedBox.shrink(),
                                   ],
                                 ),
                               ],

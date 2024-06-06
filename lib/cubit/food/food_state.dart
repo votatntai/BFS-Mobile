@@ -1,3 +1,4 @@
+import '../../domain/models/food.dart';
 import '../../domain/models/foods.dart';
 
 class FoodState {}
@@ -5,7 +6,7 @@ class FoodState {}
 class FoodLoadingState extends FoodState {}
 
 class FoodSuccessState extends FoodState {
-  final Foods foods;
+  final List<Foodd> foods;
   FoodSuccessState(this.foods);
 }
 
