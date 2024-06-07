@@ -181,7 +181,7 @@ class _FoodFragmentState extends State<FoodFragment> {
                                                       ),
                                                     ).onTap(() {
                                                       // context.read<FoodCubit>().updateFood(id: foods[index].food!.id!, quantity: quantityController.text.toDouble());
-                                                      if (quantityWillUpdateController.text.toDouble() > 0 && quantityWillUpdateController.text.toDouble() < foods[index].food!.quantity! - foods[index].planQuantity!){
+                                                      if (quantityWillUpdateController.text.toDouble() > 0 && quantityWillUpdateController.text.toDouble() <= foods[index].food!.quantity! - foods[index].planQuantity!){
                                                         context.read<FoodCubit>().createFoodReport(
                                                             staffId: UserRepo.user.id!,
                                                             foodId: foods[index].food!.id!,
