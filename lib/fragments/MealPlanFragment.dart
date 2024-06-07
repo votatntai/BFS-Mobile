@@ -70,7 +70,7 @@ class _MealPlanFragmentState extends State<MealPlanFragment> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: BlocProvider<MealPlanCubit>(
-        create: (context) => MealPlanCubit()..getMealPlans(pageSize: 1000),
+        create: (context) => MealPlanCubit(),
         child: Column(
           children: [
             Row(
@@ -106,7 +106,14 @@ class _MealPlanFragmentState extends State<MealPlanFragment> {
                 Expanded(
                     child: BlocProvider<CageCubit>(
                   create: (context) => CageCubit()..getCages(pageSize: 100),
-                  child: BlocBuilder<CageCubit, CageState>(builder: (context, state) {
+                  child: BlocConsumer<CageCubit, CageState>(listener: (context, state) {
+                    if (state is CagesSuccessState) {
+                      setState(() {
+                        selectedCage = state.cages.cages!.first;
+                        context.read<MealPlanCubit>().getMealPlans(cageId: selectedCage!.id, pageSize: 1000);
+                      });
+                    }
+                  }, builder: (context, state) {
                     if (state is CagesSuccessState) {
                       var cages = state.cages.cages;
                       return Container(
@@ -191,10 +198,10 @@ class _MealPlanFragmentState extends State<MealPlanFragment> {
                           var mealPlan = mealPlans.mealPlans![index];
                           List<String> thumbnailUrls = [];
                           for (var meal in mealPlan.menu!.menuMeals!) {
-                              if (isCurrentTimeInRange(meal.from!, meal.to!)) {
-                                for (var mealItem in meal.mealItems!) {
-                                  thumbnailUrls.add(mealItem.food!.thumbnailUrl!);
-                                }
+                            if (isCurrentTimeInRange(meal.from!, meal.to!)) {
+                              for (var mealItem in meal.mealItems!) {
+                                thumbnailUrls.add(mealItem.food!.thumbnailUrl!);
+                              }
                             }
                           }
 
@@ -222,4 +229,3 @@ class _MealPlanFragmentState extends State<MealPlanFragment> {
     );
   }
 }
-

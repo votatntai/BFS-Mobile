@@ -181,7 +181,13 @@ class _BirdFragmentState extends State<BirdFragment> {
                                     items: species!.map<DropdownMenuItem<BirdSpeciesData>>((BirdSpeciesData value) {
                                       return DropdownMenuItem<BirdSpeciesData>(
                                         value: value,
-                                        child: Text(value.name!, style: boldTextStyle(color: selectedCategory != null ? primaryColor : gray, weight: FontWeight.w500, size: 14)),
+                                        child: SizedBox(
+                                          width: 130,
+                                          child: Text(value.name!, style: boldTextStyle(color: selectedCategory != null ? primaryColor : gray, weight: FontWeight.w500,
+                                           size: 14),
+                                           maxLines: 2,
+                                           ),
+                                        ),
                                       );
                                     }).toList(),
                                     onChanged: selectedCategory == null

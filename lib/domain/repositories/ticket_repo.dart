@@ -1,5 +1,6 @@
 
 import 'package:dio/dio.dart';
+import 'package:flutter_application_1/domain/repositories/user_repo.dart';
 import 'package:flutter_application_1/utils/get_it.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -13,6 +14,7 @@ class TicketRepo {
       Map<String, dynamic> queryParameters = {};
       if (cageId != null) queryParameters['cageId'] = cageId;
       if (ticketCategory != null) queryParameters['ticketCategory'] = ticketCategory;
+      queryParameters['farmId'] = UserRepo.user.farm!.id;
       if (pageNumber != null) queryParameters['pageNumber'] = pageNumber;
       if (pageSize != null) queryParameters['pageSize'] = pageSize;
       final response = await _apiClient.get('/api/tickets', queryParameters: queryParameters);
