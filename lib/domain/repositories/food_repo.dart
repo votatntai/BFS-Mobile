@@ -1,20 +1,21 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_application_1/domain/models/food_reports.dart';
 import 'package:flutter_application_1/domain/models/foods.dart';
 import 'package:flutter_application_1/utils/get_it.dart';
 import 'package:image_picker/image_picker.dart';
-import '../models/foods.dart';
 import '../models/food.dart';
 
 final Dio _apiClient = getIt.get<Dio>();
 
 class FoodRepo {
-  Future<List<Foodd>> getFoods({String? name, String? status, int? pageNumber, int? pageSize}) async {
+  Future<List<Foodd>> getFoods({required String farmId, String? name, String? status, int? pageNumber, int? pageSize}) async {
     try {
       Map<String, dynamic> queryParameters = {};
+      queryParameters['farmId'] = farmId;
       if (name != null) queryParameters['name'] = name;
       if (status != null) queryParameters['status'] = status;
       if (pageNumber != null) queryParameters['pageNumber'] = pageNumber;
-      var res = await _apiClient.get('/api/foods/GetByMealPlan', queryParameters: queryParameters);
+      var res = await _apiClient.get('/api/foods/get-by-mealplan', queryParameters: queryParameters);
       var rs = (res.data as List).map((e) => Foodd.fromJson(e)).toList();
       return rs;
     } on DioException catch (e) {
@@ -47,9 +48,23 @@ class FoodRepo {
         'foodId': foodId,
         'lastQuantity': lastQuantity,
         'remainQuantity': remainQuantity,
+        'isReported' : true,
         if (description != null) 'description': description,
       });
       return true;
+    } on DioException catch (e) {
+      throw Exception(e.response!.data);
+    }
+  }
+
+  Future<FoodReports> getFoodReport({required String staffId, int? pageSize, int? pageNumber}) async {
+    try {
+      Map<String, dynamic> queryParameters = {};
+      queryParameters['staffId'] = staffId;
+      if (pageSize != null) queryParameters['pageSize'] = pageSize;
+      if (pageNumber != null) queryParameters['pageNumber'] = pageNumber;
+      var res = await _apiClient.get('/api/food-report', queryParameters: queryParameters);
+      return FoodReports.fromJson(res.data);
     } on DioException catch (e) {
       throw Exception(e.response!.data);
     }

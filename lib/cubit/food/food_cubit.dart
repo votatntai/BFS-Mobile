@@ -5,14 +5,14 @@ import 'package:image_picker/image_picker.dart';
 
 import 'food_state.dart';
 
-class FoodCubit extends Cubit<FoodState>{
+class FoodCubit extends Cubit<FoodState> {
   FoodCubit() : super(FoodState());
   final FoodRepo _foodRepo = getIt.get<FoodRepo>();
 
-  Future<void> getFoods({String? name, String? status, int? pageNumber, int? pageSize}) async {
+  Future<void> getFoods({required String farmId, String? name, String? status, int? pageNumber, int? pageSize}) async {
     emit(FoodLoadingState());
     try {
-      var foods = await _foodRepo.getFoods(name: name, status: status, pageNumber: pageNumber, pageSize: pageSize);
+      var foods = await _foodRepo.getFoods(farmId: farmId, name: name, status: status, pageNumber: pageNumber, pageSize: pageSize);
       emit(FoodSuccessState(foods));
     } catch (e) {
       emit(FoodFailedState(e.toString()));
