@@ -76,33 +76,33 @@ class _MealPlanFragmentState extends State<MealPlanFragment> {
             Row(
               // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(12), color: primaryColor.withOpacity(0.1)),
-                    child: Center(
-                      child: Text(
-                        selectedDate != null ? DateFormat('dd/MM/yyyy').format(selectedDate!) : 'Date',
-                        style: boldTextStyle(color: gray, weight: FontWeight.w500),
-                      ),
-                    ),
-                  ).onTap(() {
-                    showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime(2000),
-                      lastDate: DateTime(2025),
-                    ).then((selectedDate) {
-                      if (selectedDate != null) {
-                        setState(() {
-                          this.selectedDate = selectedDate;
-                        });
-                        context.read<MealPlanCubit>().getMealPlans(from: selectedDate, cageId: selectedCage!.id, pageSize: 1000);
-                      }
-                    });
-                  }),
-                ),
-                Gap.k16.width,
+                // Expanded(
+                //   child: Container(
+                //     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                //     decoration: BoxDecoration(borderRadius: BorderRadius.circular(12), color: primaryColor.withOpacity(0.1)),
+                //     child: Center(
+                //       child: Text(
+                //         selectedDate != null ? DateFormat('dd/MM/yyyy').format(selectedDate!) : 'Date',
+                //         style: boldTextStyle(color: gray, weight: FontWeight.w500),
+                //       ),
+                //     ),
+                //   ).onTap(() {
+                //     showDatePicker(
+                //       context: context,
+                //       initialDate: DateTime.now(),
+                //       firstDate: DateTime(2000),
+                //       lastDate: DateTime(2025),
+                //     ).then((selectedDate) {
+                //       if (selectedDate != null) {
+                //         setState(() {
+                //           this.selectedDate = selectedDate;
+                //         });
+                //         context.read<MealPlanCubit>().getMealPlans(from: selectedDate, cageId: selectedCage!.id, pageSize: 1000);
+                //       }
+                //     });
+                //   }),
+                // ),
+                // Gap.k16.width,
                 Expanded(
                     child: BlocProvider<CageCubit>(
                   create: (context) => CageCubit()..getCages(pageSize: 100),
@@ -181,7 +181,7 @@ class _MealPlanFragmentState extends State<MealPlanFragment> {
                 } else if (state is MealPlansSuccessState) {
                   var mealPlans = state.mealPlans;
 
-                  return RefreshIndicator(
+                  return mealPlans.mealPlans!.isNotEmpty ? RefreshIndicator(
                     onRefresh: () async {
                       context.read<MealPlanCubit>().getMealPlans(from: selectedDate, cageId: selectedCage!.id, pageSize: 1000);
                     },
@@ -210,6 +210,11 @@ class _MealPlanFragmentState extends State<MealPlanFragment> {
                           });
                         },
                       ),
+                    ),
+                  ) : Center(
+                    child: Text(
+                      'No meal plan available',
+                      style: boldTextStyle(color: gray, weight: FontWeight.w500),
                     ),
                   );
                 } else if (state is MealPlansFailedState) {
