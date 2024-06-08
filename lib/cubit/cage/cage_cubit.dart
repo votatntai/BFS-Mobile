@@ -7,10 +7,10 @@ import 'cage_state.dart';
 class CageCubit extends Cubit<CageState> {
   final CageRepo _cageRepo = getIt<CageRepo>();
   CageCubit() : super(CageState());
-  Future<void> getCages({String? code, int? pageNumber, int? pageSize}) async {
+  Future<void> getCages({String? code, String? farmId, int? pageNumber, int? pageSize}) async {
     emit(CagesLoadingState());
     try {
-      var cages = await _cageRepo.getCages(code: code, pageNumber: pageNumber, pageSize: pageSize);
+      var cages = await _cageRepo.getCages(code: code, farmId: farmId, pageNumber: pageNumber, pageSize: pageSize);
       emit(CagesSuccessState(cages));
     } catch (e) {
       emit(CagesFailedState(e.toString()));

@@ -7,10 +7,11 @@ import '../models/cages.dart';
 final Dio _apiClient = getIt.get<Dio>();
 
 class CageRepo {
-  Future<Cages> getCages({String? code, int? pageNumber, int? pageSize}) async {
+  Future<Cages> getCages({String? code, String? farmId, int? pageNumber, int? pageSize}) async {
     try {
       Map<String, dynamic> queryParameters = {};
       if (code != null) queryParameters['code'] = code;
+      if (farmId != null) queryParameters['farmId'] = farmId;
       if (pageNumber != null) queryParameters['pageNumber'] = pageNumber;
       if (pageSize != null) queryParameters['pageSize'] = pageSize;
 

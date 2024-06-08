@@ -3,6 +3,7 @@ import 'package:flutter_application_1/cubit/cage/cage_cubit.dart';
 import 'package:flutter_application_1/cubit/cage/cage_state.dart';
 import 'package:flutter_application_1/cubit/meal_plan/meal_plan_cubit.dart';
 import 'package:flutter_application_1/domain/models/cages.dart';
+import 'package:flutter_application_1/domain/repositories/user_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
@@ -105,7 +106,7 @@ class _MealPlanFragmentState extends State<MealPlanFragment> {
                 // Gap.k16.width,
                 Expanded(
                     child: BlocProvider<CageCubit>(
-                  create: (context) => CageCubit()..getCages(pageSize: 100),
+                  create: (context) => CageCubit()..getCages(farmId: UserRepo.user.farm!.id, pageSize: 100),
                   child: BlocConsumer<CageCubit, CageState>(listener: (context, state) {
                     if (state is CagesSuccessState) {
                       setState(() {
