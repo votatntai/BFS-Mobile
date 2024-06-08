@@ -26,6 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool loading = false;
+  bool isViewPassword = false;
   @override
   Widget build(BuildContext context) {
     return BlocProvider<LoginCubit>(
@@ -109,10 +110,14 @@ class _LoginScreenState extends State<LoginScreen> {
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: TextFormField(
-                          obscureText: true,
+                          obscureText: !isViewPassword,
                           controller: passwordController,
-                          decoration: const InputDecoration(
-                            
+                          decoration: InputDecoration(
+                            suffixIcon: Icon(isViewPassword ? Icons.visibility_rounded : Icons.visibility_off).onTap(() {
+                              setState(() {
+                                isViewPassword = !isViewPassword;
+                              });
+                            }),
                             labelText: 'Password',
                             border: InputBorder.none,
                           ),
