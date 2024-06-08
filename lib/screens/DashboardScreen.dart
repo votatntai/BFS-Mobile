@@ -62,6 +62,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       extendBodyBehindAppBar: true,
       extendBody: true,
       appBar: AppBar(
+        leading: const SizedBox(),
         systemOverlayStyle: const SystemUiOverlayStyle(statusBarColor: transparentColor, statusBarIconBrightness: Brightness.dark),
         backgroundColor: transparentColor,
         actions: [

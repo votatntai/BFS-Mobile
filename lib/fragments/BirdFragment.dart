@@ -52,26 +52,26 @@ class _BirdFragmentState extends State<BirdFragment> {
         create: (context) => BirdCubit()..getBirds(pageSize: 1000),
         child: Column(
           children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              decoration: BoxDecoration(
-                color: white,
-                borderRadius: BorderRadius.circular(24),
-              ),
-              child: Row(children: [
-                const Text(
-                  'Search Bird',
-                  style: TextStyle(color: gray),
-                ),
-                const Spacer(),
-                SvgPicture.asset(
-                  AppAssets.magnifying_glass_svg,
-                  color: primaryColor,
-                  width: 20,
-                ),
-              ]),
-            ),
-            Gap.k16.height,
+            // Container(
+            //   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            //   decoration: BoxDecoration(
+            //     color: white,
+            //     borderRadius: BorderRadius.circular(24),
+            //   ),
+            //   child: Row(children: [
+            //     const Text(
+            //       'Search Bird',
+            //       style: TextStyle(color: gray),
+            //     ),
+            //     const Spacer(),
+            //     SvgPicture.asset(
+            //       AppAssets.magnifying_glass_svg,
+            //       color: primaryColor,
+            //       width: 20,
+            //     ),
+            //   ]),
+            // ),
+            // Gap.k16.height,
             Expanded(
                 child: Column(
               children: <Widget>[
